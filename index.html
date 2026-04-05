@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth" style="background:#0d1117;">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
 
     <script>
@@ -17,20 +17,21 @@
                 extend: {
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
-                        mono: ['JetBrains Mono', 'monospace'],
+                        mono: ['Inter', 'sans-serif'],
                     },
                     colors: {
                         apex: {
-                            bg:          '#0d1117',
-                            panel:       '#161b22',
-                            surface:     '#1c2128',
-                            border:      '#30363d',
+                            bg:          '#0a0d12',
+                            panel:       '#111418',
+                            surface:     '#181c23',
+                            feature:     '#14181f',
+                            border:      '#252b34',
                             accent:      '#00d4aa',
                             accentDim:   'rgba(0,212,170,0.12)',
                             accentGlow:  'rgba(0,212,170,0.06)',
                             text:        '#f0f0f0',
                             sub:         '#c9d1d9',
-                            muted:       '#8b949e',
+                            muted:       '#6e7680',
                             green:       '#3fb950',
                             greenDim:    'rgba(63,185,80,0.12)',
                             red:         '#f85149',
@@ -44,15 +45,23 @@
 
     <style>
         *, *::before, *::after { box-sizing: border-box; }
-        body { color: #f0f0f0; overflow-x: hidden; -webkit-font-smoothing: antialiased; background: #0d1117; }
+        body { color: #f0f0f0; overflow-x: hidden; -webkit-font-smoothing: antialiased; background: #0a0d12; }
+
+        /* ── Scroll snap ── */
+        html { scroll-snap-type: y mandatory; overflow-y: scroll; }
+        section.page { scroll-snap-align: start; scroll-snap-stop: always; height: 100vh; overflow: hidden; }
+        @media (max-width: 768px) { html { scroll-snap-type: none; } }
 
         /* ── Reveal ── */
-        .reveal { opacity: 0; transform: translateY(20px); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
+        .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
         .d1 { transition-delay: 80ms; }
         .d2 { transition-delay: 160ms; }
         .d3 { transition-delay: 240ms; }
         .d4 { transition-delay: 320ms; }
+
+        /* ── Typography ── */
+        .font-display { font-family: 'Inter', sans-serif; font-weight: 300; letter-spacing: -0.02em; }
 
         /* ── Grid background ── */
         .bg-grid {
@@ -94,68 +103,251 @@
 
         /* ── Custom scrollbar ── */
         ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: #0d1117; }
-        ::-webkit-scrollbar-thumb { background: #30363d; border-radius: 2px; }
+        ::-webkit-scrollbar-track { background: #0a0d12; }
+        ::-webkit-scrollbar-thumb { background: #252b34; border-radius: 2px; }
         ::-webkit-scrollbar-thumb:hover { background: #00d4aa; }
 
-        /* ── Pricing toggle ── */
-        .plan-card { transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s; }
+        /* ── Pricing ── */
+        .plan-card { transition: border-color 0.2s, transform 0.2s; }
         .plan-card:hover { transform: translateY(-2px); }
-        .plan-featured { border-color: rgba(0,212,170,0.5) !important; box-shadow: 0 0 30px rgba(0,212,170,0.07); }
+        .plan-featured { border-top: 2px solid #00d4aa !important; background: #14181f !important; }
         .price-mo, .price-yr { transition: opacity 0.2s; }
 
-        /* ── Feature card hover ── */
-        .feat-card { transition: border-color 0.22s, background 0.22s; }
-        .feat-card:hover { border-color: rgba(0,212,170,0.3) !important; background: rgba(0,212,170,0.03) !important; }
+        /* ── Feature card ── */
+        .feat-card { position: relative; overflow: hidden; background: #14181f; display: flex; flex-direction: column; }
+        .feat-content { position: relative; z-index: 2; flex-shrink: 0; }
+        .feat-thumb {
+            flex: 1; min-height: 0;
+            margin: 8px -20px -24px;
+            overflow: hidden;
+            border-top: 1px solid #252b34;
+        }
+        .feat-thumb img {
+            width: 100%; height: 100%;
+            object-fit: cover; object-position: top center;
+            display: block;
+            opacity: 0.55;
+            transition: opacity 0.3s, transform 0.4s;
+        }
+        .feat-card:hover .feat-thumb img { opacity: 0.85; transform: scale(1.03); }
 
         /* ── Form ── */
         .form-input {
-            background: #1c2128; border: 1px solid #30363d; color: #f0f0f0;
+            background: #181c23; border: 1px solid #252b34; color: #f0f0f0;
             padding: 0.75rem 1rem; font-family: inherit; font-size: 0.875rem;
             outline: none; transition: border-color 0.2s, box-shadow 0.2s; width: 100%;
+            border-radius: 0;
         }
         .form-input:focus { border-color: #00d4aa; box-shadow: 0 0 0 3px rgba(0,212,170,0.1); }
-        .form-input::placeholder { color: #8b949e; }
+        .form-input::placeholder { color: #6e7680; }
         .btn-primary {
-            background: #00d4aa; color: #0d1117; font-weight: 600; font-size: 0.875rem;
+            background: #00d4aa; color: #0a0d12; font-weight: 600; font-size: 0.875rem;
             letter-spacing: 0.06em; padding: 0.8rem 2rem; cursor: pointer;
             border: none; transition: background 0.2s, box-shadow 0.2s; font-family: inherit;
+            border-radius: 0;
         }
         .btn-primary:hover { background: #00efbf; box-shadow: 0 0 30px rgba(0,212,170,0.25); }
         .btn-outline {
             background: transparent; color: #f0f0f0; font-size: 0.875rem;
             letter-spacing: 0.06em; padding: 0.8rem 2rem; cursor: pointer;
-            border: 1px solid #30363d; transition: border-color 0.2s, color 0.2s; font-family: inherit;
+            border: 1px solid #252b34; transition: border-color 0.2s, color 0.2s; font-family: inherit;
+            border-radius: 0;
         }
         .btn-outline:hover { border-color: rgba(0,212,170,0.5); color: #00d4aa; }
 
-        /* ── Step connector ── */
-        .step-line { position: relative; }
-        .step-line::after {
-            content: ''; position: absolute; top: 20px; left: calc(50% + 40px);
-            width: calc(100% - 80px); height: 1px;
-            background: linear-gradient(90deg, #30363d 0%, transparent 100%);
-        }
-        @media (max-width: 767px) { .step-line::after { display: none; } }
-
         /* ── Toggle pill ── */
         .toggle-pill {
-            display: inline-flex; background: #1c2128; border: 1px solid #30363d;
+            display: inline-flex; background: #181c23; border: 1px solid #252b34;
             border-radius: 0; padding: 3px; gap: 2px;
         }
         .toggle-btn {
-            padding: 0.4rem 1.1rem; font-size: 0.78rem; font-family: 'JetBrains Mono', monospace;
+            padding: 0.4rem 1.1rem; font-size: 0.78rem; font-family: 'Inter', sans-serif;
             letter-spacing: 0.1em; cursor: pointer; border: none; background: transparent;
-            color: #8b949e; transition: background 0.18s, color 0.18s; text-transform: uppercase;
+            color: #6e7680; transition: background 0.18s, color 0.18s; text-transform: uppercase;
+            border-radius: 0; width: 7rem; text-align: center;
         }
-        .toggle-btn.active { background: #00d4aa; color: #0d1117; font-weight: 600; }
+        .toggle-btn.active { background: #00d4aa; color: #0a0d12; font-weight: 600; }
+
+        /* ── Navbar CTA ── */
+        .nav-cta {
+            background: #00d4aa; color: #0a0d12;
+            font-family: 'Inter', sans-serif; font-size: 11px; font-weight: 600;
+            letter-spacing: 0.12em; text-transform: uppercase;
+            padding: 0.5rem 1.2rem; border-radius: 0;
+            transition: background 0.2s; white-space: nowrap;
+        }
+        .nav-cta:hover { background: #00efbf; }
 
         /* ── Accent glow behind hero ── */
         .hero-glow {
             position: absolute; top: 20%; left: 50%; transform: translateX(-50%);
             width: 60vw; height: 30vh;
             background: radial-gradient(ellipse, rgba(0,212,170,0.055) 0%, transparent 70%);
-            pointer-events: none; z-index: 0;
+            pointer-events: none; z-index: 2;
+        }
+
+        /* ── Hero video ── */
+        .hero-video {
+            position: absolute; inset: 0; width: 100%; height: 100%;
+            object-fit: cover; z-index: 0;
+            animation: fadeInVideo 1.2s ease-out forwards;
+        }
+        @keyframes fadeInVideo { from { opacity: 0; } to { opacity: 1; } }
+
+        /* ── Video overlay gradient ── */
+        .hero-overlay {
+            position: absolute; inset: 0; z-index: 1; pointer-events: none;
+            background: linear-gradient(to bottom, rgba(10,13,18,0.55) 0%, rgba(10,13,18,0.75) 60%, rgba(10,13,18,1.0) 100%);
+        }
+
+        /* ── Scroll indicator ── */
+        .scroll-indicator {
+            position: absolute; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+            display: flex; flex-direction: column; align-items: center; gap: 6px;
+            z-index: 3; transition: opacity 0.2s; pointer-events: none;
+        }
+        .scroll-line {
+            width: 2px; height: 28px;
+            background: linear-gradient(to bottom, transparent, #00d4aa, transparent);
+            animation: scrollPulse 1.8s ease-in-out infinite;
+        }
+        .scroll-indicator span {
+            font-family: 'Inter', sans-serif;
+            font-size: 9px; letter-spacing: 0.15em;
+            color: #6e7680; text-transform: uppercase;
+        }
+        @keyframes scrollPulse {
+            0%, 100% { opacity: 0.3; transform: scaleY(0.8); }
+            50% { opacity: 1; transform: scaleY(1); }
+        }
+
+        /* ── Step watermark ── */
+        .step-watermark {
+            font-family: 'Inter', sans-serif;
+            font-weight: 300; font-size: 72px;
+            color: rgba(0,212,170,0.15);
+            display: block; text-align: center;
+            line-height: 1; margin-bottom: 8px;
+            pointer-events: none; user-select: none;
+        }
+
+        /* ── Step SVG connector draw ── */
+        .step-connector-path {
+            stroke-dasharray: 400;
+            stroke-dashoffset: 400;
+            transition: stroke-dashoffset 1.8s ease-out;
+        }
+        .step-connector-path.drawn { stroke-dashoffset: 0; }
+
+        /* ── Feature panel slide-over ── */
+        #feature-panel {
+            position: fixed; inset: 0; z-index: 200;
+            display: flex; align-items: flex-end; justify-content: center;
+            background: rgba(10,13,18,0.7);
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(4px);
+        }
+        #feature-panel.open {
+            opacity: 1; pointer-events: all;
+        }
+        #feature-panel-inner {
+            width: 100%; height: 92vh;
+            background: #111418; border-top: 1px solid #252b34;
+            display: flex; flex-direction: column;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+        }
+        #feature-panel.open #feature-panel-inner {
+            transform: translateY(0);
+        }
+        #feature-panel-header {
+            height: 52px; display: flex; align-items: center;
+            justify-content: space-between; padding: 0 28px;
+            border-bottom: 1px solid #252b34; flex-shrink: 0;
+        }
+        #panel-close {
+            width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+            border: 1px solid #252b34; background: transparent; cursor: pointer;
+            color: #6e7680; transition: color 0.15s, border-color 0.15s;
+        }
+        #panel-close:hover { color: #f0f0f0; border-color: #f0f0f0; }
+
+        /* ── Screenshot container + hotspot dots ── */
+        #panel-screenshot-wrap {
+            position: relative; flex: 1; overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+            background: #0a0d12;
+        }
+        #panel-screenshot-wrap img {
+            max-width: 100%; max-height: 100%;
+            object-fit: contain; display: block;
+            border: 1px solid #252b34;
+        }
+        #panel-screenshot-placeholder {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            gap: 12px; color: #252b34; user-select: none;
+            width: 85%; height: 80%;
+            border: 1px dashed #252b34;
+        }
+        #panel-screenshot-placeholder span {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #252b34;
+        }
+
+        /* ── Hotspot dot ── */
+        .hotspot {
+            position: absolute;
+            width: 14px; height: 14px;
+            cursor: pointer; z-index: 10;
+        }
+        .hotspot-dot {
+            width: 14px; height: 14px; border-radius: 50%;
+            background: #00d4aa;
+            box-shadow: 0 0 0 0 rgba(0,212,170,0.6);
+            animation: hotspotPulse 2.4s ease-in-out infinite;
+            position: relative; z-index: 2;
+        }
+        @keyframes hotspotPulse {
+            0%,100% { box-shadow: 0 0 0 0 rgba(0,212,170,0.55); }
+            50%      { box-shadow: 0 0 0 8px rgba(0,212,170,0); }
+        }
+        .hotspot-tooltip {
+            position: absolute; bottom: calc(100% + 10px); left: 50%; transform: translateX(-50%);
+            background: #111418; border: 1px solid #00d4aa;
+            padding: 10px 14px; min-width: 180px; max-width: 240px;
+            pointer-events: none; opacity: 0;
+            transition: opacity 0.18s ease;
+            z-index: 20;
+        }
+        .hotspot:hover .hotspot-tooltip { opacity: 1; }
+        .hotspot-tooltip h4 {
+            font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600;
+            color: #00d4aa; margin: 0 0 4px 0;
+        }
+        .hotspot-tooltip p {
+            font-family: 'Inter', sans-serif; font-size: 11px; line-height: 1.5;
+            color: #c9d1d9; margin: 0;
+        }
+        /* Flip tooltip if near top edge */
+        .hotspot.flip-down .hotspot-tooltip {
+            bottom: auto; top: calc(100% + 10px);
+        }
+
+        /* ── Features responsive grid ── */
+        @media (max-width: 1023px) {
+            .feat-grid { grid-template-columns: repeat(3, 1fr) !important; }
+        }
+        @media (max-width: 639px) {
+            .feat-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+
+        /* ── Pricing responsive ── */
+        @media (max-width: 1023px) {
+            .pricing-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+        @media (max-width: 639px) {
+            .pricing-grid { grid-template-columns: 1fr !important; }
         }
 
         @media (max-width: 640px) {
@@ -169,9 +361,9 @@
 <!-- ══════════════════════════════════════════════
      NAV
 ══════════════════════════════════════════════ -->
-<nav id="navbar" class="fixed w-full z-50 border-b border-apex-border/60 transition-all duration-300"
-     style="background:rgba(13,17,23,0.9); backdrop-filter:blur(16px);">
-    <div class="max-w-6xl mx-auto px-5 h-14 flex items-center justify-between">
+<nav id="navbar" class="fixed w-full z-50 transition-all duration-300"
+     style="background:transparent; border-bottom:1px solid transparent; height:60px;">
+    <div class="max-w-6xl mx-auto px-5 h-full flex items-center justify-between">
 
         <!-- Logo -->
         <div class="flex items-center gap-2.5 shrink-0">
@@ -182,483 +374,603 @@
 
         <!-- Nav links -->
         <div class="hidden md:flex items-center gap-7 text-[12px] font-mono text-apex-muted uppercase tracking-[0.15em]">
-            <a href="#features"  class="hover:text-apex-text transition-colors duration-150">Features</a>
-            <a href="#how"       class="hover:text-apex-text transition-colors duration-150">How It Works</a>
-            <a href="#pricing"   class="hover:text-apex-text transition-colors duration-150">Pricing</a>
+            <a href="#features" id="nav-features" class="nav-link hover:text-apex-text transition-colors duration-150">Features</a>
+            <a href="#how"      id="nav-how"      class="nav-link hover:text-apex-text transition-colors duration-150">How It Works</a>
+            <a href="#pricing"  id="nav-pricing"  class="nav-link hover:text-apex-text transition-colors duration-150">Pricing</a>
         </div>
 
         <!-- CTA -->
-        <a href="#beta" class="btn-primary text-[11px] tracking-[0.12em] uppercase px-5 py-2">
-            Join the Beta
-        </a>
+        <a href="#beta" class="nav-cta">Join the Beta →</a>
     </div>
 </nav>
 
 
 <!-- ══════════════════════════════════════════════
-     HERO
+     HERO (Page 1)
 ══════════════════════════════════════════════ -->
-<section class="relative min-h-screen flex flex-col items-center justify-center pt-28 pb-16 px-4 overflow-hidden">
-    <div class="absolute inset-0 bg-grid pointer-events-none z-0"></div>
+<section class="relative flex flex-col items-center justify-center pb-6 px-4 overflow-hidden"
+     style="height:calc(100vh - 60px); margin-top:60px; scroll-snap-align:start; scroll-snap-stop:always;">
+
+    <!-- Video background — shows gradient fallback until assets/hero-bg.mp4 exists -->
+    <video class="hero-video" autoplay muted loop playsinline>
+        <source src="assets/hero-bg.mp4" type="video/mp4">
+    </video>
+
+    <!-- Gradient overlay -->
+    <div class="hero-overlay"></div>
+
+    <!-- Grid + glow (z-index 2) -->
+    <div class="absolute inset-0 bg-grid pointer-events-none" style="z-index:2;"></div>
     <div class="hero-glow"></div>
 
-    <!-- Badge -->
-    <div class="reveal relative z-10 flex items-center gap-2.5 mb-8">
-        <div class="w-1.5 h-1.5 rounded-full bg-apex-accent pulse-live"></div>
-        <span class="font-mono text-[10px] text-apex-accent uppercase tracking-[0.28em]">Beta Access Open — Limited Spots</span>
-    </div>
+    <!-- All hero content (z-index 3) -->
+    <div class="relative flex flex-col items-center text-center w-full max-w-5xl mx-auto" style="z-index:3;">
 
-    <!-- Headline -->
-    <div class="reveal d1 relative z-10 text-center max-w-4xl mx-auto mb-6">
-        <h1 class="font-sans font-light leading-[1.06] tracking-tight text-apex-text">
-            <span class="block text-[46px] sm:text-[58px] md:text-[72px]">Institutional Research.</span>
-            <span class="block text-[46px] sm:text-[58px] md:text-[72px]" style="color:#00d4aa;">Built for You.</span>
-        </h1>
-    </div>
+        <!-- Badge -->
+        <div class="reveal flex items-center gap-2.5 mb-6">
+            <div class="w-1.5 h-1.5 rounded-full bg-apex-accent pulse-live"></div>
+            <span class="font-mono text-[10px] text-apex-accent uppercase tracking-[0.28em]">Beta Access Open — Limited Spots</span>
+        </div>
 
-    <!-- Sub -->
-    <p class="reveal d2 relative z-10 text-center text-apex-sub text-[16px] sm:text-[17px] font-light leading-relaxed max-w-2xl mb-10">
-        APEX is an AI-powered investment research platform that generates on-demand equity reports, tracks your portfolio, monitors the macro cycle, and surfaces signals from your newsletters — in a single, browser-based dashboard.
-    </p>
+        <!-- H1 -->
+        <div class="reveal d1 text-center max-w-4xl mx-auto mb-5">
+            <h1 class="font-display leading-[1.06]" style="font-size:clamp(52px,8vw,96px);">
+                <span class="block text-apex-text whitespace-nowrap">Institutional Research.</span>
+                <span class="block" style="color:#00d4aa;">Built for You.</span>
+            </h1>
+        </div>
 
-    <!-- CTA row -->
-    <div class="reveal d3 relative z-10 flex flex-wrap items-center justify-center gap-3 mb-6">
-        <a href="#beta" class="btn-primary" style="font-size:0.9rem; padding:0.85rem 2.2rem;">
-            Request Early Access
-        </a>
-        <a href="#features" class="btn-outline" style="font-size:0.9rem;">
-            Explore Features ↓
-        </a>
-    </div>
-    <p class="reveal d3 relative z-10 text-apex-muted text-[11px] font-mono uppercase tracking-[0.18em] mb-16">
-        No credit card &nbsp;·&nbsp; Free 24h trial on launch &nbsp;·&nbsp; Browser-based
-    </p>
+        <!-- Sub -->
+        <p class="reveal d2 text-center text-apex-sub text-[16px] sm:text-[17px] font-light leading-relaxed max-w-2xl mb-8">
+            APEX is an AI-powered investment research platform that generates on-demand equity reports, tracks your portfolio, monitors the macro cycle, and surfaces signals from your newsletters — in a single, browser-based dashboard.
+        </p>
 
-    <!-- ── Terminal Mockup ── -->
-    <div class="reveal d4 relative w-full max-w-[1240px] z-10">
-        <div class="absolute -inset-6 pointer-events-none" style="background:radial-gradient(ellipse, rgba(0,212,170,0.05) 0%, transparent 65%);"></div>
+        <!-- CTA row -->
+        <div class="reveal d3 flex flex-wrap items-center justify-center gap-3 mb-4">
+            <a href="#beta" class="btn-primary" style="font-size:0.9rem; padding:0.85rem 2.2rem;">
+                Request Early Access
+            </a>
+            <a href="#features" class="btn-outline" style="font-size:0.9rem;">
+                Explore Features ↓
+            </a>
+        </div>
+        <p class="reveal d3 text-apex-muted text-[11px] font-mono uppercase tracking-[0.18em]">
+            Free 24h trial on launch &nbsp;·&nbsp; Browser-based
+        </p>
 
-        <div class="border border-apex-border bg-apex-panel shadow-2xl flex flex-col overflow-hidden" style="height:570px;">
+        <!-- Terminal Mockup removed — video background replaces it -->
+        <div class="reveal d4 relative w-full max-w-[1240px]" style="display:none;">
+            <div class="absolute -inset-6 pointer-events-none" style="background:radial-gradient(ellipse, rgba(0,212,170,0.05) 0%, transparent 65%);"></div>
 
-            <!-- Window chrome + tabs -->
-            <div class="h-9 bg-apex-surface border-b border-apex-border flex items-center px-4 text-[10px] font-mono text-apex-muted shrink-0 select-none">
-                <div class="flex items-center gap-1.5 mr-5">
-                    <div class="w-2.5 h-2.5 rounded-full" style="background:#ff5f57;"></div>
-                    <div class="w-2.5 h-2.5 rounded-full" style="background:#febc2e;"></div>
-                    <div class="w-2.5 h-2.5 rounded-full" style="background:#28c840;"></div>
-                </div>
-                <div class="flex-1 flex items-center h-full overflow-hidden gap-1">
-                    <div class="h-full flex items-center px-4 gap-1.5 uppercase tracking-wider border-b-2 text-apex-accent" style="border-color:#00d4aa;">
-                        <i data-lucide="layout-dashboard" class="w-3 h-3"></i> Overview
+            <div class="border border-apex-border bg-apex-panel shadow-2xl flex flex-col overflow-hidden" style="height:340px;">
+
+                <!-- Window chrome + tabs -->
+                <div class="h-9 bg-apex-surface border-b border-apex-border flex items-center px-4 text-[10px] font-mono text-apex-muted shrink-0 select-none">
+                    <div class="flex items-center gap-1.5 mr-5">
+                        <div class="w-2.5 h-2.5 rounded-full" style="background:#ff5f57;"></div>
+                        <div class="w-2.5 h-2.5 rounded-full" style="background:#febc2e;"></div>
+                        <div class="w-2.5 h-2.5 rounded-full" style="background:#28c840;"></div>
                     </div>
-                    <div class="h-full flex items-center px-4 gap-1.5 uppercase tracking-wider cursor-pointer hover:text-apex-text transition-colors">
-                        <i data-lucide="bar-chart-2" class="w-3 h-3"></i> Stock View
-                    </div>
-                    <div class="h-full flex items-center px-4 gap-1.5 uppercase tracking-wider cursor-pointer hover:text-apex-text transition-colors hidden sm:flex">
-                        <i data-lucide="activity" class="w-3 h-3"></i> Recession Radar
-                    </div>
-                    <div class="h-full flex items-center px-4 gap-1.5 uppercase tracking-wider cursor-pointer hover:text-apex-text transition-colors hidden lg:flex">
-                        <i data-lucide="briefcase" class="w-3 h-3"></i> Portfolio
-                    </div>
-                    <div class="h-full flex items-center px-4 gap-1.5 uppercase tracking-wider cursor-pointer hover:text-apex-text transition-colors hidden xl:flex">
-                        <i data-lucide="sparkles" class="w-3 h-3"></i> Trends
-                    </div>
-                </div>
-                <div class="ml-auto flex items-center gap-3 shrink-0">
-                    <div class="flex items-center gap-1.5 text-apex-accent">
-                        <div class="w-1.5 h-1.5 rounded-full bg-apex-accent pulse-live"></div>
-                        <span class="tracking-wider">LIVE</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Body -->
-            <div class="flex flex-1 overflow-hidden">
-
-                <!-- Watchlist sidebar -->
-                <div class="mockup-sidebar w-48 border-r border-apex-border bg-apex-surface flex flex-col shrink-0">
-                    <div class="px-3 py-2 border-b border-apex-border flex justify-between items-center">
-                        <span class="text-[9px] text-apex-muted font-mono uppercase tracking-wider">Watchlist</span>
-                        <span class="text-[9px] text-apex-muted font-mono">12 pos</span>
-                    </div>
-                    <div class="px-2 py-2 border-b border-apex-border bg-apex-bg/30">
-                        <div class="grid grid-cols-2 gap-1">
-                            <div class="text-[9px] font-mono"><span class="text-apex-muted">SPX</span> <span class="text-apex-green">+0.74%</span></div>
-                            <div class="text-[9px] font-mono"><span class="text-apex-muted">NDX</span> <span class="text-apex-green">+1.12%</span></div>
-                            <div class="text-[9px] font-mono"><span class="text-apex-muted">VIX</span> <span class="text-apex-red">14.2</span></div>
-                            <div class="text-[9px] font-mono"><span class="text-apex-muted">BTC</span> <span class="text-apex-green">+2.3%</span></div>
+                    <div class="flex-1 flex items-center h-full overflow-hidden gap-1">
+                        <div class="h-full flex items-center px-4 gap-1.5 uppercase tracking-wider border-b-2 text-apex-accent" style="border-color:#00d4aa;">
+                            <i data-lucide="layout-dashboard" class="w-3 h-3"></i> Overview
+                        </div>
+                        <div class="h-full flex items-center px-4 gap-1.5 uppercase tracking-wider cursor-pointer hover:text-apex-text transition-colors">
+                            <i data-lucide="bar-chart-2" class="w-3 h-3"></i> Stock View
+                        </div>
+                        <div class="h-full flex items-center px-4 gap-1.5 uppercase tracking-wider cursor-pointer hover:text-apex-text transition-colors hidden sm:flex">
+                            <i data-lucide="activity" class="w-3 h-3"></i> Recession Radar
+                        </div>
+                        <div class="h-full flex items-center px-4 gap-1.5 uppercase tracking-wider cursor-pointer hover:text-apex-text transition-colors hidden lg:flex">
+                            <i data-lucide="briefcase" class="w-3 h-3"></i> Portfolio
+                        </div>
+                        <div class="h-full flex items-center px-4 gap-1.5 uppercase tracking-wider cursor-pointer hover:text-apex-text transition-colors hidden xl:flex">
+                            <i data-lucide="sparkles" class="w-3 h-3"></i> Trends
                         </div>
                     </div>
-                    <div class="flex-1 overflow-y-auto py-1">
-                        <div class="flex justify-between items-center px-3 py-2 border-l-2 cursor-pointer" style="border-color:#00d4aa; background:rgba(0,212,170,0.05);">
-                            <div><div class="text-[11px] font-mono text-apex-text font-medium">ADBE</div><div class="text-[9px] text-apex-muted">Adobe Inc.</div></div>
-                            <div class="text-right"><div class="text-[11px] font-mono text-apex-text live-price" data-base="521.40">$521.40</div><div class="text-[10px] font-mono text-apex-green live-change">+1.24%</div></div>
-                        </div>
-                        <div class="flex justify-between items-center px-3 py-2 hover:bg-apex-border/10 cursor-pointer">
-                            <div><div class="text-[11px] font-mono text-apex-text font-medium">ASML</div><div class="text-[9px] text-apex-muted">ASML Holding</div></div>
-                            <div class="text-right"><div class="text-[11px] font-mono text-apex-text live-price" data-base="824.60">€824.60</div><div class="text-[10px] font-mono text-apex-green live-change">+0.91%</div></div>
-                        </div>
-                        <div class="flex justify-between items-center px-3 py-2 hover:bg-apex-border/10 cursor-pointer">
-                            <div><div class="text-[11px] font-mono text-apex-text font-medium">SAP</div><div class="text-[9px] text-apex-muted">SAP SE</div></div>
-                            <div class="text-right"><div class="text-[11px] font-mono text-apex-text live-price" data-base="212.80">€212.80</div><div class="text-[10px] font-mono text-apex-green live-change">+0.33%</div></div>
-                        </div>
-                        <div class="flex justify-between items-center px-3 py-2 hover:bg-apex-border/10 cursor-pointer">
-                            <div><div class="text-[11px] font-mono text-apex-text font-medium">UBER</div><div class="text-[9px] text-apex-muted">Uber Technologies</div></div>
-                            <div class="text-right"><div class="text-[11px] font-mono text-apex-text live-price" data-base="74.20">$74.20</div><div class="text-[10px] font-mono text-apex-red live-change">-1.08%</div></div>
-                        </div>
-                        <div class="flex justify-between items-center px-3 py-2 hover:bg-apex-border/10 cursor-pointer">
-                            <div><div class="text-[11px] font-mono text-apex-text font-medium">ADYEN</div><div class="text-[9px] text-apex-muted">Adyen N.V.</div></div>
-                            <div class="text-right"><div class="text-[11px] font-mono text-apex-text live-price" data-base="1482.40">€1,482</div><div class="text-[10px] font-mono text-apex-red live-change">-0.42%</div></div>
+                    <div class="ml-auto flex items-center gap-3 shrink-0">
+                        <div class="flex items-center gap-1.5 text-apex-accent">
+                            <div class="w-1.5 h-1.5 rounded-full bg-apex-accent pulse-live"></div>
+                            <span class="tracking-wider">LIVE</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Main chart + report area -->
-                <div class="flex-1 flex flex-col overflow-hidden bg-apex-bg">
-                    <div class="px-5 py-3 border-b border-apex-border flex justify-between items-center shrink-0">
-                        <div>
-                            <div class="flex items-center gap-3 mb-0.5">
-                                <span class="text-[17px] font-sans text-apex-text font-light">Adobe Inc.</span>
+                <!-- Body -->
+                <div class="flex flex-1 overflow-hidden">
+
+                    <!-- Watchlist sidebar -->
+                    <div class="mockup-sidebar w-48 border-r border-apex-border bg-apex-surface flex flex-col shrink-0">
+                        <div class="px-3 py-2 border-b border-apex-border flex justify-between items-center">
+                            <span class="text-[9px] text-apex-muted font-mono uppercase tracking-wider">Watchlist</span>
+                            <span class="text-[9px] text-apex-muted font-mono">12 pos</span>
+                        </div>
+                        <div class="px-2 py-2 border-b border-apex-border bg-apex-bg/30">
+                            <div class="grid grid-cols-2 gap-1">
+                                <div class="text-[9px] font-mono"><span class="text-apex-muted">SPX</span> <span class="text-apex-green">+0.74%</span></div>
+                                <div class="text-[9px] font-mono"><span class="text-apex-muted">NDX</span> <span class="text-apex-green">+1.12%</span></div>
+                                <div class="text-[9px] font-mono"><span class="text-apex-muted">VIX</span> <span class="text-apex-red">14.2</span></div>
+                                <div class="text-[9px] font-mono"><span class="text-apex-muted">BTC</span> <span class="text-apex-green">+2.3%</span></div>
+                            </div>
+                        </div>
+                        <div class="flex-1 overflow-y-auto py-1">
+                            <div class="flex justify-between items-center px-3 py-2 border-l-2 cursor-pointer" style="border-color:#00d4aa; background:rgba(0,212,170,0.05);">
+                                <div><div class="text-[11px] font-mono text-apex-text font-medium">ADBE</div><div class="text-[9px] text-apex-muted">Adobe Inc.</div></div>
+                                <div class="text-right"><div class="text-[11px] font-mono text-apex-text live-price" data-base="521.40">$521.40</div><div class="text-[10px] font-mono text-apex-green live-change">+1.24%</div></div>
+                            </div>
+                            <div class="flex justify-between items-center px-3 py-2 hover:bg-apex-border/10 cursor-pointer">
+                                <div><div class="text-[11px] font-mono text-apex-text font-medium">ASML</div><div class="text-[9px] text-apex-muted">ASML Holding</div></div>
+                                <div class="text-right"><div class="text-[11px] font-mono text-apex-text live-price" data-base="824.60">€824.60</div><div class="text-[10px] font-mono text-apex-green live-change">+0.91%</div></div>
+                            </div>
+                            <div class="flex justify-between items-center px-3 py-2 hover:bg-apex-border/10 cursor-pointer">
+                                <div><div class="text-[11px] font-mono text-apex-text font-medium">SAP</div><div class="text-[9px] text-apex-muted">SAP SE</div></div>
+                                <div class="text-right"><div class="text-[11px] font-mono text-apex-text live-price" data-base="212.80">€212.80</div><div class="text-[10px] font-mono text-apex-green live-change">+0.33%</div></div>
+                            </div>
+                            <div class="flex justify-between items-center px-3 py-2 hover:bg-apex-border/10 cursor-pointer">
+                                <div><div class="text-[11px] font-mono text-apex-text font-medium">UBER</div><div class="text-[9px] text-apex-muted">Uber Technologies</div></div>
+                                <div class="text-right"><div class="text-[11px] font-mono text-apex-text live-price" data-base="74.20">$74.20</div><div class="text-[10px] font-mono text-apex-red live-change">-1.08%</div></div>
+                            </div>
+                            <div class="flex justify-between items-center px-3 py-2 hover:bg-apex-border/10 cursor-pointer">
+                                <div><div class="text-[11px] font-mono text-apex-text font-medium">ADYEN</div><div class="text-[9px] text-apex-muted">Adyen N.V.</div></div>
+                                <div class="text-right"><div class="text-[11px] font-mono text-apex-text live-price" data-base="1482.40">€1,482</div><div class="text-[10px] font-mono text-apex-red live-change">-0.42%</div></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main chart + report area -->
+                    <div class="flex-1 flex flex-col overflow-hidden bg-apex-bg">
+                        <div class="px-5 py-2.5 border-b border-apex-border flex justify-between items-center shrink-0">
+                            <div class="flex items-center gap-3">
+                                <span class="text-[16px] font-sans text-apex-text font-light">Adobe Inc.</span>
                                 <span class="text-[9px] font-mono text-apex-muted px-2 py-0.5 border border-apex-border uppercase">NASDAQ: ADBE</span>
                             </div>
+                            <div class="text-right shrink-0 ml-4">
+                                <div class="text-[20px] font-mono text-apex-text">$521.40</div>
+                                <div class="text-xs font-mono text-apex-green">+6.37 (+1.24%)</div>
+                            </div>
+                        </div>
+                        <div class="flex-1 flex flex-col p-3 overflow-hidden">
+                            <!-- Chart -->
+                            <div class="relative border border-apex-border mb-2 overflow-hidden shrink-0" style="height:110px;">
+                                <div class="absolute top-2 left-3 flex gap-3 text-[9px] font-mono text-apex-muted z-10">
+                                    <span class="text-apex-text border-b pb-0.5" style="border-color:#00d4aa;">1M</span>
+                                    <span class="cursor-pointer hover:text-apex-text">3M</span>
+                                    <span class="cursor-pointer hover:text-apex-text">6M</span>
+                                    <span class="cursor-pointer hover:text-apex-text">1Y</span>
+                                    <span class="cursor-pointer hover:text-apex-text">2Y</span>
+                                </div>
+                                <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 1000 110">
+                                    <defs>
+                                        <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                                            <stop offset="0%" stop-color="#00d4aa" stop-opacity="0.14"/>
+                                            <stop offset="100%" stop-color="#00d4aa" stop-opacity="0"/>
+                                        </linearGradient>
+                                    </defs>
+                                    <line x1="0" y1="28" x2="1000" y2="28" stroke="#252b34" stroke-width="1"/>
+                                    <line x1="0" y1="56" x2="1000" y2="56" stroke="#252b34" stroke-width="1"/>
+                                    <line x1="0" y1="84" x2="1000" y2="84" stroke="#252b34" stroke-width="1"/>
+                                    <path class="path-draw"
+                                          d="M0,94 C60,78 110,90 170,70 C230,50 270,66 330,46 C390,26 430,56 490,38 C550,20 590,46 650,26 C710,6 750,34 810,14 C870,0 910,22 960,8 C975,4 988,6 1000,4"
+                                          fill="none" stroke="#00d4aa" stroke-width="1.8"
+                                          filter="drop-shadow(0 0 6px rgba(0,212,170,0.5))"/>
+                                    <path d="M0,94 C60,78 110,90 170,70 C230,50 270,66 330,46 C390,26 430,56 490,38 C550,20 590,46 650,26 C710,6 750,34 810,14 C870,0 910,22 960,8 C975,4 988,6 1000,4 L1000,110 L0,110 Z"
+                                          fill="url(#chartGrad)"/>
+                                </svg>
+                            </div>
+                            <!-- Fundamentals -->
+                            <div class="grid grid-cols-6 gap-px bg-apex-border border border-apex-border mb-2 shrink-0">
+                                <div class="bg-apex-panel px-2 py-1.5"><div class="text-[8px] text-apex-muted mb-0.5">Mkt Cap</div><div class="text-[11px] font-mono text-apex-text">$239B</div></div>
+                                <div class="bg-apex-panel px-2 py-1.5"><div class="text-[8px] text-apex-muted mb-0.5">P/E TTM</div><div class="text-[11px] font-mono text-apex-text">42.8×</div></div>
+                                <div class="bg-apex-panel px-2 py-1.5"><div class="text-[8px] text-apex-muted mb-0.5">EV/EBITDA</div><div class="text-[11px] font-mono text-apex-text">28.1×</div></div>
+                                <div class="bg-apex-panel px-2 py-1.5"><div class="text-[8px] text-apex-muted mb-0.5">Rev Growth</div><div class="text-[11px] font-mono text-apex-green">+10.4%</div></div>
+                                <div class="bg-apex-panel px-2 py-1.5"><div class="text-[8px] text-apex-muted mb-0.5">Gross Mgn</div><div class="text-[11px] font-mono text-apex-text">88.2%</div></div>
+                                <div class="bg-apex-panel px-2 py-1.5"><div class="text-[8px] text-apex-muted mb-0.5">FCF Yield</div><div class="text-[11px] font-mono text-apex-text">3.1%</div></div>
+                            </div>
+                            <!-- AI report -->
+                            <div class="flex-1 bg-apex-panel border border-apex-border overflow-hidden scanline-wrap">
+                                <div class="scanline"></div>
+                                <div class="px-4 py-2 border-b border-apex-border flex justify-between items-center shrink-0">
+                                    <div class="text-[9px] font-mono text-apex-muted uppercase tracking-wider flex items-center gap-2">
+                                        <i data-lucide="file-text" class="w-3 h-3" style="color:#00d4aa;"></i>
+                                        AI Research Report — Adobe Inc.
+                                    </div>
+                                    <div class="flex items-center gap-3">
+                                        <span class="text-[10px] font-mono text-apex-green border px-2 py-0.5" style="border-color:rgba(63,185,80,0.4); background:rgba(63,185,80,0.08);">BUY</span>
+                                        <span class="text-[10px] font-mono text-apex-muted hidden sm:inline">Target: $620 · +18.9%</span>
+                                    </div>
+                                </div>
+                                <div class="px-4 py-2.5">
+                                    <div class="text-[9px] font-mono uppercase tracking-wider mb-1.5" style="color:#00d4aa;">§ Investment Fit — Growth Investor · 3–5yr Horizon</div>
+                                    <p class="text-[11px] text-apex-sub leading-relaxed typing-cursor">
+                                        Adobe's AI integration across Creative Cloud (Firefly) represents an untapped monetisation vector consensus models underestimate. FCF conversion supports sustained buybacks.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Macro + news sidebar -->
+                    <div class="mockup-right w-48 border-l border-apex-border bg-apex-surface flex flex-col overflow-hidden shrink-0">
+                        <div class="px-4 py-2.5 border-b border-apex-border">
+                            <div class="text-[9px] font-mono text-apex-muted uppercase tracking-wider mb-2.5">Macro Snapshot</div>
+                            <div class="space-y-2">
+                                <div class="flex justify-between items-center">
+                                    <div><div class="text-[11px] font-mono text-apex-text">10Y UST</div><div class="text-[9px] text-apex-muted">Treasury</div></div>
+                                    <div class="text-right"><div class="text-[11px] font-mono text-apex-text">4.42%</div><div class="text-[9px] font-mono text-apex-green">+2bp</div></div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <div><div class="text-[11px] font-mono text-apex-text">HY OAS</div><div class="text-[9px] text-apex-muted">Credit Stress</div></div>
+                                    <div class="text-right"><div class="text-[11px] font-mono text-apex-text">3.24</div><div class="text-[9px] font-mono text-apex-green">↓ Low</div></div>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <div><div class="text-[11px] font-mono text-apex-text">DXY</div><div class="text-[9px] text-apex-muted">USD Index</div></div>
+                                    <div class="text-right"><div class="text-[11px] font-mono text-apex-text">104.8</div><div class="text-[9px] font-mono text-apex-red">-0.3%</div></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex-1 px-4 py-2.5">
+                            <div class="text-[9px] font-mono text-apex-muted uppercase tracking-wider mb-2">Market News</div>
+                            <div class="space-y-3">
+                                <div>
+                                    <div class="flex gap-2 mb-1">
+                                        <span class="text-[8px] font-mono px-1.5 py-0.5 uppercase tracking-wider" style="background:rgba(0,212,170,0.12);color:#00d4aa;border:1px solid rgba(0,212,170,0.25);">AI</span>
+                                        <span class="text-[8px] text-apex-muted font-mono">2h · Bloomberg</span>
+                                    </div>
+                                    <p class="text-[11px] text-apex-sub leading-snug">Adobe reports record AI-assisted exports; raises FY guidance.</p>
+                                </div>
+                                <div>
+                                    <div class="flex gap-2 mb-1">
+                                        <span class="text-[8px] font-mono px-1.5 py-0.5 uppercase tracking-wider border border-apex-border text-apex-muted">MACRO</span>
+                                        <span class="text-[8px] text-apex-muted font-mono">4h · Reuters</span>
+                                    </div>
+                                    <p class="text-[11px] text-apex-sub leading-snug">Fed signals hold at May meeting; 2-cut path maintained H2.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <div id="scroll-indicator" class="scroll-indicator">
+        <div class="scroll-line"></div>
+        <span>Scroll</span>
+    </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     FEATURES (Page 2) — 10-cell 2×5 grid
+══════════════════════════════════════════════ -->
+<section id="features" class="page flex flex-col" style="background:#14181f;">
+
+    <!-- Section header -->
+    <div class="px-8 pt-12 pb-5 text-center shrink-0">
+        <span class="font-mono text-[10px] text-apex-muted uppercase tracking-[0.24em]">What You Get</span>
+        <h2 class="font-display mt-2 leading-snug" style="font-size:clamp(36px,4vw,60px); color:#f0f0f0;">
+            Everything in one place.
+        </h2>
+    </div>
+
+    <!-- 10-cell grid — gap:1px on border-coloured wrapper = hairline lines -->
+    <div class="flex-1 overflow-hidden" style="background:#252b34; min-height:0;">
+        <div class="feat-grid" style="display:grid; grid-template-columns:repeat(5,1fr); grid-template-rows:repeat(2,1fr); gap:1px; height:100%; background:#252b34;">
+
+            <!-- Feat 1: Shortlist Management -->
+            <div class="feat-card" style="padding:24px 20px; cursor:pointer;" onclick="openFeature('shortlist')">
+                <div class="feat-content">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-9 h-9 flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
+                            <i data-lucide="bookmark" class="w-4 h-4" style="color:#00d4aa;"></i>
+                        </div>
+                        <h3 class="text-[16px] font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Shortlist Management</h3>
+                    </div>
+                    <p class="text-[15px] leading-relaxed" style="color:#6e7680;">Curate your highest-conviction ideas with live prices, ratings, and notes in one focused view.</p>
+                </div>
+                <div class="feat-thumb"><img src="shortlist_management.png" alt="Shortlist Management screenshot"></div>
+            </div>
+
+            <!-- Feat 2: AI Equity Research Reports -->
+            <div class="feat-card" style="padding:24px 20px; cursor:pointer;" onclick="openFeature('reports')">
+                <div class="feat-content">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-9 h-9 flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
+                            <i data-lucide="file-text" class="w-4 h-4" style="color:#00d4aa;"></i>
+                        </div>
+                        <h3 class="text-[16px] font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">AI Equity Research Reports</h3>
+                    </div>
+                    <p class="text-[15px] leading-relaxed" style="color:#6e7680;">On-demand, structured reports in seconds — thesis, DCF, risk factors, catalysts, and investment fit.</p>
+                </div>
+                <div class="feat-thumb"><img src="AI_equityreports.png" alt="AI Equity Research Reports screenshot"></div>
+            </div>
+
+            <!-- Feat 3: Stock Viewer -->
+            <div class="feat-card" style="padding:24px 20px; cursor:pointer;" onclick="openFeature('stock')">
+                <div class="feat-content">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-9 h-9 flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
+                            <i data-lucide="bar-chart-2" class="w-4 h-4" style="color:#00d4aa;"></i>
+                        </div>
+                        <h3 class="text-[16px] font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Stock Viewer</h3>
+                    </div>
+                    <p class="text-[15px] leading-relaxed" style="color:#6e7680;">Live charts, OHLCV data, insider transactions, analyst consensus, and fundamentals in one panel.</p>
+                </div>
+                <div class="feat-thumb"><img src="stock_viewer.png" alt="Stock Viewer screenshot"></div>
+            </div>
+
+            <!-- Feat 4: Sector Overview -->
+            <div class="feat-card" style="padding:24px 20px; cursor:pointer;" onclick="openFeature('sectors')">
+                <div class="feat-content">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-9 h-9 flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
+                            <i data-lucide="layers" class="w-4 h-4" style="color:#00d4aa;"></i>
+                        </div>
+                        <h3 class="text-[16px] font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Key Sector Overview &amp; Insights</h3>
+                    </div>
+                    <p class="text-[15px] leading-relaxed" style="color:#6e7680;">12 sector ETF snapshots with sparklines, top movers, and performance heatmaps updated live.</p>
+                </div>
+                <div class="feat-thumb"><img src="sector_overview.png" alt="Sector Overview screenshot"></div>
+            </div>
+
+            <!-- Feat 5: Macro + News + Earnings -->
+            <div class="feat-card" style="padding:24px 20px; cursor:pointer;" onclick="openFeature('macro')">
+                <div class="feat-content">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-9 h-9 flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
+                            <i data-lucide="globe" class="w-4 h-4" style="color:#00d4aa;"></i>
+                        </div>
+                        <h3 class="text-[16px] font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Macro Data, World News &amp; Earnings</h3>
+                    </div>
+                    <p class="text-[15px] leading-relaxed" style="color:#6e7680;">Yield curve, FX, commodities, global news feed, and upcoming earnings calendar — all in one tab.</p>
+                </div>
+                <div class="feat-thumb"><img src="news_world_earnings.png" alt="Macro Data, World News & Earnings screenshot"></div>
+            </div>
+
+            <!-- Feat 6: Recession Radar -->
+            <div class="feat-card" style="padding:24px 20px; cursor:pointer;" onclick="openFeature('recession')">
+                <div class="feat-content">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-9 h-9 flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
+                            <i data-lucide="activity" class="w-4 h-4" style="color:#00d4aa;"></i>
+                        </div>
+                        <h3 class="text-[16px] font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Recession Radar &amp; Fear &amp; Greed</h3>
+                    </div>
+                    <p class="text-[15px] leading-relaxed" style="color:#6e7680;">11-signal composite score across 5 regimes — yield curve, HY spreads, VIX, Sahm Rule, and more.</p>
+                </div>
+                <div class="feat-thumb"><img src="recession_radar.png" alt="Recession Radar screenshot"></div>
+            </div>
+
+            <!-- Feat 7: Portfolio Tracking -->
+            <div class="feat-card" style="padding:24px 20px; cursor:pointer;" onclick="openFeature('portfolio')">
+                <div class="feat-content">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-9 h-9 flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
+                            <i data-lucide="briefcase" class="w-4 h-4" style="color:#00d4aa;"></i>
+                        </div>
+                        <h3 class="text-[16px] font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Portfolio Tracking &amp; AI Analysis</h3>
+                    </div>
+                    <p class="text-[15px] leading-relaxed" style="color:#6e7680;">Live P&amp;L, sector allocation, value history chart, and AI-generated portfolio commentary.</p>
+                </div>
+                <div class="feat-thumb"><img src="portfolio_analyzer.png" alt="Portfolio Tracking & AI Analysis screenshot"></div>
+            </div>
+
+            <!-- Feat 8: DCF Analyzer -->
+            <div class="feat-card" style="padding:24px 20px; cursor:pointer;" onclick="openFeature('dcf')">
+                <div class="feat-content">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-9 h-9 flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
+                            <i data-lucide="calculator" class="w-4 h-4" style="color:#00d4aa;"></i>
+                        </div>
+                        <h3 class="text-[16px] font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Plug &amp; Play DCF Analyzer</h3>
+                    </div>
+                    <p class="text-[15px] leading-relaxed" style="color:#6e7680;">Full DCF model with WACC/terminal growth sensitivity table and AI commentary on key value drivers.</p>
+                </div>
+                <div class="feat-thumb"><img src="DCF_analyzer.png" alt="DCF Analyzer screenshot"></div>
+            </div>
+
+            <!-- Feat 9: Trend-Based Company Finder -->
+            <div class="feat-card" style="padding:24px 20px; cursor:pointer;" onclick="openFeature('trends')">
+                <div class="feat-content">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-9 h-9 flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
+                            <i data-lucide="search" class="w-4 h-4" style="color:#00d4aa;"></i>
+                        </div>
+                        <h3 class="text-[16px] font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Trend-Based Company Finder</h3>
+                    </div>
+                    <p class="text-[15px] leading-relaxed" style="color:#6e7680;">Describe a macro theme; AI surfaces 10–12 matching companies enriched with live financial data.</p>
+                </div>
+                <div class="feat-thumb"><img src="company_finder.png" alt="Trend-Based Company Finder screenshot"></div>
+            </div>
+
+            <!-- Feat 10: Trend Intelligence (Coming Soon) -->
+            <div class="feat-card" style="padding:24px 20px; opacity:0.65; cursor:default;">
+                <div class="feat-content">
+                    <div class="flex items-center gap-3 mb-3">
+                        <div class="w-9 h-9 flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
+                            <i data-lucide="zap" class="w-4 h-4" style="color:#00d4aa;"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-[16px] font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Trend Intelligence</h3>
+                            <span class="font-mono text-[8px] uppercase tracking-wider" style="color:#00d4aa;">Coming Soon</span>
+                        </div>
+                    </div>
+                    <p class="text-[15px] leading-relaxed" style="color:#6e7680;">AI-powered thematic signal detection across newsletters, earnings calls, and macro data streams.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════
+     HOW IT WORKS + CLAUDE AI (Page 3)
+══════════════════════════════════════════════ -->
+<section id="how" class="page flex flex-col" style="background:#0a0d12;">
+
+    <!-- Top band: How It Works (50vh) -->
+    <div style="height:50%; display:flex; align-items:center; overflow:hidden;">
+        <div class="w-full max-w-5xl mx-auto px-8 py-6">
+            <div class="text-center mb-6">
+                <span class="font-mono text-[10px] text-apex-muted uppercase tracking-[0.24em]">How It Works</span>
+                <h2 class="font-display mt-1.5" style="font-size:clamp(30px,3.5vw,50px); color:#f0f0f0;">Up and running in minutes.</h2>
+            </div>
+
+            <div class="relative grid grid-cols-1 md:grid-cols-3 gap-0">
+
+                <!-- SVG connector 1→2 -->
+                <div class="hidden md:block absolute" style="top:24px; left:calc(33.33% + 32px); width:calc(33.33% - 64px); height:2px; overflow:visible; pointer-events:none;">
+                    <svg width="100%" height="2" style="overflow:visible;">
+                        <defs>
+                            <marker id="arrow1" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5" orient="auto">
+                                <path d="M0,0 L0,5 L5,2.5 z" fill="rgba(0,212,170,0.35)"/>
+                            </marker>
+                        </defs>
+                        <path id="connector-1-2" class="step-connector-path" d="M0,1 Q50%,1 100%,1" fill="none" stroke="rgba(0,212,170,0.35)" stroke-width="1" marker-end="url(#arrow1)"/>
+                    </svg>
+                </div>
+
+                <!-- SVG connector 2→3 -->
+                <div class="hidden md:block absolute" style="top:24px; left:calc(66.66% + 32px); width:calc(33.33% - 64px); height:2px; overflow:visible; pointer-events:none;">
+                    <svg width="100%" height="2" style="overflow:visible;">
+                        <defs>
+                            <marker id="arrow2" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5" orient="auto">
+                                <path d="M0,0 L0,5 L5,2.5 z" fill="rgba(0,212,170,0.35)"/>
+                            </marker>
+                        </defs>
+                        <path id="connector-2-3" class="step-connector-path" d="M0,1 Q50%,1 100%,1" fill="none" stroke="rgba(0,212,170,0.35)" stroke-width="1" marker-end="url(#arrow2)"/>
+                    </svg>
+                </div>
+
+                <!-- Step 1 -->
+                <div class="reveal text-center px-6 pb-4 md:pb-0 relative">
+                    <span class="step-watermark">01</span>
+                    <h3 class="text-[15px] font-sans font-medium text-apex-text mb-2">Create Your Account</h3>
+                    <p class="text-[13px] leading-relaxed" style="color:#6e7680;">Sign up and start a free 24-hour trial with full access — no credit card required.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="reveal d1 text-center px-6 pb-4 md:pb-0 relative">
+                    <span class="step-watermark">02</span>
+                    <h3 class="text-[15px] font-sans font-medium text-apex-text mb-2">Add Your Watchlist</h3>
+                    <p class="text-[13px] leading-relaxed" style="color:#6e7680;">Enter tickers you follow. Live prices populate instantly. Generate your first AI report in 30 seconds.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="reveal d2 text-center px-6 relative">
+                    <span class="step-watermark">03</span>
+                    <h3 class="text-[15px] font-sans font-medium text-apex-text mb-2">Research. Decide. Act.</h3>
+                    <p class="text-[13px] leading-relaxed" style="color:#6e7680;">Use AI reports, the recession radar, portfolio tracker, and newsletter signals — all in one place.</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Divider -->
+    <div style="height:1px; background:#252b34; flex-shrink:0;"></div>
+
+    <!-- Bottom band: Powered by Claude AI (50vh) -->
+    <div style="height:50%; display:flex; align-items:center; overflow:hidden;">
+        <div class="w-full max-w-5xl mx-auto px-8 py-6 grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+
+            <!-- Left: text -->
+            <div class="reveal">
+                <div class="flex items-center gap-2 mb-4">
+                    <i data-lucide="cpu" class="w-4 h-4" style="color:#00d4aa;"></i>
+                    <span class="font-mono text-[10px] uppercase tracking-[0.22em]" style="color:#00d4aa;">Enabling Technology</span>
+                </div>
+                <h2 class="font-display mb-3 leading-snug" style="font-size:clamp(26px,3vw,42px); color:#f0f0f0;">
+                    Powered by Claude AI.
+                </h2>
+                <p class="text-apex-muted text-[14px] leading-relaxed mb-5">
+                    Reports aren't generated from headlines. APEX pulls real financial data and layers Claude AI reasoning on top to produce structured, readable research tailored to your investor profile.
+                </p>
+                <div class="space-y-2.5 font-mono text-[12px] text-apex-sub">
+                    <div class="flex items-center gap-3"><div class="w-1 h-1 rounded-full shrink-0" style="background:#00d4aa;"></div>Personalised investment fit assessment per report</div>
+                    <div class="flex items-center gap-3"><div class="w-1 h-1 rounded-full shrink-0" style="background:#00d4aa;"></div>Full DCF model with WACC &amp; terminal growth sensitivity</div>
+                    <div class="flex items-center gap-3"><div class="w-1 h-1 rounded-full shrink-0" style="background:#00d4aa;"></div>Catalyst identification and structured risk extraction</div>
+                    <div class="flex items-center gap-3"><div class="w-1 h-1 rounded-full shrink-0" style="background:#00d4aa;"></div>Analyst consensus enriched by live web research</div>
+                </div>
+            </div>
+
+            <!-- Right: ASML report card (scanline retained exactly) -->
+            <div class="reveal d2 relative">
+                <div class="absolute -inset-4 pointer-events-none" style="background:radial-gradient(ellipse, rgba(0,212,170,0.05), transparent 70%);"></div>
+                <div class="bg-apex-panel border border-apex-border relative z-10 scanline-wrap">
+                    <div class="scanline"></div>
+                    <div class="px-5 py-3.5 border-b border-apex-border flex justify-between items-start">
+                        <div>
+                            <div class="text-[9px] font-mono text-apex-muted uppercase tracking-widest mb-1">Equity Research Report</div>
+                            <div class="text-[17px] font-sans text-apex-text font-light">ASML Holding N.V.</div>
+                            <div class="text-[9px] font-mono text-apex-muted mt-0.5">AMS: ASML · EUV Lithography</div>
                         </div>
                         <div class="text-right shrink-0 ml-4">
-                            <div class="text-[22px] font-mono text-apex-text">$521.40</div>
-                            <div class="text-xs font-mono text-apex-green">+6.37 (+1.24%)</div>
+                            <div class="text-[17px] font-mono text-apex-green font-light">BUY</div>
+                            <div class="text-[10px] font-mono text-apex-muted mt-0.5">€950 target</div>
+                            <div class="text-[10px] font-mono text-apex-green">+15.2% upside</div>
                         </div>
                     </div>
-                    <div class="flex-1 flex flex-col p-4 overflow-hidden">
-                        <!-- Chart -->
-                        <div class="relative border border-apex-border mb-3 overflow-hidden shrink-0" style="height:175px;">
-                            <div class="absolute top-2 left-3 flex gap-3 text-[9px] font-mono text-apex-muted z-10">
-                                <span class="text-apex-text border-b pb-0.5" style="border-color:#00d4aa;">1M</span>
-                                <span class="cursor-pointer hover:text-apex-text">3M</span>
-                                <span class="cursor-pointer hover:text-apex-text">6M</span>
-                                <span class="cursor-pointer hover:text-apex-text">1Y</span>
-                                <span class="cursor-pointer hover:text-apex-text">2Y</span>
+                    <div class="px-5 py-3.5 space-y-3">
+                        <div class="pl-4 py-2" style="border-left:2px solid #00d4aa;">
+                            <div class="flex justify-between items-center mb-1.5">
+                                <span class="text-[9px] font-mono uppercase tracking-wider" style="color:#00d4aa;">§ Investment Fit</span>
+                                <span class="text-[9px] font-mono text-apex-muted">GROWTH · 5YR</span>
                             </div>
-                            <svg class="w-full h-full" preserveAspectRatio="none" viewBox="0 0 1000 175">
-                                <defs>
-                                    <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stop-color="#00d4aa" stop-opacity="0.14"/>
-                                        <stop offset="100%" stop-color="#00d4aa" stop-opacity="0"/>
-                                    </linearGradient>
-                                </defs>
-                                <line x1="0" y1="44" x2="1000" y2="44" stroke="#30363d" stroke-width="1"/>
-                                <line x1="0" y1="88" x2="1000" y2="88" stroke="#30363d" stroke-width="1"/>
-                                <line x1="0" y1="132" x2="1000" y2="132" stroke="#30363d" stroke-width="1"/>
-                                <path class="path-draw"
-                                      d="M0,148 C60,128 110,144 170,118 C230,92 270,110 330,84 C390,58 430,98 490,74 C550,50 590,80 650,54 C710,28 750,64 810,36 C870,8 910,44 960,20 C975,14 988,18 1000,16"
-                                      fill="none" stroke="#00d4aa" stroke-width="1.8"
-                                      filter="drop-shadow(0 0 6px rgba(0,212,170,0.5))"/>
-                                <path d="M0,148 C60,128 110,144 170,118 C230,92 270,110 330,84 C390,58 430,98 490,74 C550,50 590,80 650,54 C710,28 750,64 810,36 C870,8 910,44 960,20 C975,14 988,18 1000,16 L1000,175 L0,175 Z"
-                                      fill="url(#chartGrad)"/>
-                            </svg>
+                            <p class="text-[11px] text-apex-sub leading-relaxed typing-cursor">
+                                ASML's monopoly in EUV lithography is structurally irreplaceable. High-NA ramp at TSMC and Intel creates a multi-year earnings catalyst consensus currently underestimates.
+                            </p>
                         </div>
-                        <!-- Fundamentals -->
-                        <div class="grid grid-cols-6 gap-px bg-apex-border border border-apex-border mb-3 shrink-0">
-                            <div class="bg-apex-panel px-3 py-2"><div class="text-[8px] text-apex-muted mb-1">Mkt Cap</div><div class="text-[11px] font-mono text-apex-text">$239B</div></div>
-                            <div class="bg-apex-panel px-3 py-2"><div class="text-[8px] text-apex-muted mb-1">P/E TTM</div><div class="text-[11px] font-mono text-apex-text">42.8×</div></div>
-                            <div class="bg-apex-panel px-3 py-2"><div class="text-[8px] text-apex-muted mb-1">EV/EBITDA</div><div class="text-[11px] font-mono text-apex-text">28.1×</div></div>
-                            <div class="bg-apex-panel px-3 py-2"><div class="text-[8px] text-apex-muted mb-1">Rev Growth</div><div class="text-[11px] font-mono text-apex-green">+10.4%</div></div>
-                            <div class="bg-apex-panel px-3 py-2"><div class="text-[8px] text-apex-muted mb-1">Gross Mgn</div><div class="text-[11px] font-mono text-apex-text">88.2%</div></div>
-                            <div class="bg-apex-panel px-3 py-2"><div class="text-[8px] text-apex-muted mb-1">FCF Yield</div><div class="text-[11px] font-mono text-apex-text">3.1%</div></div>
-                        </div>
-                        <!-- AI report -->
-                        <div class="flex-1 bg-apex-panel border border-apex-border overflow-hidden scanline-wrap">
-                            <div class="scanline"></div>
-                            <div class="px-4 py-2.5 border-b border-apex-border flex justify-between items-center shrink-0">
-                                <div class="text-[9px] font-mono text-apex-muted uppercase tracking-wider flex items-center gap-2">
-                                    <i data-lucide="file-text" class="w-3 h-3" style="color:#00d4aa;"></i>
-                                    AI Research Report — Adobe Inc.
-                                </div>
-                                <div class="flex items-center gap-3">
-                                    <span class="text-[10px] font-mono text-apex-green border px-2 py-0.5" style="border-color:rgba(63,185,80,0.4); background:rgba(63,185,80,0.08);">BUY</span>
-                                    <span class="text-[10px] font-mono text-apex-muted hidden sm:inline">Target: $620 · +18.9%</span>
-                                </div>
-                            </div>
-                            <div class="px-4 py-3">
-                                <div class="text-[9px] font-mono uppercase tracking-wider mb-2" style="color:#00d4aa;">§ Investment Fit — Growth Investor · 3–5yr Horizon</div>
-                                <p class="text-[11px] text-apex-sub leading-relaxed typing-cursor">
-                                    Adobe's AI integration across Creative Cloud (Firefly) represents an untapped monetisation vector consensus models underestimate. FCF conversion supports sustained buybacks. The transition to subscription removes revenue cyclicality — entry point is asymmetric.
-                                </p>
-                            </div>
+                        <div class="grid grid-cols-4 gap-px bg-apex-border border border-apex-border">
+                            <div class="bg-apex-surface px-3 py-2 text-center"><div class="text-[8px] text-apex-muted mb-1">P/E Fwd</div><div class="text-[11px] font-mono text-apex-text">28.4×</div></div>
+                            <div class="bg-apex-surface px-3 py-2 text-center"><div class="text-[8px] text-apex-muted mb-1">FCF Yield</div><div class="text-[11px] font-mono text-apex-green">4.1%</div></div>
+                            <div class="bg-apex-surface px-3 py-2 text-center"><div class="text-[8px] text-apex-muted mb-1">Rev Grwth</div><div class="text-[11px] font-mono text-apex-green">+23%</div></div>
+                            <div class="bg-apex-surface px-3 py-2 text-center"><div class="text-[8px] text-apex-muted mb-1">Analysts</div><div class="text-[11px] font-mono text-apex-text">34 · BUY</div></div>
                         </div>
                     </div>
                 </div>
-
-                <!-- Macro + news sidebar -->
-                <div class="mockup-right w-52 border-l border-apex-border bg-apex-surface flex flex-col overflow-hidden shrink-0">
-                    <div class="px-4 py-3 border-b border-apex-border">
-                        <div class="text-[9px] font-mono text-apex-muted uppercase tracking-wider mb-3">Macro Snapshot</div>
-                        <div class="space-y-2.5">
-                            <div class="flex justify-between items-center">
-                                <div><div class="text-[11px] font-mono text-apex-text">10Y UST</div><div class="text-[9px] text-apex-muted">Treasury</div></div>
-                                <div class="text-right"><div class="text-[11px] font-mono text-apex-text">4.42%</div><div class="text-[9px] font-mono text-apex-green">+2bp</div></div>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <div><div class="text-[11px] font-mono text-apex-text">HY OAS</div><div class="text-[9px] text-apex-muted">Credit Stress</div></div>
-                                <div class="text-right"><div class="text-[11px] font-mono text-apex-text">3.24</div><div class="text-[9px] font-mono text-apex-green">↓ Low</div></div>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <div><div class="text-[11px] font-mono text-apex-text">DXY</div><div class="text-[9px] text-apex-muted">USD Index</div></div>
-                                <div class="text-right"><div class="text-[11px] font-mono text-apex-text">104.8</div><div class="text-[9px] font-mono text-apex-red">-0.3%</div></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex-1 overflow-y-auto px-4 py-3">
-                        <div class="text-[9px] font-mono text-apex-muted uppercase tracking-wider mb-3">Market News</div>
-                        <div class="space-y-4">
-                            <div>
-                                <div class="flex gap-2 mb-1">
-                                    <span class="text-[8px] font-mono px-1.5 py-0.5 uppercase tracking-wider" style="background:rgba(0,212,170,0.12);color:#00d4aa;border:1px solid rgba(0,212,170,0.25);">AI</span>
-                                    <span class="text-[8px] text-apex-muted font-mono">2h · Bloomberg</span>
-                                </div>
-                                <p class="text-[11px] text-apex-sub leading-snug">Adobe reports record AI-assisted exports; raises FY guidance.</p>
-                            </div>
-                            <div>
-                                <div class="flex gap-2 mb-1">
-                                    <span class="text-[8px] font-mono px-1.5 py-0.5 uppercase tracking-wider border border-apex-border text-apex-muted">MACRO</span>
-                                    <span class="text-[8px] text-apex-muted font-mono">4h · Reuters</span>
-                                </div>
-                                <p class="text-[11px] text-apex-sub leading-snug">Fed signals hold at May meeting; 2-cut path maintained H2.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-4 py-3 border-t border-apex-border">
-                        <div class="text-[9px] font-mono text-apex-muted uppercase tracking-wider mb-2">Earnings This Week</div>
-                        <div class="space-y-1.5 text-[10px] font-mono">
-                            <div class="flex justify-between"><span class="text-apex-text">MSFT</span><span class="text-apex-muted">Thu BMO</span><span class="text-apex-muted">$3.11e</span></div>
-                            <div class="flex justify-between"><span class="text-apex-text">GOOGL</span><span class="text-apex-muted">Thu AMC</span><span class="text-apex-muted">$2.01e</span></div>
-                            <div class="flex justify-between"><span class="text-apex-text">META</span><span class="text-apex-muted">Wed AMC</span><span class="text-apex-muted">$5.25e</span></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-<!-- ══════════════════════════════════════════════
-     FEATURE CARDS (6)
-══════════════════════════════════════════════ -->
-<section id="features" class="py-24 border-t border-apex-border bg-apex-bg">
-    <div class="max-w-5xl mx-auto px-6">
-        <div class="reveal text-center mb-14">
-            <span class="font-mono text-[10px] text-apex-muted uppercase tracking-[0.24em]">What You Get</span>
-            <h2 class="text-[32px] sm:text-[38px] font-sans font-light text-apex-text mt-3 leading-snug">
-                Everything in one place.<br>Nothing left out.
-            </h2>
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-
-            <div class="feat-card reveal bg-apex-panel border border-apex-border p-7">
-                <div class="w-9 h-9 flex items-center justify-center border border-apex-border mb-5" style="background:rgba(0,212,170,0.08);">
-                    <i data-lucide="file-text" class="w-4 h-4" style="color:#00d4aa;"></i>
-                </div>
-                <h3 class="text-[15px] font-sans font-medium text-apex-text mb-3">AI Equity Research Reports</h3>
-                <p class="text-[13px] text-apex-muted leading-relaxed">On-demand, structured investment reports generated in seconds by Claude AI and live web research. Covers thesis, DCF, risk factors, catalysts, and a personalised investment fit assessment.</p>
-            </div>
-
-            <div class="feat-card reveal d1 bg-apex-panel border border-apex-border p-7">
-                <div class="w-9 h-9 flex items-center justify-center border border-apex-border mb-5" style="background:rgba(0,212,170,0.08);">
-                    <i data-lucide="briefcase" class="w-4 h-4" style="color:#00d4aa;"></i>
-                </div>
-                <h3 class="text-[15px] font-sans font-medium text-apex-text mb-3">Portfolio Tracker with AI Analysis</h3>
-                <p class="text-[13px] text-apex-muted leading-relaxed">Track all your positions with live prices, P&L history, sector allocation charts, and AI-generated portfolio commentary. Sell transactions recorded with net proceeds and gain/loss history.</p>
-            </div>
-
-            <div class="feat-card reveal d2 bg-apex-panel border border-apex-border p-7">
-                <div class="w-9 h-9 flex items-center justify-center border border-apex-border mb-5" style="background:rgba(0,212,170,0.08);">
-                    <i data-lucide="candlestick-chart" class="w-4 h-4" style="color:#00d4aa;"></i>
-                </div>
-                <h3 class="text-[15px] font-sans font-medium text-apex-text mb-3">Interactive Stock View</h3>
-                <p class="text-[13px] text-apex-muted leading-relaxed">Candlestick and line charts with full OHLCV tooltips across 1W–2Y ranges. Fundamentals panel, analyst price targets, recent news, short interest data, and insider transaction history.</p>
-            </div>
-
-            <div class="feat-card reveal bg-apex-panel border border-apex-border p-7">
-                <div class="w-9 h-9 flex items-center justify-center border border-apex-border mb-5" style="background:rgba(210,153,34,0.1);">
-                    <i data-lucide="activity" class="w-4 h-4" style="color:#d29922;"></i>
-                </div>
-                <h3 class="text-[15px] font-sans font-medium text-apex-text mb-3">Recession Radar</h3>
-                <p class="text-[13px] text-apex-muted leading-relaxed">11-signal composite risk score across five regimes — from Expansion to Critical. Covers yield curve, HY spreads, VIX, Sahm Rule, LEI, and building permits. Capital allocation guidance per regime.</p>
-            </div>
-
-            <div class="feat-card reveal d1 bg-apex-panel border border-apex-border p-7">
-                <div class="w-9 h-9 flex items-center justify-center border border-apex-border mb-5" style="background:rgba(0,212,170,0.08);">
-                    <i data-lucide="calculator" class="w-4 h-4" style="color:#00d4aa;"></i>
-                </div>
-                <h3 class="text-[15px] font-sans font-medium text-apex-text mb-3">DCF Valuation Model</h3>
-                <p class="text-[13px] text-apex-muted leading-relaxed">On-demand discounted cash flow analysis with WACC/terminal-growth sensitivity table, assumptions panel, and AI commentary explaining the key value drivers and risks for any ticker.</p>
-            </div>
-
-            <div class="feat-card reveal d2 bg-apex-panel border border-apex-border p-7">
-                <div class="w-9 h-9 flex items-center justify-center border border-apex-border mb-5" style="background:rgba(0,212,170,0.08);">
-                    <i data-lucide="mail" class="w-4 h-4" style="color:#00d4aa;"></i>
-                </div>
-                <h3 class="text-[15px] font-sans font-medium text-apex-text mb-3">Newsletter Intelligence</h3>
-                <p class="text-[13px] text-apex-muted leading-relaxed">Connect your email account to automatically ingest investment newsletters. AI extracts ticker mentions, macro themes, and key signals — turning unread email into structured investment intelligence.</p>
-            </div>
-
-        </div>
-
-        <!-- + more -->
-        <div class="reveal mt-6 border border-apex-border bg-apex-panel px-5 py-4 flex flex-wrap gap-x-6 gap-y-2 items-center justify-center text-[11px] font-mono text-apex-muted">
-            <span>+ Macro Dashboard</span>
-            <span class="text-apex-border">·</span>
-            <span>+ Sector Pulse (12 ETFs)</span>
-            <span class="text-apex-border">·</span>
-            <span>+ Trend Intelligence</span>
-            <span class="text-apex-border">·</span>
-            <span>+ Earnings Calendar</span>
-            <span class="text-apex-border">·</span>
-            <span>+ Benchmark Comparison</span>
-            <span class="text-apex-border">·</span>
-            <span>+ World News Feed</span>
-            <span class="text-apex-border">·</span>
-            <span class="text-apex-accent">10 tabs total</span>
-        </div>
-    </div>
-</section>
-
-
-<!-- ══════════════════════════════════════════════
-     HOW IT WORKS
-══════════════════════════════════════════════ -->
-<section id="how" class="py-24 border-t border-apex-border bg-apex-panel">
-    <div class="max-w-4xl mx-auto px-6">
-        <div class="reveal text-center mb-16">
-            <span class="font-mono text-[10px] text-apex-muted uppercase tracking-[0.24em]">How It Works</span>
-            <h2 class="text-[32px] sm:text-[38px] font-sans font-light text-apex-text mt-3">Up and running in minutes.</h2>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-0 relative">
-
-            <!-- Connector lines -->
-            <div class="hidden md:block absolute top-6 left-[33%] right-[33%] h-px" style="background:linear-gradient(90deg, transparent, #30363d, transparent);"></div>
-
-            <div class="reveal text-center px-6 pb-10 md:pb-0">
-                <div class="w-12 h-12 flex items-center justify-center border border-apex-border font-mono text-apex-accent text-lg font-light mx-auto mb-6" style="background:#1c2128;">01</div>
-                <h3 class="text-[15px] font-sans font-medium text-apex-text mb-3">Create Your Account</h3>
-                <p class="text-[13px] text-apex-muted leading-relaxed">Sign up and start a free 24-hour trial with full access — no credit card required. Explore every feature before you decide.</p>
-            </div>
-
-            <div class="reveal d1 text-center px-6 pb-10 md:pb-0 relative">
-                <div class="hidden md:block absolute top-6 left-0 w-full h-px" style="background:linear-gradient(90deg, #30363d, transparent 50%, #30363d);"></div>
-                <div class="w-12 h-12 flex items-center justify-center border font-mono text-lg font-light mx-auto mb-6 relative z-10" style="background:#1c2128; border-color:rgba(0,212,170,0.5); color:#00d4aa;">02</div>
-                <h3 class="text-[15px] font-sans font-medium text-apex-text mb-3">Add Your Watchlist</h3>
-                <p class="text-[13px] text-apex-muted leading-relaxed">Enter the tickers you follow. Live prices populate immediately. Generate your first AI research report in under 30 seconds.</p>
-            </div>
-
-            <div class="reveal d2 text-center px-6">
-                <div class="w-12 h-12 flex items-center justify-center border border-apex-border font-mono text-apex-accent text-lg font-light mx-auto mb-6" style="background:#1c2128;">03</div>
-                <h3 class="text-[15px] font-sans font-medium text-apex-text mb-3">Research. Decide. Act.</h3>
-                <p class="text-[13px] text-apex-muted leading-relaxed">Use AI reports, the recession radar, your portfolio tracker, and newsletter signals to make better-informed decisions — all in one tab.</p>
             </div>
 
         </div>
     </div>
+
 </section>
 
 
 <!-- ══════════════════════════════════════════════
-     AI REPORT SPOTLIGHT
+     PRICING (Page 4)
 ══════════════════════════════════════════════ -->
-<section class="py-24 border-t border-apex-border bg-apex-bg">
-    <div class="max-w-5xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-        <div class="reveal">
-            <div class="flex items-center gap-2 mb-6">
-                <i data-lucide="cpu" class="w-4 h-4" style="color:#00d4aa;"></i>
-                <span class="font-mono text-[10px] uppercase tracking-[0.22em]" style="color:#00d4aa;">Claude AI · Real-Time Web Research</span>
-            </div>
-            <h2 class="text-[30px] sm:text-[34px] font-sans font-light text-apex-text mb-5 leading-snug">
-                AI that writes conviction.<br>Not summaries.
-            </h2>
-            <p class="text-apex-muted text-[14px] leading-relaxed mb-8">
-                Reports aren't generated from headlines. APEX pulls real financial data — income statements, balance sheets, live analyst consensus — and layers Claude AI reasoning on top to produce a structured, readable research document tailored to your declared investor profile.
-            </p>
-            <div class="space-y-3 font-mono text-[12px] text-apex-sub">
-                <div class="flex items-center gap-3"><div class="w-1 h-1 rounded-full shrink-0" style="background:#00d4aa;"></div>Personalised investment fit assessment per report</div>
-                <div class="flex items-center gap-3"><div class="w-1 h-1 rounded-full shrink-0" style="background:#00d4aa;"></div>Full DCF model with WACC &amp; terminal growth sensitivity</div>
-                <div class="flex items-center gap-3"><div class="w-1 h-1 rounded-full shrink-0" style="background:#00d4aa;"></div>Catalyst identification and structured risk extraction</div>
-                <div class="flex items-center gap-3"><div class="w-1 h-1 rounded-full shrink-0" style="background:#00d4aa;"></div>Analyst consensus enriched by live web research</div>
-            </div>
-        </div>
+<section id="pricing" class="page flex flex-col items-center justify-center overflow-hidden" style="background:#111418;">
+    <div class="w-full max-w-6xl mx-auto px-6">
 
-        <!-- Report card -->
-        <div class="reveal d2 relative">
-            <div class="absolute -inset-4 pointer-events-none" style="background:radial-gradient(ellipse, rgba(0,212,170,0.05), transparent 70%);"></div>
-            <div class="bg-apex-panel border border-apex-border relative z-10 scanline-wrap">
-                <div class="scanline"></div>
-                <div class="px-5 py-4 border-b border-apex-border flex justify-between items-start">
-                    <div>
-                        <div class="text-[9px] font-mono text-apex-muted uppercase tracking-widest mb-1">Equity Research Report</div>
-                        <div class="text-[18px] font-sans text-apex-text font-light">ASML Holding N.V.</div>
-                        <div class="text-[9px] font-mono text-apex-muted mt-0.5">AMS: ASML · EUV Lithography</div>
-                    </div>
-                    <div class="text-right shrink-0 ml-4">
-                        <div class="text-[18px] font-mono text-apex-green font-light">BUY</div>
-                        <div class="text-[10px] font-mono text-apex-muted mt-0.5">€950 target</div>
-                        <div class="text-[10px] font-mono text-apex-green">+15.2% upside</div>
-                    </div>
-                </div>
-                <div class="px-5 py-4 space-y-4">
-                    <div class="pl-4 py-2" style="border-left:2px solid #00d4aa;">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-[9px] font-mono uppercase tracking-wider" style="color:#00d4aa;">§ Investment Fit</span>
-                            <span class="text-[9px] font-mono text-apex-muted">GROWTH · 5YR</span>
-                        </div>
-                        <p class="text-[11px] text-apex-sub leading-relaxed typing-cursor">
-                            ASML's monopoly in EUV lithography is structurally irreplaceable. High-NA ramp at TSMC and Intel creates a multi-year earnings catalyst consensus currently underestimates. At a cyclically compressed 28× forward P/E, the entry is asymmetric for patient capital.
-                        </p>
-                    </div>
-                    <div class="grid grid-cols-4 gap-px bg-apex-border border border-apex-border">
-                        <div class="bg-apex-surface px-3 py-2 text-center"><div class="text-[8px] text-apex-muted mb-1">P/E Fwd</div><div class="text-[11px] font-mono text-apex-text">28.4×</div></div>
-                        <div class="bg-apex-surface px-3 py-2 text-center"><div class="text-[8px] text-apex-muted mb-1">FCF Yield</div><div class="text-[11px] font-mono text-apex-green">4.1%</div></div>
-                        <div class="bg-apex-surface px-3 py-2 text-center"><div class="text-[8px] text-apex-muted mb-1">Rev Grwth</div><div class="text-[11px] font-mono text-apex-green">+23%</div></div>
-                        <div class="bg-apex-surface px-3 py-2 text-center"><div class="text-[8px] text-apex-muted mb-1">Analysts</div><div class="text-[11px] font-mono text-apex-text">34 · BUY</div></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-<!-- ══════════════════════════════════════════════
-     PRICING
-══════════════════════════════════════════════ -->
-<section id="pricing" class="py-24 border-t border-apex-border bg-apex-panel">
-    <div class="max-w-5xl mx-auto px-6">
         <div class="reveal text-center mb-6">
             <span class="font-mono text-[10px] text-apex-muted uppercase tracking-[0.24em]">Pricing</span>
-            <h2 class="text-[32px] sm:text-[38px] font-sans font-light text-apex-text mt-3">Simple, transparent tiers.</h2>
+            <h2 class="font-display mt-3" style="font-size:clamp(36px,4vw,56px); color:#f0f0f0;">Simple, transparent tiers.</h2>
         </div>
 
         <!-- Toggle -->
-        <div class="reveal flex justify-center mb-12">
+        <div class="reveal flex justify-center mb-8">
             <div class="toggle-pill">
                 <button id="btn-mo" class="toggle-btn active" onclick="setPricing('mo')">Monthly</button>
                 <button id="btn-yr" class="toggle-btn" onclick="setPricing('yr')">
-                    Annual
-                    <span class="ml-1.5 text-[9px] font-mono px-1.5 py-0.5" style="background:rgba(0,212,170,0.15);color:#00d4aa;">2 months free</span>
+                    Annual<a href="#pricing-note" style="color:inherit; text-decoration:none;"><sup style="font-size:0.65em; vertical-align:super;">*</sup></a>
                 </button>
             </div>
         </div>
 
-        <!-- Cards -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 reveal">
+        <!-- Cards: hairline gap -->
+        <div class="pricing-grid reveal" style="display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:#252b34;">
 
             <!-- Free Trial -->
-            <div class="plan-card bg-apex-bg border border-apex-border p-6 flex flex-col">
+            <div class="plan-card flex flex-col p-6" style="background:#0a0d12;">
                 <div class="text-[10px] font-mono text-apex-muted uppercase tracking-[0.2em] mb-4">Free Trial</div>
-                <div class="mb-5">
-                    <span class="text-[36px] font-sans font-light text-apex-text">€0</span>
+                <div class="mb-4 whitespace-nowrap">
+                    <span class="font-display text-apex-text" style="font-size:52px; line-height:1;">€0</span>
                     <span class="text-apex-muted text-[13px] ml-1 font-mono">/ 24h</span>
                 </div>
-                <div class="text-[12px] text-apex-muted mb-6">No credit card. Full platform access for 24 hours.</div>
+                <div class="text-[12px] text-apex-muted mb-5">No credit card. Full platform access for 24 hours.</div>
                 <ul class="space-y-2.5 text-[12px] text-apex-sub flex-1 mb-8">
                     <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>3 AI research reports</li>
                     <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>All 10 dashboard tabs</li>
@@ -670,39 +982,38 @@
             </div>
 
             <!-- Base — Best Value -->
-            <div class="plan-card plan-featured bg-apex-bg border p-6 flex flex-col relative" style="border-color:rgba(0,212,170,0.45);">
-                <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 text-[9px] font-mono font-semibold uppercase tracking-wider" style="background:#00d4aa;color:#0d1117;">Best Value</div>
+            <div class="plan-card plan-featured flex flex-col p-6 relative">
+                <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 text-[9px] font-mono font-semibold uppercase tracking-wider" style="background:#00d4aa;color:#0a0d12;">Best Value</div>
                 <div class="text-[10px] font-mono text-apex-muted uppercase tracking-[0.2em] mb-4">Base</div>
-                <div class="mb-1">
-                    <span class="text-[36px] font-sans font-light text-apex-text price-mo" id="base-price-mo">€7.99</span>
-                    <span class="text-[36px] font-sans font-light text-apex-text price-yr hidden" id="base-price-yr">€79.99</span>
+                <div class="mb-1 whitespace-nowrap">
+                    <span class="font-display text-apex-text price-mo" id="base-price-mo" style="font-size:52px; line-height:1;">€9.99</span>
+                    <span class="font-display text-apex-text price-yr hidden" id="base-price-yr" style="font-size:52px; line-height:1;">€99.99</span>
                     <span class="text-apex-muted text-[13px] ml-1 font-mono price-mo">/ mo</span>
                     <span class="text-apex-muted text-[13px] ml-1 font-mono price-yr hidden">/ yr</span>
                 </div>
-                <div class="text-[11px] font-mono mb-5" style="color:#00d4aa;">Bring your own API keys</div>
-                <ul class="space-y-2.5 text-[12px] text-apex-sub flex-1 mb-6">
+                <div class="text-[11px] font-mono mb-4" style="color:#00d4aa;">Bring your own API keys</div>
+                <ul class="space-y-2.5 text-[12px] text-apex-sub flex-1 mb-5">
                     <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span><span><strong class="text-apex-text">Unlimited</strong> AI reports (BYOK)</span></li>
                     <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>All 10 dashboard tabs</li>
                     <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Newsletter ingestion</li>
                     <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Portfolio AI analysis</li>
                     <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>DCF valuation model</li>
-                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Priority support</li>
                 </ul>
-                <div class="text-[11px] text-apex-muted font-mono mb-5 leading-relaxed" style="border-top:1px solid #30363d; padding-top:1rem;">Takes ~10 min to set up.<br>Typical all-in cost ≈ <span class="text-apex-sub">€13/mo</span>.</div>
+                <div class="text-[11px] text-apex-muted font-mono mb-4 leading-relaxed" style="border-top:1px solid #252b34; padding-top:0.875rem;">Takes ~10 min to set up.<br>Cost (depending on usage) ≈ <span class="text-apex-sub">€20/mo</span>.</div>
                 <a href="#beta" class="btn-primary text-center text-[12px] uppercase tracking-wider">Join Beta →</a>
             </div>
 
             <!-- Starter — Most Popular -->
-            <div class="plan-card bg-apex-bg border border-apex-border p-6 flex flex-col relative">
-                <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 text-[9px] font-mono font-semibold uppercase tracking-wider" style="background:#30363d;color:#f0f0f0;">Most Popular</div>
+            <div class="plan-card flex flex-col p-6 relative" style="background:#0a0d12;">
+                <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 text-[9px] font-mono font-semibold uppercase tracking-wider" style="background:#252b34;color:#f0f0f0;">Most Popular</div>
                 <div class="text-[10px] font-mono text-apex-muted uppercase tracking-[0.2em] mb-4">Starter</div>
-                <div class="mb-1">
-                    <span class="text-[36px] font-sans font-light text-apex-text price-mo" id="starter-price-mo">€9.99</span>
-                    <span class="text-[36px] font-sans font-light text-apex-text price-yr hidden" id="starter-price-yr">€99.99</span>
+                <div class="mb-1 whitespace-nowrap">
+                    <span class="font-display text-apex-text price-mo" id="starter-price-mo" style="font-size:52px; line-height:1;">€12.99</span>
+                    <span class="font-display text-apex-text price-yr hidden" id="starter-price-yr" style="font-size:52px; line-height:1;">€129.99</span>
                     <span class="text-apex-muted text-[13px] ml-1 font-mono price-mo">/ mo</span>
                     <span class="text-apex-muted text-[13px] ml-1 font-mono price-yr hidden">/ yr</span>
                 </div>
-                <div class="text-[11px] font-mono text-apex-muted mb-5">No setup required</div>
+                <div class="text-[11px] font-mono text-apex-muted mb-4">No setup required</div>
                 <ul class="space-y-2.5 text-[12px] text-apex-sub flex-1 mb-8">
                     <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span><span><strong class="text-apex-text">10 reports</strong> / month</span></li>
                     <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>All 10 dashboard tabs</li>
@@ -715,22 +1026,22 @@
             </div>
 
             <!-- Pro -->
-            <div class="plan-card bg-apex-bg border border-apex-border p-6 flex flex-col">
+            <div class="plan-card flex flex-col p-6" style="background:#0a0d12;">
                 <div class="text-[10px] font-mono text-apex-muted uppercase tracking-[0.2em] mb-4">Pro</div>
-                <div class="mb-1">
-                    <span class="text-[36px] font-sans font-light text-apex-text price-mo" id="pro-price-mo">€24.99</span>
-                    <span class="text-[36px] font-sans font-light text-apex-text price-yr hidden" id="pro-price-yr">€249.99</span>
+                <div class="mb-1 whitespace-nowrap">
+                    <span class="font-display text-apex-text price-mo" id="pro-price-mo" style="font-size:52px; line-height:1;">€29.99</span>
+                    <span class="font-display text-apex-text price-yr hidden" id="pro-price-yr" style="font-size:52px; line-height:1;">€299.99</span>
                     <span class="text-apex-muted text-[13px] ml-1 font-mono price-mo">/ mo</span>
                     <span class="text-apex-muted text-[13px] ml-1 font-mono price-yr hidden">/ yr</span>
                 </div>
-                <div class="text-[11px] font-mono text-apex-muted mb-5">BYOK optional for unlimited</div>
+                <div class="text-[11px] font-mono text-apex-muted mb-4">BYOK optional for unlimited</div>
                 <ul class="space-y-2.5 text-[12px] text-apex-sub flex-1 mb-8">
                     <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span><span><strong class="text-apex-text">30 reports</strong> / month</span></li>
                     <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>All 10 dashboard tabs</li>
                     <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Newsletter ingestion</li>
                     <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Portfolio AI analysis</li>
                     <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>DCF valuation model</li>
-                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Optional BYOK → unlimited</li>
+                    <li class="flex items-start gap-2.5 text-apex-muted"><span>—</span>No API key setup</li>
                 </ul>
                 <a href="#beta" class="btn-outline text-center text-[12px] uppercase tracking-wider">Join Beta →</a>
             </div>
@@ -738,110 +1049,34 @@
         </div>
 
         <!-- Footnote -->
-        <div class="reveal mt-6 text-center text-[12px] font-mono text-apex-muted">
+        <div id="pricing-note" class="reveal mt-5 text-center text-[12px] font-mono text-apex-muted">
             Need more reports? Buy extra from <span class="text-apex-sub">€0.99</span> — credits never expire.
-            &nbsp;·&nbsp; Annual plans save 2 months vs monthly.
+            &nbsp;·&nbsp; <sup style="font-size:0.65em; vertical-align:super;">*</sup> Annual plans save 2 months vs monthly.
         </div>
     </div>
 </section>
 
 
 <!-- ══════════════════════════════════════════════
-     RECESSION RADAR SPOTLIGHT
+     BETA REGISTRATION (Page 5)
 ══════════════════════════════════════════════ -->
-<section class="py-24 border-t border-apex-border bg-apex-bg overflow-hidden">
-    <div class="max-w-5xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-        <div class="reveal relative">
-            <div class="absolute -inset-6 pointer-events-none" style="background:radial-gradient(ellipse, rgba(210,153,34,0.05), transparent 70%);"></div>
-            <div class="bg-apex-panel border border-apex-border relative z-10 p-6">
-                <div class="flex justify-between items-center mb-5">
-                    <div class="text-[9px] font-mono text-apex-muted uppercase tracking-widest flex items-center gap-2">
-                        <i data-lucide="activity" class="w-3 h-3" style="color:#d29922;"></i>
-                        Recession Radar · Composite Score
-                    </div>
-                    <div class="text-[9px] font-mono text-apex-muted">Updated every 4h</div>
-                </div>
-                <div class="flex justify-center mb-6">
-                    <svg width="260" height="138" viewBox="0 0 260 138">
-                        <path d="M 22,120 A 108,108 0 0,1 64,29"  fill="none" stroke="#3fb950" stroke-width="10" stroke-linecap="round" opacity="0.45"/>
-                        <path d="M 64,29  A 108,108 0 0,1 130,12" fill="none" stroke="#66bb6a" stroke-width="10" stroke-linecap="round" opacity="0.3"/>
-                        <path d="M 130,12 A 108,108 0 0,1 196,29" fill="none" stroke="#d29922" stroke-width="10" stroke-linecap="round" opacity="0.55"/>
-                        <path d="M 196,29 A 108,108 0 0,1 238,120" fill="none" stroke="#f85149" stroke-width="10" stroke-linecap="round" opacity="0.3"/>
-                        <line x1="130" y1="116" x2="88" y2="45" stroke="#e0e0e0" stroke-width="2" stroke-linecap="round"/>
-                        <circle cx="130" cy="116" r="5" fill="#161b22" stroke="#e0e0e0" stroke-width="2"/>
-                        <text x="7"   y="134" fill="#8b949e" font-size="8" font-family="JetBrains Mono,monospace">EXP</text>
-                        <text x="50"  y="22"  fill="#8b949e" font-size="8" font-family="JetBrains Mono,monospace">CAUTION</text>
-                        <text x="116" y="8"   fill="#d29922" font-size="8" font-family="JetBrains Mono,monospace">WARN</text>
-                        <text x="182" y="22"  fill="#8b949e" font-size="8" font-family="JetBrains Mono,monospace">HIGH</text>
-                        <text x="222" y="134" fill="#8b949e" font-size="8" font-family="JetBrains Mono,monospace">CRIT</text>
-                        <text x="130" y="90"  fill="white"   font-size="28" font-family="JetBrains Mono,monospace" text-anchor="middle" font-weight="300">42</text>
-                        <text x="130" y="108" fill="#d29922" font-size="10" font-family="JetBrains Mono,monospace" text-anchor="middle">WARNING</text>
-                    </svg>
-                </div>
-                <div class="space-y-2.5 text-[11px] font-mono">
-                    <div class="flex justify-between items-center border-b border-apex-border pb-2">
-                        <span class="text-apex-muted">3M/10Y Yield Spread</span>
-                        <span class="flex items-center gap-1.5 text-apex-red"><span class="w-1.5 h-1.5 rounded-full bg-apex-red inline-block"></span>-0.38% Inverted</span>
-                    </div>
-                    <div class="flex justify-between items-center border-b border-apex-border pb-2">
-                        <span class="text-apex-muted">HY Credit Spread (OAS)</span>
-                        <span class="flex items-center gap-1.5 text-apex-green"><span class="w-1.5 h-1.5 rounded-full bg-apex-green inline-block"></span>3.24 Expansion</span>
-                    </div>
-                    <div class="flex justify-between items-center border-b border-apex-border pb-2">
-                        <span class="text-apex-muted">Sahm Rule</span>
-                        <span class="flex items-center gap-1.5 text-apex-green"><span class="w-1.5 h-1.5 rounded-full bg-apex-green inline-block"></span>0.17 Benign</span>
-                    </div>
-                    <div class="flex justify-between items-center text-apex-sub">
-                        <span class="text-apex-muted">Allocation Model</span>
-                        <span class="font-medium">60% EQ · 30% FI · 10% CASH</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="reveal d2">
-            <div class="flex items-center gap-2 mb-6">
-                <i data-lucide="shield" class="w-4 h-4" style="color:#d29922;"></i>
-                <span class="font-mono text-[10px] uppercase tracking-[0.22em]" style="color:#d29922;">Macro Risk Intelligence</span>
-            </div>
-            <h2 class="text-[30px] sm:text-[34px] font-sans font-light text-apex-text mb-5 leading-snug">
-                Know the regime.<br>Position accordingly.
-            </h2>
-            <p class="text-apex-muted text-[14px] leading-relaxed mb-7">
-                The Recession Radar aggregates 11 signals across five dimensions into one composite score — updated every 4 hours from FRED, live market prices, and leading economic indicators. Each regime comes with a capital allocation recommendation.
-            </p>
-            <div class="space-y-2.5 text-[12px] font-mono border-t border-apex-border pt-6">
-                <div class="flex items-start gap-3 pb-2 border-b border-apex-border"><span class="text-apex-sub shrink-0 w-36">Yield Curve</span><span class="text-apex-muted">3M/10Y spread · 2Y/10Y spread</span></div>
-                <div class="flex items-start gap-3 pb-2 border-b border-apex-border"><span class="text-apex-sub shrink-0 w-36">Credit Stress</span><span class="text-apex-muted">High Yield OAS (BAML)</span></div>
-                <div class="flex items-start gap-3 pb-2 border-b border-apex-border"><span class="text-apex-sub shrink-0 w-36">Market Techs</span><span class="text-apex-muted">VIX · S&P 200-day MA · 52w drawdown</span></div>
-                <div class="flex items-start gap-3 pb-2 border-b border-apex-border"><span class="text-apex-sub shrink-0 w-36">Commodities</span><span class="text-apex-muted">Oil YoY · Copper/Gold ratio</span></div>
-                <div class="flex items-start gap-3"><span class="text-apex-sub shrink-0 w-36">Real Economy</span><span class="text-apex-muted">Sahm Rule · LEI 6M · Building Permits</span></div>
-            </div>
-        </div>
-    </div>
-</section>
-
-
-<!-- ══════════════════════════════════════════════
-     BETA REGISTRATION FORM
-══════════════════════════════════════════════ -->
-<section id="beta" class="py-24 border-t border-apex-border relative overflow-hidden" style="background:#0d1117;">
+<section id="beta" class="page flex flex-col items-center justify-center relative overflow-hidden" style="background:#0a0d12;">
     <div class="absolute inset-0 bg-grid pointer-events-none z-0"></div>
-    <div class="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-none" style="width:50vw;height:20vh;background:radial-gradient(ellipse, rgba(0,212,170,0.08), transparent 70%);"></div>
+    <!-- Radial teal glow from bottom -->
+    <div class="absolute inset-0 pointer-events-none z-0" style="background:radial-gradient(ellipse 60% 40% at 50% 100%, rgba(0,212,170,0.07), transparent);"></div>
 
-    <div class="max-w-lg mx-auto px-6 relative z-10">
-        <div class="reveal text-center mb-10">
-            <img src="logo.png" alt="APEX" width="52" height="52" class="mx-auto mb-6" style="display:block;">
+    <div class="max-w-lg mx-auto px-6 relative z-10 w-full">
+        <div class="reveal text-center mb-8">
+            <img src="logo.png" alt="APEX" width="52" height="52" class="mx-auto mb-5" style="display:block;">
             <span class="font-mono text-[10px] text-apex-muted uppercase tracking-[0.24em]">Early Access</span>
-            <h2 class="text-[32px] sm:text-[38px] font-sans font-light text-apex-text mt-3 mb-4 leading-snug">
-                Be first in the door.
-            </h2>
+            <h2 class="font-display mt-3 mb-4" style="font-size:52px; line-height:1.05; color:#f0f0f0;">Be first in the door.</h2>
             <p class="text-apex-muted text-[14px] leading-relaxed">
                 APEX is in pre-launch. Join the waitlist to get early access, locked-in beta pricing, and first look at new features.
             </p>
         </div>
 
-        <!-- Form -->
-        <div class="reveal d1 bg-apex-panel border border-apex-border p-8">
+        <!-- Form panel -->
+        <div class="reveal d1" style="background:#111418; border:1px solid #252b34; padding:40px;">
             <form id="beta-form" action="https://formspree.io/f/xbdpzvvv" method="POST" onsubmit="handleSubmit(event)">
 
                 <div class="mb-4">
@@ -874,11 +1109,11 @@
         </div>
 
         <!-- Trust signals -->
-        <div class="reveal d2 mt-8 flex flex-wrap justify-center gap-x-5 gap-y-2 text-[10px] font-mono text-apex-muted uppercase tracking-[0.15em]">
+        <div class="reveal d2 mt-7 flex flex-wrap justify-center gap-x-5 gap-y-2 text-[10px] font-mono text-apex-muted uppercase tracking-[0.15em]">
             <span>Browser-based</span>
-            <span class="text-apex-border">·</span>
+            <span style="color:#252b34;">·</span>
             <span>Free 24h trial on launch</span>
-            <span class="text-apex-border">·</span>
+            <span style="color:#252b34;">·</span>
             <span>No lock-in</span>
         </div>
     </div>
@@ -888,8 +1123,8 @@
 <!-- ══════════════════════════════════════════════
      FOOTER
 ══════════════════════════════════════════════ -->
-<footer class="border-t border-apex-border py-8 bg-apex-panel">
-    <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4">
+<footer style="background:#111418; border-top:1px solid #252b34; height:64px; display:flex; align-items:center; flex-shrink:0;">
+    <div class="max-w-5xl mx-auto px-6 w-full flex flex-col md:flex-row justify-between items-center gap-3">
         <div class="flex items-center gap-2.5">
             <img src="logo.png" alt="APEX" width="20" height="20" style="display:block; opacity:0.75;">
             <span class="font-mono text-[11px] text-apex-muted uppercase tracking-[0.2em]">APEX Investment Intelligence</span>
@@ -905,6 +1140,48 @@
     </div>
 </footer>
 
+
+<!-- ══════════════════════════════════════════════
+     FEATURE DETAIL PANEL
+══════════════════════════════════════════════ -->
+<div id="feature-panel" onclick="handlePanelBackdropClick(event)">
+    <div id="feature-panel-inner">
+
+        <!-- Header bar -->
+        <div id="feature-panel-header">
+            <div style="display:flex; align-items:center; gap:10px;">
+                <span id="panel-icon" style="color:#00d4aa; display:flex; align-items:center;"></span>
+                <span id="panel-title" style="font-family:'Inter',sans-serif; font-size:14px; font-weight:600; color:#00d4aa; letter-spacing:0.04em;"></span>
+            </div>
+            <button id="panel-close" onclick="closeFeature()" title="Close">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                    <line x1="1" y1="1" x2="13" y2="13"/><line x1="13" y1="1" x2="1" y2="13"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Screenshot area -->
+        <div id="panel-screenshot-wrap">
+
+            <!-- Placeholder shown until screenshot image is provided -->
+            <div id="panel-screenshot-placeholder">
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="#252b34" stroke-width="1.5">
+                    <rect x="4" y="10" width="40" height="28" rx="1"/>
+                    <line x1="4" y1="17" x2="44" y2="17"/>
+                    <circle cx="8.5" cy="13.5" r="1.5"/><circle cx="13" cy="13.5" r="1.5"/><circle cx="17.5" cy="13.5" r="1.5"/>
+                </svg>
+                <span id="panel-placeholder-label">Screenshot coming soon</span>
+            </div>
+
+            <!-- Real screenshot — shown when src is set -->
+            <img id="panel-screenshot-img" src="" alt="" style="display:none;">
+
+            <!-- Hotspot dots injected here by JS -->
+            <div id="panel-hotspots"></div>
+        </div>
+
+    </div>
+</div>
 
 <!-- ══════════════════════════════════════════════
      SCRIPTS
@@ -924,30 +1201,226 @@
     document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
 
     // ── Navbar on scroll ──────────────────────
+    const nav = document.getElementById('navbar');
     window.addEventListener('scroll', () => {
-        const nav = document.getElementById('navbar');
-        nav.style.background = window.scrollY > 30
-            ? 'rgba(13,17,23,0.98)'
-            : 'rgba(13,17,23,0.90)';
+        const scrolled = window.scrollY > 60;
+        nav.style.background = scrolled ? 'rgba(10,13,18,0.92)' : 'transparent';
+        nav.style.backdropFilter = scrolled ? 'blur(20px)' : 'none';
+        nav.style.webkitBackdropFilter = scrolled ? 'blur(20px)' : 'none';
+        nav.style.borderBottomColor = scrolled ? 'rgba(37,43,52,0.6)' : 'transparent';
     }, { passive: true });
 
-    // ── Live ticker simulation ─────────────────
-    const priceEls  = document.querySelectorAll('.live-price');
-    const changeEls = document.querySelectorAll('.live-change');
-    setInterval(() => {
-        const i = Math.floor(Math.random() * priceEls.length);
-        const pEl = priceEls[i], cEl = changeEls[i];
-        if (!pEl || !cEl) return;
-        const base   = parseFloat(pEl.dataset.base);
-        const isEuro = pEl.textContent.includes('€');
-        const delta  = (Math.random() - 0.48) * 0.009;
-        const newVal = base + base * delta;
-        pEl.textContent = (isEuro ? '€' : '$') + newVal.toFixed(2);
-        pEl.style.color = delta >= 0 ? '#3fb950' : '#f85149';
-        cEl.textContent = (delta >= 0 ? '+' : '') + (delta * 100).toFixed(2) + '%';
-        cEl.style.color = delta >= 0 ? '#3fb950' : '#f85149';
-        setTimeout(() => { pEl.style.color = '#f0f0f0'; }, 500);
-    }, 2200);
+    // ── Scroll indicator fade ─────────────────
+    const scrollIndicator = document.getElementById('scroll-indicator');
+    window.addEventListener('scroll', () => {
+        if (scrollIndicator) scrollIndicator.style.opacity = window.scrollY > 20 ? '0' : '1';
+    }, { passive: true });
+
+    // ── Active nav links ──────────────────────
+    const navLinks = {
+        features: document.getElementById('nav-features'),
+        how:      document.getElementById('nav-how'),
+        pricing:  document.getElementById('nav-pricing'),
+    };
+    const sectionObs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            const link = navLinks[entry.target.id];
+            if (!link) return;
+            if (entry.isIntersecting) {
+                Object.values(navLinks).forEach(l => { if (l) l.style.color = ''; });
+                link.style.color = '#00d4aa';
+            }
+        });
+    }, { threshold: 0.5 });
+    ['features', 'how', 'pricing'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) sectionObs.observe(el);
+    });
+
+    // ── Step connector draw animation ─────────
+    const howSection = document.getElementById('how');
+    if (howSection) {
+        const connObs = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    document.querySelectorAll('.step-connector-path').forEach(p => p.classList.add('drawn'));
+                    connObs.disconnect();
+                }
+            });
+        }, { threshold: 0.3 });
+        connObs.observe(howSection);
+    }
+
+    // Live ticker removed (mockup hidden)
+
+    // ── Feature panel ─────────────────────────
+    // Each feature: title, lucide icon name, screenshot path (set when ready), and hotspot dots.
+    // Dots: x/y are percentage positions on the screenshot. flipDown: true if near the top edge.
+    const featureData = {
+        shortlist: {
+            title: 'Shortlist Management',
+            icon: 'bookmark',
+            screenshot: 'shortlist_management.png',
+            dots: [
+                { x: 25, y: 35, flipDown: false, label: 'Quick-add ticker', body: 'Description coming soon.' },
+                { x: 60, y: 55, flipDown: false, label: 'Live price column', body: 'Description coming soon.' },
+                { x: 80, y: 25, flipDown: true,  label: 'Sort & filter',    body: 'Description coming soon.' },
+            ]
+        },
+        reports: {
+            title: 'AI Equity Research Reports',
+            icon: 'file-text',
+            screenshot: 'AI_equityreports.png',
+            dots: [
+                { x: 20, y: 40, flipDown: false, label: 'Investment fit',   body: 'Description coming soon.' },
+                { x: 50, y: 60, flipDown: false, label: 'DCF model',        body: 'Description coming soon.' },
+                { x: 75, y: 30, flipDown: true,  label: 'Risk factors',     body: 'Description coming soon.' },
+            ]
+        },
+        stock: {
+            title: 'Stock Viewer',
+            icon: 'bar-chart-2',
+            screenshot: 'stock_viewer.png',
+            dots: [
+                { x: 30, y: 45, flipDown: false, label: 'Price chart',      body: 'Description coming soon.' },
+                { x: 55, y: 65, flipDown: false, label: 'Insider buys',     body: 'Description coming soon.' },
+                { x: 78, y: 28, flipDown: true,  label: 'Analyst targets',  body: 'Description coming soon.' },
+            ]
+        },
+        sectors: {
+            title: 'Key Sector Overview & Insights',
+            icon: 'layers',
+            screenshot: 'sector_overview.png',
+            dots: [
+                { x: 22, y: 38, flipDown: false, label: 'Sector heatmap',   body: 'Description coming soon.' },
+                { x: 58, y: 55, flipDown: false, label: 'ETF sparkline',    body: 'Description coming soon.' },
+                { x: 82, y: 30, flipDown: true,  label: 'Top movers',       body: 'Description coming soon.' },
+            ]
+        },
+        macro: {
+            title: 'Macro Data, World News & Earnings',
+            icon: 'globe',
+            screenshot: 'news_world_earnings.png',
+            dots: [
+                { x: 28, y: 42, flipDown: false, label: 'Yield curve',      body: 'Description coming soon.' },
+                { x: 52, y: 62, flipDown: false, label: 'World news feed',  body: 'Description coming soon.' },
+                { x: 76, y: 32, flipDown: true,  label: 'Earnings calendar',body: 'Description coming soon.' },
+            ]
+        },
+        recession: {
+            title: 'Recession Radar & Fear & Greed',
+            icon: 'activity',
+            screenshot: 'recession_radar.png',
+            dots: [
+                { x: 26, y: 44, flipDown: false, label: 'Composite score',  body: 'Description coming soon.' },
+                { x: 54, y: 58, flipDown: false, label: 'Signal breakdown', body: 'Description coming soon.' },
+                { x: 79, y: 27, flipDown: true,  label: 'Regime allocation',body: 'Description coming soon.' },
+            ]
+        },
+        portfolio: {
+            title: 'Portfolio Tracking & AI Analysis',
+            icon: 'briefcase',
+            screenshot: 'portfolio_analyzer.png',
+            dots: [
+                { x: 24, y: 40, flipDown: false, label: 'P&L history',      body: 'Description coming soon.' },
+                { x: 56, y: 60, flipDown: false, label: 'Sector allocation', body: 'Description coming soon.' },
+                { x: 80, y: 30, flipDown: true,  label: 'AI commentary',    body: 'Description coming soon.' },
+            ]
+        },
+        dcf: {
+            title: 'Plug & Play DCF Analyzer',
+            icon: 'calculator',
+            screenshot: 'DCF_analyzer.png',
+            dots: [
+                { x: 30, y: 48, flipDown: false, label: 'Assumptions panel',body: 'Description coming soon.' },
+                { x: 58, y: 65, flipDown: false, label: 'Sensitivity table',body: 'Description coming soon.' },
+                { x: 77, y: 28, flipDown: true,  label: 'AI commentary',    body: 'Description coming soon.' },
+            ]
+        },
+        trends: {
+            title: 'Trend-Based Company Finder',
+            icon: 'search',
+            screenshot: 'company_finder.png',
+            dots: [
+                { x: 22, y: 42, flipDown: false, label: 'Theme input',      body: 'Description coming soon.' },
+                { x: 55, y: 60, flipDown: false, label: 'Result cards',     body: 'Description coming soon.' },
+                { x: 80, y: 28, flipDown: true,  label: 'Filter panel',     body: 'Description coming soon.' },
+            ]
+        },
+        intelligence: {
+            title: 'Trend Intelligence',
+            icon: 'zap',
+            screenshot: '',
+            dots: [
+                { x: 35, y: 45, flipDown: false, label: 'Signal detection', body: 'Description coming soon.' },
+                { x: 65, y: 60, flipDown: false, label: 'Theme clusters',   body: 'Description coming soon.' },
+            ]
+        },
+    };
+
+    function openFeature(id) {
+        const data = featureData[id];
+        if (!data) return;
+
+        // Populate header
+        document.getElementById('panel-title').textContent = data.title;
+
+        // Swap icon via lucide
+        const iconEl = document.getElementById('panel-icon');
+        iconEl.innerHTML = `<i data-lucide="${data.icon}" style="width:16px;height:16px;"></i>`;
+        lucide.createIcons({ nodes: [iconEl] });
+
+        // Screenshot vs placeholder
+        const img = document.getElementById('panel-screenshot-img');
+        const placeholder = document.getElementById('panel-screenshot-placeholder');
+        const label = document.getElementById('panel-placeholder-label');
+        if (data.screenshot) {
+            img.src = data.screenshot;
+            img.style.display = 'block';
+            placeholder.style.display = 'none';
+        } else {
+            img.style.display = 'none';
+            placeholder.style.display = 'flex';
+            label.textContent = data.title + ' — screenshot coming soon';
+        }
+
+        // Build hotspots
+        const wrap = document.getElementById('panel-hotspots');
+        wrap.innerHTML = '';
+        // Hotspots only make sense on a real screenshot
+        if (data.screenshot) {
+            data.dots.forEach(dot => {
+                const el = document.createElement('div');
+                el.className = 'hotspot' + (dot.flipDown ? ' flip-down' : '');
+                el.style.left = dot.x + '%';
+                el.style.top  = dot.y + '%';
+                el.innerHTML = `
+                    <div class="hotspot-dot"></div>
+                    <div class="hotspot-tooltip">
+                        <h4>${dot.label}</h4>
+                        <p>${dot.body}</p>
+                    </div>`;
+                wrap.appendChild(el);
+            });
+        }
+
+        // Open panel
+        document.getElementById('feature-panel').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeFeature() {
+        document.getElementById('feature-panel').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    function handlePanelBackdropClick(e) {
+        // Close if clicking the dark backdrop (not the inner panel)
+        if (e.target === document.getElementById('feature-panel')) closeFeature();
+    }
+
+    // Close on Escape key
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeFeature(); });
 
     // ── Pricing toggle ─────────────────────────
     function setPricing(mode) {
