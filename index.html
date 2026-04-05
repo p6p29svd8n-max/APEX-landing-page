@@ -114,11 +114,20 @@
         .price-mo, .price-yr { transition: opacity 0.2s; }
 
         /* ── Feature card ── */
-        .feat-card { position: relative; overflow: hidden; background: #14181f; display: flex; flex-direction: column; }
+        .feat-card {
+            position: relative; overflow: hidden; background: #14181f;
+            display: flex; flex-direction: column;
+            padding: clamp(10px, 1.8vmin, 24px) clamp(10px, 1.5vmin, 20px) !important;
+        }
+        .feat-icon-box { width: clamp(26px,3vmin,36px); height: clamp(26px,3vmin,36px); flex-shrink: 0; }
+        .feat-icon-box i { width: clamp(12px,1.3vmin,16px) !important; height: clamp(12px,1.3vmin,16px) !important; }
+        .feat-title { font-size: clamp(13px, 1.5vmin, 16px) !important; }
+        .feat-desc  { font-size: clamp(12px, 1.35vmin, 15px) !important; margin: 0; }
+        .feat-header-row { gap: clamp(8px, 0.8vmin, 12px); margin-bottom: clamp(6px, 0.7vmin, 12px); }
         .feat-content { position: relative; z-index: 2; flex-shrink: 0; }
         .feat-thumb {
             flex: 1; min-height: 0;
-            margin: 8px -20px -24px;
+            margin: 8px calc(-1 * clamp(10px, 1.5vmin, 20px)) calc(-1 * clamp(10px, 1.8vmin, 24px));
             overflow: hidden;
             border-top: 1px solid #252b34;
         }
@@ -197,7 +206,7 @@
         /* ── Video overlay gradient ── */
         .hero-overlay {
             position: absolute; inset: 0; z-index: 1; pointer-events: none;
-            background: linear-gradient(to bottom, rgba(10,13,18,0.55) 0%, rgba(10,13,18,0.75) 60%, rgba(10,13,18,1.0) 100%);
+            background: linear-gradient(to bottom, rgba(10,13,18,0.72) 0%, rgba(10,13,18,0.88) 60%, rgba(10,13,18,1.0) 100%);
         }
 
         /* ── Scroll indicator ── */
@@ -391,9 +400,9 @@
 <section class="relative flex flex-col items-center justify-center pb-6 px-4 overflow-hidden"
      style="height:calc(100vh - 60px); margin-top:60px; scroll-snap-align:start; scroll-snap-stop:always;">
 
-    <!-- Video background — shows gradient fallback until assets/hero-bg.mp4 exists -->
+    <!-- Video background -->
     <video class="hero-video" autoplay muted loop playsinline>
-        <source src="assets/hero-bg.mp4" type="video/mp4">
+        <source src="hero.mp4" type="video/mp4">
     </video>
 
     <!-- Gradient overlay -->
@@ -659,144 +668,144 @@
         <div class="feat-grid" style="display:grid; grid-template-columns:repeat(5,1fr); grid-template-rows:repeat(2,1fr); gap:1px; height:100%; background:#252b34;">
 
             <!-- Feat 1: Shortlist Management -->
-            <div class="feat-card" style="padding:24px 20px; cursor:pointer;" onclick="openFeature('shortlist')">
+            <div class="feat-card" style="cursor:pointer;" onclick="openFeature('shortlist')">
                 <div class="feat-content">
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-9 h-9 flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
+                    <div class="flex items-center feat-header-row">
+                        <div class="feat-icon-box flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
                             <i data-lucide="bookmark" class="w-4 h-4" style="color:#00d4aa;"></i>
                         </div>
-                        <h3 class="text-[16px] font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Shortlist Management</h3>
+                        <h3 class="feat-title font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Shortlist Management</h3>
                     </div>
-                    <p class="text-[15px] leading-relaxed" style="color:#6e7680;">Curate your highest-conviction stock picks and ideas with live prices, key figures, fair value estimates and AI-based recommendations in one focused view.</p>
+                    <p class="feat-desc leading-relaxed" style="color:#6e7680;">Curate your highest-conviction stock picks and ideas with live prices, key figures, fair value estimates and AI-based recommendations in one focused view.</p>
                 </div>
                 <div class="feat-thumb"><img src="shortlist_management.png" alt="Shortlist Management screenshot"></div>
             </div>
 
             <!-- Feat 2: AI Equity Research Reports -->
-            <div class="feat-card" style="padding:24px 20px; cursor:pointer;" onclick="openFeature('reports')">
+            <div class="feat-card" style="cursor:pointer;" onclick="openFeature('reports')">
                 <div class="feat-content">
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-9 h-9 flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
+                    <div class="flex items-center feat-header-row">
+                        <div class="feat-icon-box flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
                             <i data-lucide="file-text" class="w-4 h-4" style="color:#00d4aa;"></i>
                         </div>
-                        <h3 class="text-[16px] font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">AI Equity Research Reports</h3>
+                        <h3 class="feat-title font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">AI Equity Research Reports</h3>
                     </div>
-                    <p class="text-[15px] leading-relaxed" style="color:#6e7680;">Generate on-demand, in-depth, structured reports in 2 minutes — investment thesis, DCF & other valuations, risk factors, catalysts, and personalized investment fit.</p>
+                    <p class="feat-desc leading-relaxed" style="color:#6e7680;">Generate on-demand, in-depth, structured reports in 2 minutes — investment thesis, DCF & other valuations, risk factors, catalysts, and personalized investment fit.</p>
                 </div>
                 <div class="feat-thumb"><img src="AI_equityreports.png" alt="AI Equity Research Reports screenshot"></div>
             </div>
 
             <!-- Feat 3: Stock Viewer -->
-            <div class="feat-card" style="padding:24px 20px; cursor:pointer;" onclick="openFeature('stock')">
+            <div class="feat-card" style="cursor:pointer;" onclick="openFeature('stock')">
                 <div class="feat-content">
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-9 h-9 flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
+                    <div class="flex items-center feat-header-row">
+                        <div class="feat-icon-box flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
                             <i data-lucide="bar-chart-2" class="w-4 h-4" style="color:#00d4aa;"></i>
                         </div>
-                        <h3 class="text-[16px] font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Stock Viewer</h3>
+                        <h3 class="feat-title font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Stock Viewer</h3>
                     </div>
-                    <p class="text-[15px] leading-relaxed" style="color:#6e7680;">Explore live stock charts, financial and business data, short-interest, insider transactions, wall street analyst consensus, and current news in one panel.</p>
+                    <p class="feat-desc leading-relaxed" style="color:#6e7680;">Explore live stock charts, financial and business data, short-interest, insider transactions, wall street analyst consensus, and current news in one panel.</p>
                 </div>
                 <div class="feat-thumb"><img src="stock_viewer.png" alt="Stock Viewer screenshot"></div>
             </div>
 
             <!-- Feat 4: Sector Overview -->
-            <div class="feat-card" style="padding:24px 20px; cursor:pointer;" onclick="openFeature('sectors')">
+            <div class="feat-card" style="cursor:pointer;" onclick="openFeature('sectors')">
                 <div class="feat-content">
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-9 h-9 flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
+                    <div class="flex items-center feat-header-row">
+                        <div class="feat-icon-box flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
                             <i data-lucide="layers" class="w-4 h-4" style="color:#00d4aa;"></i>
                         </div>
-                        <h3 class="text-[16px] font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Key Sector Overview &amp; Insights</h3>
+                        <h3 class="feat-title font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Key Sector Overview &amp; Insights</h3>
                     </div>
-                    <p class="text-[15px] leading-relaxed" style="color:#6e7680;">Evaluate and filter current and historical market performance across prominent sectors, and gain insight into leading companies within each sector.</p>
+                    <p class="feat-desc leading-relaxed" style="color:#6e7680;">Evaluate and filter current and historical market performance across prominent sectors, and gain insight into leading companies within each sector.</p>
                 </div>
                 <div class="feat-thumb"><img src="sector_overview.png" alt="Sector Overview screenshot"></div>
             </div>
 
             <!-- Feat 5: Macro + News + Earnings -->
-            <div class="feat-card" style="padding:24px 20px; cursor:pointer;" onclick="openFeature('macro')">
+            <div class="feat-card" style="cursor:pointer;" onclick="openFeature('macro')">
                 <div class="feat-content">
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-9 h-9 flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
+                    <div class="flex items-center feat-header-row">
+                        <div class="feat-icon-box flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
                             <i data-lucide="globe" class="w-4 h-4" style="color:#00d4aa;"></i>
                         </div>
-                        <h3 class="text-[16px] font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Macro Data, World News &amp; Earnings</h3>
+                        <h3 class="feat-title font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Macro Data, World News &amp; Earnings</h3>
                     </div>
-                    <p class="text-[15px] leading-relaxed" style="color:#6e7680;">Understand current yield curves, FX, commodities, global news feed, upcoming earnings and an estimated fear & greed index — all in one tab.</p>
+                    <p class="feat-desc leading-relaxed" style="color:#6e7680;">Understand current yield curves, FX, commodities, global news feed, upcoming earnings and an estimated fear & greed index — all in one tab.</p>
                 </div>
                 <div class="feat-thumb"><img src="news_world_earnings.png" alt="Macro Data, World News & Earnings screenshot"></div>
             </div>
 
             <!-- Feat 6: Recession Radar -->
-            <div class="feat-card" style="padding:24px 20px; cursor:pointer;" onclick="openFeature('recession')">
+            <div class="feat-card" style="cursor:pointer;" onclick="openFeature('recession')">
                 <div class="feat-content">
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-9 h-9 flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
+                    <div class="flex items-center feat-header-row">
+                        <div class="feat-icon-box flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
                             <i data-lucide="activity" class="w-4 h-4" style="color:#00d4aa;"></i>
                         </div>
-                        <h3 class="text-[16px] font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Recession Radar &amp; Fear &amp; Greed</h3>
+                        <h3 class="feat-title font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Recession Radar &amp; Fear &amp; Greed</h3>
                     </div>
-                    <p class="text-[15px] leading-relaxed" style="color:#6e7680;">Track 11 macro signals, merged into one composite score across 5 regimes, to understand recession risks and market sentiment.</p>
+                    <p class="feat-desc leading-relaxed" style="color:#6e7680;">Track 11 macro signals, merged into one composite score across 5 regimes, to understand recession risks and market sentiment.</p>
                 </div>
                 <div class="feat-thumb"><img src="recession_radar.png" alt="Recession Radar screenshot"></div>
             </div>
 
             <!-- Feat 7: Portfolio Tracking -->
-            <div class="feat-card" style="padding:24px 20px; cursor:pointer;" onclick="openFeature('portfolio')">
+            <div class="feat-card" style="cursor:pointer;" onclick="openFeature('portfolio')">
                 <div class="feat-content">
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-9 h-9 flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
+                    <div class="flex items-center feat-header-row">
+                        <div class="feat-icon-box flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
                             <i data-lucide="briefcase" class="w-4 h-4" style="color:#00d4aa;"></i>
                         </div>
-                        <h3 class="text-[16px] font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Portfolio Tracking &amp; AI Analysis</h3>
+                        <h3 class="feat-title font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Portfolio Tracking &amp; AI Analysis</h3>
                     </div>
-                    <p class="text-[15px] leading-relaxed" style="color:#6e7680;">Monitor your portfolio performance and understand sector allocation, value history chart, and challenge via critical AI-based portfolio analysis.</p>
+                    <p class="feat-desc leading-relaxed" style="color:#6e7680;">Monitor your portfolio performance and understand sector allocation, value history chart, and challenge via critical AI-based portfolio analysis.</p>
                 </div>
                 <div class="feat-thumb"><img src="portfolio_analyzer.png" alt="Portfolio Tracking & AI Analysis screenshot"></div>
             </div>
 
             <!-- Feat 8: DCF Analyzer -->
-            <div class="feat-card" style="padding:24px 20px; cursor:pointer;" onclick="openFeature('dcf')">
+            <div class="feat-card" style="cursor:pointer;" onclick="openFeature('dcf')">
                 <div class="feat-content">
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-9 h-9 flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
+                    <div class="flex items-center feat-header-row">
+                        <div class="feat-icon-box flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
                             <i data-lucide="calculator" class="w-4 h-4" style="color:#00d4aa;"></i>
                         </div>
-                        <h3 class="text-[16px] font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Plug &amp; Play DCF Analyzer</h3>
+                        <h3 class="feat-title font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Plug &amp; Play DCF Analyzer</h3>
                     </div>
-                    <p class="text-[15px] leading-relaxed" style="color:#6e7680;">Build comprehensive DCF models with adjustable inputs (i.e. WACC/terminal growth) and AI commentary on key value drivers in under 30 seconds.</p>
+                    <p class="feat-desc leading-relaxed" style="color:#6e7680;">Build comprehensive DCF models with adjustable inputs (i.e. WACC/terminal growth) and leverage AI commentary on key value drivers in under 30 seconds.</p>
                 </div>
                 <div class="feat-thumb"><img src="DCF_analyzer.png" alt="DCF Analyzer screenshot"></div>
             </div>
 
             <!-- Feat 9: Trend-Based Company Finder -->
-            <div class="feat-card" style="padding:24px 20px; cursor:pointer;" onclick="openFeature('trends')">
+            <div class="feat-card" style="cursor:pointer;" onclick="openFeature('trends')">
                 <div class="feat-content">
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-9 h-9 flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
+                    <div class="flex items-center feat-header-row">
+                        <div class="feat-icon-box flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
                             <i data-lucide="search" class="w-4 h-4" style="color:#00d4aa;"></i>
                         </div>
-                        <h3 class="text-[16px] font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Trend-Based Company Finder</h3>
+                        <h3 class="feat-title font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Trend-Based Company Finder</h3>
                     </div>
-                    <p class="text-[15px] leading-relaxed" style="color:#6e7680;">Research trends, filter by various performance metrics and geolocation, and uncover associated stocks enriched with live financial data.</p>
+                    <p class="feat-desc leading-relaxed" style="color:#6e7680;">Research trends, filter by various performance metrics and geolocation, and uncover associated stocks enriched with live financial data.</p>
                 </div>
                 <div class="feat-thumb"><img src="company_finder.png" alt="Trend-Based Company Finder screenshot"></div>
             </div>
 
             <!-- Feat 10: Trend Intelligence (Coming Soon) -->
-            <div class="feat-card" style="padding:24px 20px; opacity:0.65; cursor:default;">
+            <div class="feat-card" style="opacity:0.65; cursor:default;">
                 <div class="feat-content">
-                    <div class="flex items-center gap-3 mb-3">
-                        <div class="w-9 h-9 flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
+                    <div class="flex items-center feat-header-row">
+                        <div class="feat-icon-box flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
                             <i data-lucide="zap" class="w-4 h-4" style="color:#00d4aa;"></i>
                         </div>
                         <div>
-                            <h3 class="text-[16px] font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Trend Intelligence </h3>
+                            <h3 class="feat-title font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Trend Intelligence </h3>
                             <span class="font-mono text-[8px] uppercase tracking-wider" style="color:#00d4aa;">Under development</span>
                         </div>
                     </div>
-                    <p class="text-[15px] leading-relaxed" style="color:#6e7680;">Vertical and horizontal trend analysis to identify key market movements and investment opportunities, across supply-chains and sectors.</p>
+                    <p class="feat-desc leading-relaxed" style="color:#6e7680;">Vertical and horizontal trend analysis to identify key market movements and investment opportunities, across supply-chains and sectors.</p>
                 </div>
             </div>
 
