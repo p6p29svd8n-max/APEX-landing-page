@@ -115,7 +115,7 @@
 
         /* ── Feature card ── */
         .feat-card {
-            position: relative; overflow: hidden; background: #14181f;
+            position: relative; overflow: hidden; background: #0b0d0f;
             display: flex; flex-direction: column;
             padding: clamp(10px, 1.8vmin, 24px) clamp(10px, 1.5vmin, 20px) !important;
         }
@@ -128,17 +128,22 @@
         .feat-thumb {
             flex: 1; min-height: 0;
             margin: 8px calc(-1 * clamp(10px, 1.5vmin, 20px)) calc(-1 * clamp(10px, 1.8vmin, 24px));
+            padding: 0 6px;
             overflow: hidden;
-            border-top: 1px solid #252b34;
+            background: #0b0d0f;
         }
         .feat-thumb img {
             width: 100%; height: 100%;
-            object-fit: cover; object-position: top center;
+            object-fit: contain; object-position: top center;
             display: block;
             opacity: 0.55;
+            box-shadow: 0 6px 16px -4px rgba(0,212,170,0.12);
             transition: opacity 0.3s, transform 0.4s;
         }
-        .feat-card:hover .feat-thumb img { opacity: 0.85; transform: scale(1.03); }
+        .feat-card:hover { background: #0d1016 !important; }
+        .feat-card:hover .feat-thumb { background: #0d1016; }
+        .feat-card:hover .feat-desc { color: #f0f0f0 !important; }
+        .feat-card:hover .feat-thumb img { opacity: 0.85; }
 
         /* ── Form ── */
         .form-input {
@@ -653,7 +658,7 @@
 <!-- ══════════════════════════════════════════════
      FEATURES (Page 2) — 10-cell 2×5 grid
 ══════════════════════════════════════════════ -->
-<section id="features" class="page flex flex-col" style="background:#14181f;">
+<section id="features" class="page flex flex-col" style="background:#0b0d0f;">
 
     <!-- Section header -->
     <div class="px-8 pt-12 pb-5 text-center shrink-0">
