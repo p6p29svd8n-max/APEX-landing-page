@@ -72,6 +72,11 @@
             #beta > div:last-child > div:last-child { padding-left: 0 !important; padding-top: 2rem !important; }
         }
 
+        /* ── Ultrawide scaling ── */
+        @media (min-width: 1921px) {
+            html { zoom: calc(100vw / 1920); }
+        }
+
         /* ── Reveal ── */
         .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
         .reveal.active { opacity: 1; transform: translateY(0); }
