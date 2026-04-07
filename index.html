@@ -50,7 +50,13 @@
         /* ── Scroll snap ── */
         html { scroll-snap-type: y mandatory; overflow-y: scroll; }
         section.page { scroll-snap-align: start; scroll-snap-stop: always; height: 100vh; overflow: hidden; }
-        @media (max-width: 768px) { html { scroll-snap-type: none; } }
+        @media (max-width: 768px) {
+            html { scroll-snap-type: none; }
+            #how > div:first-child { grid-template-columns: 1fr !important; height: auto !important; }
+            #beta > div:last-child { grid-template-columns: 1fr !important; height: auto !important; padding: 3rem 1.5rem !important; }
+            #beta > div:last-child > div:first-child { border-right: none !important; padding-right: 0 !important; border-bottom: 1px solid #1e2530; padding-bottom: 2rem !important; }
+            #beta > div:last-child > div:last-child { padding-left: 0 !important; padding-top: 2rem !important; }
+        }
 
         /* ── Reveal ── */
         .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1); }
@@ -115,35 +121,53 @@
 
         /* ── Feature card ── */
         .feat-card {
-            position: relative; overflow: hidden; background: #0b0d0f;
-            display: flex; flex-direction: column;
+            position: relative; overflow: hidden; background: #111418;
+            border: 1px solid #1e2530;
+            display: flex; flex-direction: column; cursor: pointer;
             padding: clamp(10px, 1.8vmin, 24px) clamp(10px, 1.5vmin, 20px) !important;
+            transition: border-color 0.25s, box-shadow 0.25s;
         }
-        .feat-icon-box { width: clamp(26px,3vmin,36px); height: clamp(26px,3vmin,36px); flex-shrink: 0; }
+        .feat-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, #00d4aa, transparent);
+            opacity: 0; transition: opacity 0.25s;
+        }
+        .feat-icon-box {
+            width: clamp(26px,3vmin,36px); height: clamp(26px,3vmin,36px); flex-shrink: 0;
+            background: linear-gradient(135deg, rgba(0,212,170,0.15), rgba(0,212,170,0.05)) !important;
+            border: 1px solid rgba(0,212,170,0.3) !important;
+        }
         .feat-icon-box i { width: clamp(12px,1.3vmin,16px) !important; height: clamp(12px,1.3vmin,16px) !important; }
         .feat-title { font-size: clamp(13px, 1.5vmin, 16px) !important; }
         .feat-desc  { font-size: clamp(12px, 1.35vmin, 15px) !important; margin: 0; }
         .feat-header-row { gap: clamp(8px, 0.8vmin, 12px); margin-bottom: clamp(6px, 0.7vmin, 12px); }
         .feat-content { position: relative; z-index: 2; flex-shrink: 0; }
+        .feat-explore {
+            font-size: 11px; color: #00d4aa; letter-spacing: 0.15em;
+            margin-top: 10px; opacity: 0; transform: translateY(4px);
+            transition: opacity 0.2s, transform 0.2s; font-family: Inter, sans-serif;
+        }
         .feat-thumb {
             flex: 1; min-height: 0;
             margin: 8px calc(-1 * clamp(10px, 1.5vmin, 20px)) calc(-1 * clamp(10px, 1.8vmin, 24px));
-            padding: 0 6px;
-            overflow: hidden;
-            background: #0b0d0f;
+            padding: 0 6px; overflow: hidden; background: #111418;
         }
         .feat-thumb img {
             width: 100%; height: 100%;
             object-fit: contain; object-position: top center;
-            display: block;
-            opacity: 0.55;
+            display: block; opacity: 0.55;
             box-shadow: 0 6px 16px -4px rgba(0,212,170,0.12);
             transition: opacity 0.3s, transform 0.4s;
         }
-        .feat-card:hover { background: #0d1016 !important; }
+        .feat-card:hover {
+            border-color: rgba(0,212,170,0.3) !important;
+            box-shadow: 0 0 20px rgba(0,212,170,0.06), inset 0 0 20px rgba(0,212,170,0.02);
+        }
+        .feat-card:hover::before { opacity: 1; }
         .feat-card:hover .feat-thumb { background: #0d1016; }
         .feat-card:hover .feat-desc { color: #f0f0f0 !important; }
         .feat-card:hover .feat-thumb img { opacity: 0.85; }
+        .feat-card:hover .feat-explore { opacity: 1; transform: translateY(0); }
 
         /* ── Form ── */
         .form-input {
@@ -382,8 +406,10 @@
         <!-- Logo -->
         <div class="flex items-center gap-2.5 shrink-0">
             <img src="logo.png" alt="APEX" width="28" height="28" style="display:block;">
-            <span class="font-sans font-semibold tracking-[0.18em] text-apex-text text-[13px] uppercase">APEX</span>
-            <span class="hidden sm:inline text-apex-muted text-[11px] font-mono tracking-wider ml-1">Investment Intelligence</span>
+            <div class="flex flex-col leading-none">
+                <span class="font-sans font-bold tracking-[0.06em] text-apex-text text-[11px] uppercase">APEX</span>
+                <span class="hidden sm:inline font-mono uppercase mt-0.5" style="font-size:6px; letter-spacing:0.18em; color:#4a5568;">Investment Intelligence</span>
+            </div>
         </div>
 
         <!-- Nav links -->
@@ -394,7 +420,13 @@
         </div>
 
         <!-- CTA -->
-        <a href="#beta" class="nav-cta">Join the Beta →</a>
+        <div class="flex items-center gap-3">
+            <span class="hidden sm:flex items-center gap-1.5 font-mono uppercase" style="font-size:8px; color:#00d4aa; letter-spacing:0.12em;">
+                <span class="w-1.5 h-1.5 rounded-full bg-apex-accent pulse-live inline-block"></span>
+                Beta Live
+            </span>
+            <a href="#beta" class="nav-cta">Join the Beta →</a>
+        </div>
     </div>
 </nav>
 
@@ -682,6 +714,7 @@
                         <h3 class="feat-title font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Shortlist Management</h3>
                     </div>
                     <p class="feat-desc leading-relaxed" style="color:#6e7680;">Curate your highest-conviction stock picks and ideas with live prices, key figures, fair value estimates and AI-based recommendations in one focused view.</p>
+                    <div class="feat-explore">— Explore</div>
                 </div>
                 <div class="feat-thumb"><img src="shortlist_management.png" alt="Shortlist Management screenshot"></div>
             </div>
@@ -696,6 +729,7 @@
                         <h3 class="feat-title font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">AI Equity Research Reports</h3>
                     </div>
                     <p class="feat-desc leading-relaxed" style="color:#6e7680;">Generate on-demand, in-depth, structured reports in 2 minutes — investment thesis, DCF & other valuations, risk factors, catalysts, and personalized investment fit.</p>
+                    <div class="feat-explore">— Explore</div>
                 </div>
                 <div class="feat-thumb"><img src="AI_equityreports.png" alt="AI Equity Research Reports screenshot"></div>
             </div>
@@ -710,6 +744,7 @@
                         <h3 class="feat-title font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Stock Viewer</h3>
                     </div>
                     <p class="feat-desc leading-relaxed" style="color:#6e7680;">Explore live stock charts, financial and business data, short-interest, insider transactions, wall street analyst consensus, and current news in one panel.</p>
+                    <div class="feat-explore">— Explore</div>
                 </div>
                 <div class="feat-thumb"><img src="stock_viewer.png" alt="Stock Viewer screenshot"></div>
             </div>
@@ -724,6 +759,7 @@
                         <h3 class="feat-title font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Key Sector Overview &amp; Insights</h3>
                     </div>
                     <p class="feat-desc leading-relaxed" style="color:#6e7680;">Evaluate and filter current and historical market performance across prominent sectors, and gain insight into leading companies within each sector.</p>
+                    <div class="feat-explore">— Explore</div>
                 </div>
                 <div class="feat-thumb"><img src="sector_overview.png" alt="Sector Overview screenshot"></div>
             </div>
@@ -738,6 +774,7 @@
                         <h3 class="feat-title font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Macro Data, World News &amp; Earnings</h3>
                     </div>
                     <p class="feat-desc leading-relaxed" style="color:#6e7680;">Understand current yield curves, FX, commodities, global news feed, upcoming earnings and an estimated fear & greed index — all in one tab.</p>
+                    <div class="feat-explore">— Explore</div>
                 </div>
                 <div class="feat-thumb"><img src="news_world_earnings.png" alt="Macro Data, World News & Earnings screenshot"></div>
             </div>
@@ -752,6 +789,7 @@
                         <h3 class="feat-title font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Recession Radar &amp; Fear &amp; Greed</h3>
                     </div>
                     <p class="feat-desc leading-relaxed" style="color:#6e7680;">Track 11 macro signals, merged into one composite score across 5 regimes, to understand recession risks and market sentiment.</p>
+                    <div class="feat-explore">— Explore</div>
                 </div>
                 <div class="feat-thumb"><img src="recession_radar.png" alt="Recession Radar screenshot"></div>
             </div>
@@ -766,6 +804,7 @@
                         <h3 class="feat-title font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Portfolio Tracking &amp; AI Analysis</h3>
                     </div>
                     <p class="feat-desc leading-relaxed" style="color:#6e7680;">Monitor your portfolio performance and understand sector allocation, value history chart, and challenge via critical AI-based portfolio analysis.</p>
+                    <div class="feat-explore">— Explore</div>
                 </div>
                 <div class="feat-thumb"><img src="portfolio_analyzer.png" alt="Portfolio Tracking & AI Analysis screenshot"></div>
             </div>
@@ -780,6 +819,7 @@
                         <h3 class="feat-title font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Plug &amp; Play DCF Analyzer</h3>
                     </div>
                     <p class="feat-desc leading-relaxed" style="color:#6e7680;">Build comprehensive DCF models with adjustable inputs (i.e. WACC/terminal growth) and leverage AI commentary on key value drivers in under 30 seconds.</p>
+                    <div class="feat-explore">— Explore</div>
                 </div>
                 <div class="feat-thumb"><img src="DCF_analyzer.png" alt="DCF Analyzer screenshot"></div>
             </div>
@@ -794,6 +834,7 @@
                         <h3 class="feat-title font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Trend-Based Company Finder</h3>
                     </div>
                     <p class="feat-desc leading-relaxed" style="color:#6e7680;">Research trends, filter by various performance metrics and geolocation, and uncover associated stocks enriched with live financial data.</p>
+                    <div class="feat-explore">— Explore</div>
                 </div>
                 <div class="feat-thumb"><img src="company_finder.png" alt="Trend-Based Company Finder screenshot"></div>
             </div>
@@ -824,63 +865,168 @@
 ══════════════════════════════════════════════ -->
 <section id="how" class="page flex flex-col" style="background:#0a0d12;">
 
-    <!-- Top band: How It Works (50vh) -->
-    <div style="height:50%; display:flex; align-items:center; overflow:hidden;">
-        <div class="w-full max-w-5xl mx-auto px-8 py-6">
-            <div class="text-center mb-6">
-                <span class="font-mono text-[10px] text-apex-muted uppercase tracking-[0.24em]">How It Works</span>
-                <h2 class="font-display mt-1.5" style="font-size:clamp(30px,3.5vw,50px); color:#f0f0f0;">Up and running in minutes.</h2>
-            </div>
+    <!-- Top band: How It Works (50vh) — vertical timeline + report preview -->
+    <div style="height:50%; display:grid; grid-template-columns:1fr 1fr; overflow:hidden;">
 
-            <div class="relative grid grid-cols-1 md:grid-cols-3 gap-0">
+        <!-- Left: vertical timeline -->
+        <div class="reveal flex flex-col justify-center px-10 py-8" style="border-right:1px solid #1a2030;">
+            <span class="font-mono uppercase tracking-[0.28em] mb-2" style="font-size:8px; color:#00d4aa;">How It Works</span>
+            <h2 class="font-display mb-8 leading-tight" style="font-size:clamp(18px,2.2vw,26px); color:#f0f0f0; font-weight:300; letter-spacing:-0.03em;">
+                Three steps to<br><span style="color:#00d4aa;">institutional insight.</span>
+            </h2>
 
-                <!-- SVG connector 1→2 -->
-                <div class="hidden md:block absolute" style="top:24px; left:calc(33.33% + 32px); width:calc(33.33% - 64px); height:2px; overflow:visible; pointer-events:none;">
-                    <svg width="100%" height="2" style="overflow:visible;">
-                        <defs>
-                            <marker id="arrow1" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5" orient="auto">
-                                <path d="M0,0 L0,5 L5,2.5 z" fill="rgba(0,212,170,0.35)"/>
-                            </marker>
-                        </defs>
-                        <path id="connector-1-2" class="step-connector-path" d="M0,1 Q50%,1 100%,1" fill="none" stroke="rgba(0,212,170,0.35)" stroke-width="1" marker-end="url(#arrow1)"/>
-                    </svg>
-                </div>
-
-                <!-- SVG connector 2→3 -->
-                <div class="hidden md:block absolute" style="top:24px; left:calc(66.66% + 32px); width:calc(33.33% - 64px); height:2px; overflow:visible; pointer-events:none;">
-                    <svg width="100%" height="2" style="overflow:visible;">
-                        <defs>
-                            <marker id="arrow2" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5" orient="auto">
-                                <path d="M0,0 L0,5 L5,2.5 z" fill="rgba(0,212,170,0.35)"/>
-                            </marker>
-                        </defs>
-                        <path id="connector-2-3" class="step-connector-path" d="M0,1 Q50%,1 100%,1" fill="none" stroke="rgba(0,212,170,0.35)" stroke-width="1" marker-end="url(#arrow2)"/>
-                    </svg>
-                </div>
+            <div style="position:relative; padding-left:28px;">
+                <!-- Connector line -->
+                <div style="position:absolute; left:7px; top:10px; bottom:10px; width:1px; background:linear-gradient(to bottom,#00d4aa,rgba(0,212,170,0.08));"></div>
 
                 <!-- Step 1 -->
-                <div class="reveal text-center px-6 pb-4 md:pb-0 relative">
-                    <span class="step-watermark">01</span>
-                    <h3 class="text-[15px] font-sans font-medium text-apex-text mb-2">Create Your Account</h3>
-                    <p class="text-[13px] leading-relaxed" style="color:#6e7680;">Sign up and start a free 24-hour trial with full access — no credit card required.</p>
+                <div class="reveal" style="position:relative; margin-bottom:24px;">
+                    <div style="position:absolute; left:-28px; top:3px; width:15px; height:15px; border:1px solid #00d4aa; background:#0a0d12; display:flex; align-items:center; justify-content:center;">
+                        <div style="width:5px; height:5px; background:#00d4aa; border-radius:50%; box-shadow:0 0 8px #00d4aa;"></div>
+                    </div>
+                    <div class="font-mono uppercase mb-1" style="font-size:7px; color:#00d4aa; letter-spacing:0.2em;">01 — Sign Up</div>
+                    <div class="font-sans font-semibold mb-1" style="font-size:11px; color:#f0f0f0;">Start your free 24h trial</div>
+                    <p style="font-size:9px; color:#6e7680; line-height:1.6; margin:0;">No credit card. Browser-based. All 10 feature tabs unlocked immediately.</p>
                 </div>
 
                 <!-- Step 2 -->
-                <div class="reveal d1 text-center px-6 pb-4 md:pb-0 relative">
-                    <span class="step-watermark">02</span>
-                    <h3 class="text-[15px] font-sans font-medium text-apex-text mb-2">Add Your Watchlist</h3>
-                    <p class="text-[13px] leading-relaxed" style="color:#6e7680;">Enter tickers you follow. Live prices populate instantly. Generate your first AI report in 30 seconds.</p>
+                <div class="reveal d1" style="position:relative; margin-bottom:24px;">
+                    <div style="position:absolute; left:-28px; top:3px; width:15px; height:15px; border:1px solid rgba(0,212,170,0.3); background:#0a0d12; display:flex; align-items:center; justify-content:center;">
+                        <div style="width:5px; height:5px; background:rgba(0,212,170,0.3); border-radius:50%;"></div>
+                    </div>
+                    <div class="font-mono uppercase mb-1" style="font-size:7px; color:rgba(0,212,170,0.45); letter-spacing:0.2em;">02 — Explore</div>
+                    <div class="font-sans font-semibold mb-1" style="font-size:11px; color:#c9d1d9;">Configure your watchlist</div>
+                    <p style="font-size:9px; color:#6e7680; line-height:1.6; margin:0;">Add your stocks. Live prices, sector data, macro signals, and portfolio tools.</p>
                 </div>
 
                 <!-- Step 3 -->
-                <div class="reveal d2 text-center px-6 relative">
-                    <span class="step-watermark">03</span>
-                    <h3 class="text-[15px] font-sans font-medium text-apex-text mb-2">Research. Decide. Act.</h3>
-                    <p class="text-[13px] leading-relaxed" style="color:#6e7680;">Use AI reports, the recession radar, portfolio tracker, and newsletter signals — all in one place.</p>
+                <div class="reveal d2" style="position:relative;">
+                    <div style="position:absolute; left:-28px; top:3px; width:15px; height:15px; border:1px solid rgba(0,212,170,0.12); background:#0a0d12; display:flex; align-items:center; justify-content:center;">
+                        <div style="width:5px; height:5px; background:rgba(0,212,170,0.12); border-radius:50%;"></div>
+                    </div>
+                    <div class="font-mono uppercase mb-1" style="font-size:7px; color:rgba(0,212,170,0.22); letter-spacing:0.2em;">03 — Research</div>
+                    <div class="font-sans font-semibold mb-1" style="font-size:11px; color:#6e7680;">Generate your AI report</div>
+                    <p style="font-size:9px; color:#4a5568; line-height:1.6; margin:0;">9-section institutional research, grounded in live data. Under 2 minutes.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: AI report preview card -->
+        <div class="reveal d1 flex flex-col justify-center px-8 py-8" style="background:#0c0f14;">
+            <div class="font-mono uppercase mb-2" style="font-size:6px; color:#3a4555; letter-spacing:0.2em;">APEX AI Equity Report · Sample</div>
+
+            <div style="background:#111418; border:1px solid #1e2530; border-top:2px solid #00d4aa; font-family:Inter,sans-serif;">
+
+                <!-- Report header -->
+                <div style="padding:10px 14px; border-bottom:1px solid #1e2530; display:flex; align-items:center; justify-content:space-between;">
+                    <div>
+                        <div style="font-size:13px; font-weight:700; color:#f0f0f0;">AAPL <span style="font-size:9px; font-weight:300; color:#6e7680;">· Apple Inc.</span></div>
+                        <div style="font-size:7px; color:#4a5568; margin-top:1px;">NASDAQ · Generated today</div>
+                    </div>
+                    <div style="display:flex; flex-direction:column; align-items:flex-end; gap:3px;">
+                        <div style="padding:3px 9px; background:rgba(0,212,170,0.1); border:1px solid rgba(0,212,170,0.3); font-size:8px; font-weight:700; color:#00d4aa; letter-spacing:0.1em;">STRONG BUY</div>
+                        <div style="font-size:7px; color:#6e7680;">Price target · Moderate risk</div>
+                    </div>
+                </div>
+
+                <div style="padding:12px 14px; display:flex; flex-direction:column; gap:9px;">
+
+                    <!-- Row 1: 2-col highlights -->
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+                        <div style="display:flex; gap:8px; align-items:flex-start;">
+                            <div style="width:22px; height:22px; background:linear-gradient(135deg,rgba(0,212,170,0.15),rgba(0,212,170,0.05)); border:1px solid rgba(0,212,170,0.25); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;">
+                                <i data-lucide="file-text" style="width:10px; height:10px; color:#00d4aa;"></i>
+                            </div>
+                            <div>
+                                <div style="font-size:8px; font-weight:600; color:#c9d1d9; margin-bottom:2px;">Thesis + Catalysts</div>
+                                <div style="font-size:7px; color:#6e7680; line-height:1.5;">Investment case + 4 near &amp; mid-term drivers</div>
+                            </div>
+                        </div>
+                        <div style="display:flex; gap:8px; align-items:flex-start;">
+                            <div style="width:22px; height:22px; background:linear-gradient(135deg,rgba(0,212,170,0.15),rgba(0,212,170,0.05)); border:1px solid rgba(0,212,170,0.25); display:flex; align-items:center; justify-content:center; flex-shrink:0; margin-top:1px;">
+                                <i data-lucide="bar-chart-2" style="width:10px; height:10px; color:#00d4aa;"></i>
+                            </div>
+                            <div>
+                                <div style="font-size:8px; font-weight:600; color:#c9d1d9; margin-bottom:2px;">Financials + DCF</div>
+                                <div style="font-size:7px; color:#6e7680; line-height:1.5;">3yr tables, valuation model, peer multiples</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Divider -->
+                    <div style="height:1px; background:rgba(255,255,255,0.04);"></div>
+
+                    <!-- Price scenarios -->
+                    <div>
+                        <div class="font-mono uppercase" style="font-size:6px; color:#4a5568; letter-spacing:0.16em; margin-bottom:6px;">Price Scenarios</div>
+                        <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:5px;">
+                            <div style="background:#0a0d12; border:1px solid #1a2030; padding:6px 8px; text-align:center;">
+                                <div style="font-size:6px; color:#f85149; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:2px;">Bear</div>
+                                <div style="font-size:10px; font-weight:600; color:#8a9ab0;">$158</div>
+                            </div>
+                            <div style="background:rgba(0,212,170,0.05); border:1px solid rgba(0,212,170,0.22); padding:6px 8px; text-align:center;">
+                                <div style="font-size:6px; color:#00d4aa; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:2px;">Base ★</div>
+                                <div style="font-size:10px; font-weight:700; color:#f0f0f0;">$248</div>
+                            </div>
+                            <div style="background:#0a0d12; border:1px solid #1a2030; padding:6px 8px; text-align:center;">
+                                <div style="font-size:6px; color:#3fb950; letter-spacing:0.1em; text-transform:uppercase; margin-bottom:2px;">Bull</div>
+                                <div style="font-size:10px; font-weight:600; color:#8a9ab0;">$310</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Divider -->
+                    <div style="height:1px; background:rgba(255,255,255,0.04);"></div>
+
+                    <!-- Analyst consensus -->
+                    <div>
+                        <div class="font-mono uppercase" style="font-size:6px; color:#4a5568; letter-spacing:0.16em; margin-bottom:6px;">Analyst Consensus</div>
+                        <div style="display:flex; align-items:center; gap:10px;">
+                            <div style="flex:1; display:flex; flex-direction:column; gap:3px;">
+                                <div style="display:flex; height:6px; overflow:hidden; gap:1px;">
+                                    <div style="flex:18; background:rgba(63,185,80,0.7);"></div>
+                                    <div style="flex:7; background:rgba(210,153,34,0.6);"></div>
+                                    <div style="flex:3; background:rgba(248,81,73,0.6);"></div>
+                                </div>
+                                <div style="display:flex; justify-content:space-between;">
+                                    <span style="font-size:6px; color:#3fb950;">18 Buy</span>
+                                    <span style="font-size:6px; color:#d29922;">7 Hold</span>
+                                    <span style="font-size:6px; color:#f85149;">3 Sell</span>
+                                </div>
+                            </div>
+                            <div style="text-align:right; flex-shrink:0;">
+                                <div style="font-size:10px; font-weight:700; color:#f0f0f0;">$241</div>
+                                <div style="font-size:6px; color:#6e7680;">mean target</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Divider -->
+                    <div style="height:1px; background:rgba(255,255,255,0.04);"></div>
+
+                    <!-- Personalised Investment Fit -->
+                    <div style="display:flex; align-items:center; background:rgba(0,212,170,0.04); border:1px solid rgba(0,212,170,0.14); padding:9px 11px; gap:10px;">
+                        <div style="flex:1;">
+                            <div style="font-size:8px; font-weight:600; color:#f0f0f0; margin-bottom:2px;">Personalised Investment Fit</div>
+                            <div style="font-size:7px; color:#6e7680; line-height:1.5;">Calibrated to your investor type, time horizon, and risk appetite.</div>
+                        </div>
+                        <div style="text-align:center; flex-shrink:0;">
+                            <div style="font-size:18px; font-weight:700; color:#00d4aa; line-height:1;">4<span style="font-size:10px; color:#4a5568;">/5</span></div>
+                            <div style="font-size:6px; color:#6e7680; margin-top:2px;">fit score</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Footer -->
+                <div style="padding:6px 14px; background:#0d1015; border-top:1px solid #1e2530; display:flex; justify-content:space-between; align-items:center;">
+                    <div style="font-size:6px; color:#3a4555;">Claude Sonnet 4.6 · Yahoo Finance · Finnhub · Perplexity</div>
+                    <div style="font-size:6px; color:#3a4555;">Generated in 1m 47s</div>
                 </div>
 
             </div>
         </div>
+
     </div>
 
     <!-- Divider -->
@@ -1074,37 +1220,58 @@
 <!-- ══════════════════════════════════════════════
      BETA REGISTRATION (Page 5)
 ══════════════════════════════════════════════ -->
-<section id="beta" class="page flex flex-col items-center justify-center relative overflow-hidden" style="background:#0a0d12;">
+<section id="beta" class="page flex flex-col items-center justify-center relative overflow-hidden" style="background:#0a0d12; overflow-y:auto;">
     <div class="absolute inset-0 bg-grid pointer-events-none z-0"></div>
     <!-- Radial teal glow from bottom -->
     <div class="absolute inset-0 pointer-events-none z-0" style="background:radial-gradient(ellipse 60% 40% at 50% 100%, rgba(0,212,170,0.07), transparent);"></div>
 
-    <div class="max-w-lg mx-auto px-6 relative z-10 w-full">
-        <div class="reveal text-center mb-8">
-            <img src="logo.png" alt="APEX" width="52" height="52" class="mx-auto mb-5" style="display:block;">
-            <span class="font-mono text-[10px] text-apex-muted uppercase tracking-[0.24em]">Early Access</span>
-            <h2 class="font-display mt-3 mb-4" style="font-size:52px; line-height:1.05; color:#f0f0f0;">Be first in the door.</h2>
-            <p class="text-apex-muted text-[14px] leading-relaxed">
-                APEX is in pre-launch. Join the waitlist to get early access, locked-in beta pricing, and first look at new features.
-            </p>
+    <div class="w-full max-w-5xl mx-auto px-8 relative z-10" style="display:grid; grid-template-columns:1fr 1fr; gap:0; align-items:center; height:100%;">
+
+        <!-- Left: value proposition -->
+        <div class="reveal flex flex-col justify-center py-12 pr-12" style="border-right:1px solid #1e2530;">
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:24px;">
+                <span class="w-1.5 h-1.5 rounded-full bg-apex-accent pulse-live inline-block"></span>
+                <span class="font-mono uppercase" style="font-size:7px; color:#00d4aa; letter-spacing:0.22em;">Beta Live</span>
+            </div>
+            <h2 class="font-display mb-4 leading-tight" style="font-size:clamp(16px,2vw,26px); font-weight:300; letter-spacing:-0.03em; color:#f0f0f0; line-height:1.2;">
+                Research like an institution.<br>
+                <span style="color:#00d4aa;">Act like a founder.</span>
+            </h2>
+            <div style="display:flex; flex-direction:column; gap:10px; margin-top:8px;">
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <div style="width:4px; height:4px; background:#00d4aa; border-radius:50%; flex-shrink:0;"></div>
+                    <span style="font-size:13px; color:#6e7680;">AI equity reports in under 2 minutes</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <div style="width:4px; height:4px; background:#00d4aa; border-radius:50%; flex-shrink:0;"></div>
+                    <span style="font-size:13px; color:#6e7680;">Personalised investment fit scoring</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <div style="width:4px; height:4px; background:#00d4aa; border-radius:50%; flex-shrink:0;"></div>
+                    <span style="font-size:13px; color:#6e7680;">10 research tools, one platform</span>
+                </div>
+                <div style="display:flex; align-items:center; gap:10px;">
+                    <div style="width:4px; height:4px; background:#00d4aa; border-radius:50%; flex-shrink:0;"></div>
+                    <span style="font-size:13px; color:#6e7680;">Free 24h trial · No lock-in</span>
+                </div>
+            </div>
         </div>
 
-        <!-- Form panel -->
-        <div class="reveal d1" style="background:#111418; border:1px solid #252b34; padding:40px;">
-            <form id="beta-form" action="https://formspree.io/f/xbdpzvvv" method="POST" onsubmit="handleSubmit(event)">
+        <!-- Right: form -->
+        <div class="reveal d1 flex flex-col justify-center py-12 pl-12">
+            <div class="font-sans font-semibold mb-6" style="font-size:14px; color:#c9d1d9;">Request early access</div>
 
+            <form id="beta-form" action="https://formspree.io/f/xbdpzvvv" method="POST" onsubmit="handleSubmit(event)">
                 <div class="mb-4">
                     <label class="block text-[11px] font-mono text-apex-muted uppercase tracking-[0.18em] mb-2">First Name</label>
                     <input name="first_name" type="text" required placeholder="Your first name"
                            class="form-input" autocomplete="given-name">
                 </div>
-
                 <div class="mb-6">
                     <label class="block text-[11px] font-mono text-apex-muted uppercase tracking-[0.18em] mb-2">Email Address</label>
                     <input name="email" type="email" required placeholder="you@email.com"
                            class="form-input" autocomplete="email">
                 </div>
-
                 <button type="submit" id="submit-btn" class="btn-primary w-full text-center uppercase tracking-[0.14em]" style="font-size:0.9rem;">
                     Join Waitlist
                 </button>
@@ -1117,19 +1284,12 @@
                 <div class="text-apex-muted text-[13px]">We'll be in touch before launch.</div>
             </div>
 
-            <p class="mt-5 text-center text-[11px] font-mono text-apex-muted">
-                No spam. No card. You'll hear from us before launch.
+            <p class="mt-5 text-[11px] font-mono" style="color:#4a5568;">
+                Browser-based · No credit card required
             </p>
         </div>
 
-        <!-- Trust signals -->
-        <div class="reveal d2 mt-7 flex flex-wrap justify-center gap-x-5 gap-y-2 text-[10px] font-mono text-apex-muted uppercase tracking-[0.15em]">
-            <span>Browser-based</span>
-            <span style="color:#252b34;">·</span>
-            <span>Free 24h trial on launch</span>
-            <span style="color:#252b34;">·</span>
-            <span>No lock-in</span>
-        </div>
+    </div>
     </div>
 </section>
 
@@ -1222,6 +1382,7 @@
         nav.style.backdropFilter = scrolled ? 'blur(20px)' : 'none';
         nav.style.webkitBackdropFilter = scrolled ? 'blur(20px)' : 'none';
         nav.style.borderBottomColor = scrolled ? 'rgba(37,43,52,0.6)' : 'transparent';
+        nav.style.boxShadow = scrolled ? '0 1px 0 0 rgba(0,212,170,0.15)' : 'none';
     }, { passive: true });
 
     // ── Scroll indicator fade ─────────────────
@@ -1257,7 +1418,7 @@
         const connObs = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    document.querySelectorAll('.step-connector-path').forEach(p => p.classList.add('drawn'));
+                    // step-connector paths removed in How It Works redesign
                     connObs.disconnect();
                 }
             });
