@@ -1,0 +1,118 @@
+<h2>Navigation bar — which direction?</h2>
+<p class="subtitle">Current: logo + "APEX Investment Intelligence" text + nav links + CTA button. Frosted glass on scroll. Three refinements:</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="refined" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0a0d12;padding:0;font-family:Inter,sans-serif;">
+      <!-- Default state -->
+      <div style="padding:0 20px;height:52px;display:flex;align-items:center;gap:16px;border-bottom:1px solid rgba(255,255,255,0.04);">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div style="width:22px;height:22px;background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);display:flex;align-items:center;justify-content:center;">
+            <div style="width:8px;height:8px;border:1.5px solid #00d4aa;transform:rotate(45deg);"></div>
+          </div>
+          <div>
+            <div style="font-size:10px;font-weight:700;color:#f0f0f0;letter-spacing:0.04em;">APEX</div>
+          </div>
+        </div>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:20px;">
+          <div style="display:flex;gap:16px;">
+            <span style="font-size:9px;color:#6e7680;letter-spacing:0.04em;">Features</span>
+            <span style="font-size:9px;color:#6e7680;letter-spacing:0.04em;">How it works</span>
+            <span style="font-size:9px;color:#6e7680;letter-spacing:0.04em;">Pricing</span>
+          </div>
+          <div style="padding:5px 14px;background:#00d4aa;font-size:8px;font-weight:700;color:#0a0d12;letter-spacing:0.08em;">JOIN BETA →</div>
+        </div>
+      </div>
+      <!-- Scrolled state -->
+      <div style="padding:0 20px;height:52px;display:flex;align-items:center;gap:16px;background:rgba(10,13,18,0.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06);">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <div style="width:22px;height:22px;background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);display:flex;align-items:center;justify-content:center;">
+            <div style="width:8px;height:8px;border:1.5px solid #00d4aa;transform:rotate(45deg);"></div>
+          </div>
+          <div style="font-size:10px;font-weight:700;color:#f0f0f0;letter-spacing:0.04em;">APEX</div>
+        </div>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:20px;">
+          <div style="display:flex;gap:16px;">
+            <span style="font-size:9px;color:#6e7680;letter-spacing:0.04em;">Features</span>
+            <span style="font-size:9px;color:#6e7680;letter-spacing:0.04em;">How it works</span>
+            <span style="font-size:9px;color:#6e7680;letter-spacing:0.04em;">Pricing</span>
+          </div>
+          <div style="padding:5px 14px;background:#00d4aa;font-size:8px;font-weight:700;color:#0a0d12;letter-spacing:0.08em;">JOIN BETA →</div>
+        </div>
+        <div style="position:absolute;bottom:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(0,212,170,0.2),transparent);"></div>
+      </div>
+      <div style="padding:6px 20px;display:flex;justify-content:space-between;align-items:center;">
+        <div style="font-size:7px;color:#4a5568;">Top: default · Bottom: scrolled state</div>
+        <div style="font-size:7px;color:#4a5568;">Drop "Investment Intelligence" subtitle · logo becomes icon-only · teal glow line on scroll</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Refined (Recommended)</h3>
+      <p>Drop the "Investment Intelligence" text — APEX stands alone. Logo becomes a sharp diamond icon. Nav links slightly more spaced. On scroll: a teal hairline glow appears at the bottom of the frosted bar instead of just blur. Subtle but premium.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="minimal" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0a0d12;padding:0;font-family:Inter,sans-serif;">
+      <!-- Floating pill nav -->
+      <div style="padding:12px 20px;height:76px;display:flex;align-items:center;justify-content:center;">
+        <div style="display:inline-flex;align-items:center;gap:0;background:rgba(17,20,24,0.9);border:1px solid rgba(255,255,255,0.07);backdrop-filter:blur(20px);padding:0 4px;height:38px;">
+          <div style="padding:0 12px;display:flex;align-items:center;gap:7px;border-right:1px solid rgba(255,255,255,0.06);height:100%;">
+            <div style="width:16px;height:16px;background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.3);display:flex;align-items:center;justify-content:center;">
+              <div style="width:6px;height:6px;border:1.5px solid #00d4aa;transform:rotate(45deg);"></div>
+            </div>
+            <span style="font-size:9px;font-weight:700;color:#f0f0f0;letter-spacing:0.06em;">APEX</span>
+          </div>
+          <div style="display:flex;align-items:center;padding:0 4px;height:100%;">
+            <span style="font-size:8px;color:#6e7680;padding:0 10px;letter-spacing:0.03em;">Features</span>
+            <span style="font-size:8px;color:#6e7680;padding:0 10px;letter-spacing:0.03em;">Pricing</span>
+          </div>
+          <div style="padding:0 4px;height:100%;display:flex;align-items:center;border-left:1px solid rgba(255,255,255,0.06);">
+            <div style="padding:4px 12px;background:#00d4aa;font-size:7px;font-weight:700;color:#0a0d12;letter-spacing:0.1em;height:26px;display:flex;align-items:center;">JOIN BETA</div>
+          </div>
+        </div>
+      </div>
+      <div style="padding:4px 20px 8px;font-size:7px;color:#4a5568;text-align:center;">Floating pill — sits 12px from top edges, always visible, never edge-to-edge</div>
+    </div>
+    <div class="card-body">
+      <h3>B — Floating Pill</h3>
+      <p>The nav becomes a floating pill that hovers above the content with a gap on all sides. Very modern SaaS aesthetic. Always has the frosted glass treatment — no scroll state change needed. Feels lighter and less conventional than a full-width bar.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="wordmark" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0a0d12;padding:0;font-family:Inter,sans-serif;">
+      <div style="padding:0 20px;height:52px;display:flex;align-items:center;gap:16px;border-bottom:1px solid rgba(255,255,255,0.04);">
+        <!-- Wordmark: logo + full name restored but typographically refined -->
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div style="width:24px;height:24px;background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.25);display:flex;align-items:center;justify-content:center;">
+            <div style="width:9px;height:9px;border:1.5px solid #00d4aa;transform:rotate(45deg);"></div>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:700;color:#f0f0f0;letter-spacing:0.06em;line-height:1;">APEX</div>
+            <div style="font-size:6px;color:#4a5568;letter-spacing:0.18em;text-transform:uppercase;margin-top:1px;">Investment Intelligence</div>
+          </div>
+        </div>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:20px;">
+          <div style="display:flex;gap:16px;">
+            <span style="font-size:9px;color:#6e7680;letter-spacing:0.04em;">Features</span>
+            <span style="font-size:9px;color:#6e7680;letter-spacing:0.04em;">Pricing</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="font-size:8px;color:#00d4aa;letter-spacing:0.06em;">● BETA LIVE</span>
+            <div style="padding:5px 14px;background:#00d4aa;font-size:8px;font-weight:700;color:#0a0d12;letter-spacing:0.08em;">JOIN →</div>
+          </div>
+        </div>
+      </div>
+      <div style="padding:6px 20px;">
+        <div style="font-size:7px;color:#4a5568;">Keeps full name but tighter typographic stack · adds "● BETA LIVE" pulse indicator next to CTA</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Full Wordmark + Beta Live</h3>
+      <p>Keep "Investment Intelligence" but render it as a tiny subtitle beneath APEX in the logo lockup. Adds a pulsing "● BETA LIVE" signal next to the CTA button — reinforces scarcity and urgency without a separate badge element.</p>
+    </div>
+  </div>
+
+</div>

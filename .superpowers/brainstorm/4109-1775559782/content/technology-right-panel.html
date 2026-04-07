@@ -1,0 +1,242 @@
+<h2>Enabling Technology — right panel direction</h2>
+<p class="subtitle">The ASML report card doesn't connect to the "how the AI works" story. Three replacements — each tells a different angle of the technology narrative.</p>
+
+<div class="cards">
+
+  <!-- Option A: AI Pipeline -->
+  <div class="card" data-choice="pipeline" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0a0d12; padding:20px 18px; font-family:Inter,sans-serif; min-height:260px; display:flex; flex-direction:column; justify-content:center; position:relative; overflow:hidden;">
+      <div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 21px,rgba(255,255,255,0.012) 22px),repeating-linear-gradient(90deg,transparent,transparent 21px,rgba(255,255,255,0.012) 22px);pointer-events:none;"></div>
+
+      <!-- Label -->
+      <div style="font-size:6px;color:#3a4555;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:14px;font-family:monospace;">How APEX Research Engine Works</div>
+
+      <!-- Pipeline flow -->
+      <div style="display:flex;flex-direction:column;gap:6px;position:relative;">
+
+        <!-- Data inputs row -->
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:4px;">
+          <div style="background:#111418;border:1px solid #1e2530;padding:5px 6px;text-align:center;">
+            <div style="font-size:5px;color:#4a5568;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:2px;">Prices</div>
+            <div style="font-size:7px;color:#c9d1d9;font-weight:500;">Yahoo Finance</div>
+          </div>
+          <div style="background:#111418;border:1px solid #1e2530;padding:5px 6px;text-align:center;">
+            <div style="font-size:5px;color:#4a5568;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:2px;">News/Insider</div>
+            <div style="font-size:7px;color:#c9d1d9;font-weight:500;">Finnhub</div>
+          </div>
+          <div style="background:#111418;border:1px solid #1e2530;padding:5px 6px;text-align:center;">
+            <div style="font-size:5px;color:#4a5568;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:2px;">Web Research</div>
+            <div style="font-size:7px;color:#c9d1d9;font-weight:500;">Perplexity</div>
+          </div>
+          <div style="background:#111418;border:1px solid #1e2530;padding:5px 6px;text-align:center;">
+            <div style="font-size:5px;color:#4a5568;text-transform:uppercase;letter-spacing:0.12em;margin-bottom:2px;">Macro</div>
+            <div style="font-size:7px;color:#c9d1d9;font-weight:500;">FRED</div>
+          </div>
+        </div>
+
+        <!-- Arrow down -->
+        <div style="display:flex;justify-content:center;">
+          <div style="width:1px;height:10px;background:linear-gradient(to bottom,rgba(0,212,170,0.4),#00d4aa);"></div>
+        </div>
+
+        <!-- Claude processing -->
+        <div style="background:rgba(0,212,170,0.06);border:1px solid rgba(0,212,170,0.25);border-top:2px solid #00d4aa;padding:10px 12px;text-align:center;">
+          <div style="font-size:7px;color:#00d4aa;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:4px;">Claude Sonnet 4.6</div>
+          <div style="font-size:9px;color:#f0f0f0;font-weight:300;margin-bottom:5px;">Structured financial reasoning</div>
+          <div style="display:flex;gap:4px;justify-content:center;flex-wrap:wrap;">
+            <span style="font-size:5px;background:#0d1016;border:1px solid #252b34;padding:2px 5px;color:#6e7680;text-transform:uppercase;letter-spacing:0.1em;">Thesis generation</span>
+            <span style="font-size:5px;background:#0d1016;border:1px solid #252b34;padding:2px 5px;color:#6e7680;text-transform:uppercase;letter-spacing:0.1em;">DCF modelling</span>
+            <span style="font-size:5px;background:#0d1016;border:1px solid #252b34;padding:2px 5px;color:#6e7680;text-transform:uppercase;letter-spacing:0.1em;">Risk extraction</span>
+            <span style="font-size:5px;background:#0d1016;border:1px solid #252b34;padding:2px 5px;color:#6e7680;text-transform:uppercase;letter-spacing:0.1em;">Investor fit</span>
+          </div>
+        </div>
+
+        <!-- Arrow down -->
+        <div style="display:flex;justify-content:center;">
+          <div style="width:1px;height:10px;background:linear-gradient(to bottom,#00d4aa,rgba(0,212,170,0.4));"></div>
+        </div>
+
+        <!-- Outputs row -->
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;">
+          <div style="background:#111418;border:1px solid #1e2530;border-left:2px solid #00d4aa;padding:5px 7px;">
+            <div style="font-size:5px;color:#4a5568;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:2px;">Output</div>
+            <div style="font-size:7px;color:#c9d1d9;">9-section report</div>
+          </div>
+          <div style="background:#111418;border:1px solid #1e2530;border-left:2px solid #00d4aa;padding:5px 7px;">
+            <div style="font-size:5px;color:#4a5568;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:2px;">Output</div>
+            <div style="font-size:7px;color:#c9d1d9;">DCF valuation</div>
+          </div>
+          <div style="background:#111418;border:1px solid #1e2530;border-left:2px solid #00d4aa;padding:5px 7px;">
+            <div style="font-size:5px;color:#4a5568;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:2px;">Output</div>
+            <div style="font-size:7px;color:#c9d1d9;">Investor fit score</div>
+          </div>
+        </div>
+
+        <!-- Time -->
+        <div style="text-align:center;margin-top:4px;">
+          <span style="font-size:6px;color:#3a4555;font-family:monospace;letter-spacing:0.12em;">avg. generation time · 1m 47s</span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — AI Pipeline Diagram</h3>
+      <p>Shows the actual data flow: 4 sources in → Claude processing → structured outputs. Answers "how does it work?" directly. Very on-brand for a "technology" section. No stock card at all — the process is the hero.</p>
+    </div>
+  </div>
+
+  <!-- Option B: Feature Mosaic -->
+  <div class="card" data-choice="mosaic" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0a0d12; padding:16px; font-family:Inter,sans-serif; min-height:260px; position:relative; overflow:hidden;">
+      <div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 21px,rgba(255,255,255,0.012) 22px),repeating-linear-gradient(90deg,transparent,transparent 21px,rgba(255,255,255,0.012) 22px);pointer-events:none;"></div>
+
+      <div style="font-size:6px;color:#3a4555;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:10px;font-family:monospace;">AI-Powered Intelligence · Live Snapshot</div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;position:relative;">
+
+        <!-- Recession Radar mini -->
+        <div style="background:#111418;border:1px solid #1e2530;padding:8px 10px;">
+          <div style="font-size:6px;color:#00d4aa;text-transform:uppercase;letter-spacing:0.14em;margin-bottom:5px;">Recession Radar</div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="width:32px;height:32px;border-radius:50%;border:2px solid #d29922;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span style="font-size:8px;font-weight:700;color:#d29922;">41</span>
+            </div>
+            <div>
+              <div style="font-size:7px;color:#d29922;font-weight:600;margin-bottom:1px;">WARNING</div>
+              <div style="font-size:6px;color:#4a5568;">11 signals · composite</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fear & Greed mini -->
+        <div style="background:#111418;border:1px solid #1e2530;padding:8px 10px;">
+          <div style="font-size:6px;color:#00d4aa;text-transform:uppercase;letter-spacing:0.14em;margin-bottom:5px;">Fear &amp; Greed</div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <div style="width:32px;height:32px;border-radius:50%;border:2px solid #f85149;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <span style="font-size:8px;font-weight:700;color:#f85149;">28</span>
+            </div>
+            <div>
+              <div style="font-size:7px;color:#f85149;font-weight:600;margin-bottom:1px;">FEAR</div>
+              <div style="font-size:6px;color:#4a5568;">7 sub-signals</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Portfolio AI analysis mini -->
+        <div style="background:#111418;border:1px solid #1e2530;padding:8px 10px;">
+          <div style="font-size:6px;color:#00d4aa;text-transform:uppercase;letter-spacing:0.14em;margin-bottom:4px;">Portfolio AI Analysis</div>
+          <div style="font-size:7px;color:#8a9ab0;line-height:1.5;margin-bottom:4px;">"Concentration in tech at 58% creates tail risk. Consider defensive rotation into—"</div>
+          <div style="font-size:6px;color:#3a4555;font-family:monospace;">Claude Sonnet 4.6 · Perplexity</div>
+        </div>
+
+        <!-- Trend Intelligence mini -->
+        <div style="background:#111418;border:1px solid #1e2530;padding:8px 10px;">
+          <div style="font-size:6px;color:#00d4aa;text-transform:uppercase;letter-spacing:0.14em;margin-bottom:4px;">Trend Intelligence</div>
+          <div style="font-size:7px;color:#c9d1d9;margin-bottom:3px;">"Defence tech in Europe"</div>
+          <div style="display:flex;flex-direction:column;gap:2px;">
+            <div style="display:flex;align-items:center;gap:4px;"><div style="width:3px;height:3px;background:#00d4aa;border-radius:50%;flex-shrink:0;"></div><span style="font-size:6px;color:#6e7680;">RHEINMETALL · 94% match</span></div>
+            <div style="display:flex;align-items:center;gap:4px;"><div style="width:3px;height:3px;background:#00d4aa;border-radius:50%;flex-shrink:0;"></div><span style="font-size:6px;color:#6e7680;">SAAB · 87% match</span></div>
+          </div>
+        </div>
+
+        <!-- DCF mini - spans full width -->
+        <div style="background:#111418;border:1px solid #1e2530;padding:7px 10px;grid-column:span 2;display:flex;justify-content:space-between;align-items:center;">
+          <div>
+            <div style="font-size:6px;color:#00d4aa;text-transform:uppercase;letter-spacing:0.14em;margin-bottom:2px;">DCF Analyser · NVDA</div>
+            <div style="font-size:7px;color:#8a9ab0;">WACC 9.2% · Terminal growth 3.5% · 5yr projection</div>
+          </div>
+          <div style="text-align:right;">
+            <div style="font-size:11px;font-weight:700;color:#3fb950;">$682</div>
+            <div style="font-size:6px;color:#4a5568;">intrinsic value</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Feature Intelligence Mosaic</h3>
+      <p>4–5 mini-panels showing different AI features firing simultaneously: Recession Radar, Fear & Greed, Portfolio AI, Trend Intelligence, DCF. Shows breadth. Feels like a live system. Tells "all your intelligence, one platform."</p>
+    </div>
+  </div>
+
+  <!-- Option C: Macro Intelligence -->
+  <div class="card" data-choice="macro" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0a0d12; padding:18px; font-family:Inter,sans-serif; min-height:260px; display:flex; flex-direction:column; justify-content:center; position:relative; overflow:hidden;">
+      <div style="position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 21px,rgba(255,255,255,0.012) 22px),repeating-linear-gradient(90deg,transparent,transparent 21px,rgba(255,255,255,0.012) 22px);pointer-events:none;"></div>
+
+      <div style="font-size:6px;color:#3a4555;letter-spacing:0.2em;text-transform:uppercase;margin-bottom:10px;font-family:monospace;">APEX Intelligence · Real-time</div>
+
+      <!-- Big gauge -->
+      <div style="display:flex;align-items:center;gap:14px;margin-bottom:10px;">
+        <div style="position:relative;width:64px;height:64px;flex-shrink:0;">
+          <svg width="64" height="64" viewBox="0 0 64 64">
+            <circle cx="32" cy="32" r="26" fill="none" stroke="#1e2530" stroke-width="5"/>
+            <circle cx="32" cy="32" r="26" fill="none" stroke="#d29922" stroke-width="5"
+              stroke-dasharray="81 82" stroke-dashoffset="20" stroke-linecap="round"/>
+            <text x="32" y="37" text-anchor="middle" font-size="12" font-weight="700" fill="#d29922" font-family="Inter">41</text>
+          </svg>
+        </div>
+        <div>
+          <div style="font-size:7px;color:#00d4aa;text-transform:uppercase;letter-spacing:0.16em;margin-bottom:3px;">Recession Radar</div>
+          <div style="font-size:11px;font-weight:600;color:#d29922;margin-bottom:2px;">WARNING</div>
+          <div style="font-size:7px;color:#6e7680;">Composite · 11 independent signals</div>
+        </div>
+      </div>
+
+      <!-- Signal bars -->
+      <div style="display:flex;flex-direction:column;gap:3px;margin-bottom:10px;">
+        <div style="display:flex;align-items:center;gap:6px;">
+          <div style="font-size:6px;color:#4a5568;width:80px;flex-shrink:0;">Yield Curve</div>
+          <div style="flex:1;height:4px;background:#1e2530;border-radius:2px;overflow:hidden;">
+            <div style="width:70%;height:100%;background:#f85149;"></div>
+          </div>
+          <div style="font-size:6px;color:#f85149;width:20px;text-align:right;">HIGH</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <div style="font-size:6px;color:#4a5568;width:80px;flex-shrink:0;">Credit Spreads</div>
+          <div style="flex:1;height:4px;background:#1e2530;border-radius:2px;overflow:hidden;">
+            <div style="width:40%;height:100%;background:#d29922;"></div>
+          </div>
+          <div style="font-size:6px;color:#d29922;width:20px;text-align:right;">MED</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <div style="font-size:6px;color:#4a5568;width:80px;flex-shrink:0;">Market Tech.</div>
+          <div style="flex:1;height:4px;background:#1e2530;border-radius:2px;overflow:hidden;">
+            <div style="width:28%;height:100%;background:#3fb950;"></div>
+          </div>
+          <div style="font-size:6px;color:#3fb950;width:20px;text-align:right;">LOW</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <div style="font-size:6px;color:#4a5568;width:80px;flex-shrink:0;">Real Economy</div>
+          <div style="flex:1;height:4px;background:#1e2530;border-radius:2px;overflow:hidden;">
+            <div style="width:55%;height:100%;background:#d29922;"></div>
+          </div>
+          <div style="font-size:6px;color:#d29922;width:20px;text-align:right;">MED</div>
+        </div>
+      </div>
+
+      <!-- AI recommendation -->
+      <div style="background:rgba(0,212,170,0.04);border:1px solid rgba(0,212,170,0.14);padding:8px 10px;">
+        <div style="font-size:6px;color:#00d4aa;text-transform:uppercase;letter-spacing:0.14em;margin-bottom:4px;">AI Capital Allocation</div>
+        <div style="display:flex;gap:6px;margin-bottom:4px;">
+          <div style="flex:1;text-align:center;">
+            <div style="font-size:8px;font-weight:600;color:#f0f0f0;">50%</div>
+            <div style="font-size:5px;color:#4a5568;text-transform:uppercase;">Equities</div>
+          </div>
+          <div style="flex:1;text-align:center;">
+            <div style="font-size:8px;font-weight:600;color:#f0f0f0;">35%</div>
+            <div style="font-size:5px;color:#4a5568;text-transform:uppercase;">Bonds</div>
+          </div>
+          <div style="flex:1;text-align:center;">
+            <div style="font-size:8px;font-weight:600;color:#f0f0f0;">15%</div>
+            <div style="font-size:5px;color:#4a5568;text-transform:uppercase;">Cash</div>
+          </div>
+        </div>
+        <div style="font-size:6px;color:#3a4555;font-family:monospace;">Regime: CAUTION · Defensive tilt recommended</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Recession Radar + AI Allocation</h3>
+      <p>Leads with the Recession Radar gauge (a purely APEX differentiator), shows signal dimensions, and ends with the AI-generated capital allocation recommendation. Tells "intelligent macro awareness, not just stock picking."</p>
+    </div>
+  </div>
+
+</div>

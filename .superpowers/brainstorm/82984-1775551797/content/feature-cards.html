@@ -1,0 +1,151 @@
+<h2>How should the feature cards feel?</h2>
+<p class="subtitle">The 10-cell features grid is the biggest visual surface. Three treatments — all within the Refined Dark Premium direction.</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="glass" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0b0d0f;padding:20px;font-family:Inter,sans-serif;min-height:200px;display:grid;grid-template-columns:1fr 1fr;gap:1px;background-color:#1a2030;">
+      <!-- Glassmorphism cards -->
+      <div style="background:rgba(255,255,255,0.03);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.07);padding:14px;position:relative;overflow:hidden;">
+        <div style="width:28px;height:28px;background:rgba(0,212,170,0.1);border:1px solid rgba(0,212,170,0.25);display:flex;align-items:center;justify-content:center;margin-bottom:8px;">
+          <div style="width:10px;height:10px;border:1.5px solid #00d4aa;border-radius:1px;"></div>
+        </div>
+        <div style="font-size:10px;font-weight:600;color:#f0f0f0;margin-bottom:4px;letter-spacing:-0.01em;">Shortlist Mgmt</div>
+        <div style="font-size:8px;color:#6e7680;line-height:1.4;">Curate stocks with live prices & alerts</div>
+        <div style="position:absolute;bottom:0;left:0;right:0;height:40px;background:linear-gradient(transparent,rgba(0,212,170,0.04));"></div>
+        <div style="position:absolute;top:8px;right:8px;width:4px;height:4px;background:#00d4aa;border-radius:50%;box-shadow:0 0 6px #00d4aa;opacity:0.7;"></div>
+      </div>
+      <div style="background:rgba(0,212,170,0.06);backdrop-filter:blur(12px);border:1px solid rgba(0,212,170,0.2);padding:14px;position:relative;overflow:hidden;">
+        <div style="width:28px;height:28px;background:rgba(0,212,170,0.15);border:1px solid rgba(0,212,170,0.35);display:flex;align-items:center;justify-content:center;margin-bottom:8px;">
+          <div style="width:10px;height:8px;border:1.5px solid #00d4aa;"></div>
+        </div>
+        <div style="font-size:10px;font-weight:600;color:#f0f0f0;margin-bottom:4px;letter-spacing:-0.01em;">AI Equity Reports</div>
+        <div style="font-size:8px;color:#6e7680;line-height:1.4;">Generate full reports in 2 minutes</div>
+        <div style="position:absolute;bottom:0;left:0;right:0;height:40px;background:linear-gradient(transparent,rgba(0,212,170,0.06));"></div>
+      </div>
+      <div style="background:rgba(255,255,255,0.03);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.07);padding:14px;">
+        <div style="width:28px;height:28px;background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:8px;">
+          <div style="width:12px;height:8px;border-bottom:1.5px solid #00d4aa;position:relative;"><div style="position:absolute;left:2px;bottom:2px;width:3px;height:5px;border-left:1.5px solid #00d4aa;"></div><div style="position:absolute;left:6px;bottom:2px;width:3px;height:7px;border-left:1.5px solid #00d4aa;"></div></div>
+        </div>
+        <div style="font-size:10px;font-weight:600;color:#f0f0f0;margin-bottom:4px;letter-spacing:-0.01em;">Stock Viewer</div>
+        <div style="font-size:8px;color:#6e7680;line-height:1.4;">Charts, fundamentals, insider data</div>
+      </div>
+      <div style="background:rgba(255,255,255,0.03);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.07);padding:14px;">
+        <div style="width:28px;height:28px;background:rgba(0,212,170,0.08);border:1px solid rgba(0,212,170,0.2);display:flex;align-items:center;justify-content:center;margin-bottom:8px;">
+          <div style="width:10px;height:10px;border:1.5px solid #00d4aa;transform:rotate(45deg);"></div>
+        </div>
+        <div style="font-size:10px;font-weight:600;color:#f0f0f0;margin-bottom:4px;letter-spacing:-0.01em;">Sector Overview</div>
+        <div style="font-size:8px;color:#6e7680;line-height:1.4;">Sector performance heatmap</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Glassmorphism Cards</h3>
+      <p>Frosted glass panels with subtle backdrop blur, soft border glow, and layered depth. Active/featured card gets a stronger teal tint. Feels premium and modern — like a real financial terminal.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="bordered" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0b0d0f;padding:0;font-family:Inter,sans-serif;min-height:200px;display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid #1e2530;">
+      <!-- Bordered/terminal style cards -->
+      <div style="border-right:1px solid #1e2530;border-bottom:1px solid #1e2530;padding:14px;position:relative;">
+        <div style="position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,#00d4aa,transparent);"></div>
+        <div style="width:26px;height:26px;border:1px solid #2a3545;display:flex;align-items:center;justify-content:center;margin-bottom:10px;">
+          <div style="width:10px;height:10px;border:1.5px solid #00d4aa;border-radius:1px;"></div>
+        </div>
+        <div style="font-size:9px;letter-spacing:0.15em;color:#00d4aa;text-transform:uppercase;margin-bottom:4px;">01</div>
+        <div style="font-size:10px;font-weight:500;color:#f0f0f0;margin-bottom:3px;">Shortlist Mgmt</div>
+        <div style="font-size:8px;color:#6e7680;line-height:1.4;">Live prices & alerts</div>
+      </div>
+      <div style="border-bottom:1px solid #1e2530;padding:14px;position:relative;">
+        <div style="width:26px;height:26px;border:1px solid #2a3545;display:flex;align-items:center;justify-content:center;margin-bottom:10px;">
+          <div style="width:10px;height:8px;border:1.5px solid #00d4aa;"></div>
+        </div>
+        <div style="font-size:9px;letter-spacing:0.15em;color:#00d4aa;text-transform:uppercase;margin-bottom:4px;">02</div>
+        <div style="font-size:10px;font-weight:500;color:#f0f0f0;margin-bottom:3px;">AI Equity Reports</div>
+        <div style="font-size:8px;color:#6e7680;line-height:1.4;">2-minute full reports</div>
+      </div>
+      <div style="border-right:1px solid #1e2530;padding:14px;position:relative;">
+        <div style="width:26px;height:26px;border:1px solid #2a3545;display:flex;align-items:center;justify-content:center;margin-bottom:10px;">
+          <div style="width:12px;height:9px;border-bottom:1.5px solid #00d4aa;"></div>
+        </div>
+        <div style="font-size:9px;letter-spacing:0.15em;color:#00d4aa;text-transform:uppercase;margin-bottom:4px;">03</div>
+        <div style="font-size:10px;font-weight:500;color:#f0f0f0;margin-bottom:3px;">Stock Viewer</div>
+        <div style="font-size:8px;color:#6e7680;line-height:1.4;">Charts & fundamentals</div>
+      </div>
+      <div style="padding:14px;position:relative;background:rgba(0,212,170,0.03);">
+        <div style="position:absolute;inset:0;border:1px solid rgba(0,212,170,0.12);pointer-events:none;"></div>
+        <div style="width:26px;height:26px;border:1px solid rgba(0,212,170,0.3);display:flex;align-items:center;justify-content:center;margin-bottom:10px;">
+          <div style="width:10px;height:10px;border:1.5px solid #00d4aa;transform:rotate(45deg);"></div>
+        </div>
+        <div style="font-size:9px;letter-spacing:0.15em;color:#00d4aa;text-transform:uppercase;margin-bottom:4px;">04</div>
+        <div style="font-size:10px;font-weight:500;color:#f0f0f0;margin-bottom:3px;">Sector Overview</div>
+        <div style="font-size:8px;color:#6e7680;line-height:1.4;">Heatmap & insights</div>
+        <div style="position:absolute;bottom:6px;right:8px;font-size:7px;color:#00d4aa;letter-spacing:0.1em;">HOVER →</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Terminal / Numbered Grid</h3>
+      <p>Hairline borders as dividers (no individual card backgrounds), numbered feature index in teal, top-edge accent line on hover. Very Bloomberg. Emphasizes the 10-feature depth — almost feels like a spec sheet.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="hover-reveal" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0b0d0f;padding:16px;font-family:Inter,sans-serif;min-height:200px;display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <!-- Hover reveal cards -->
+      <div style="background:#111418;border:1px solid #1e2530;padding:14px;position:relative;overflow:hidden;transition:all 0.3s;">
+        <div style="width:32px;height:32px;background:linear-gradient(135deg,rgba(0,212,170,0.15),rgba(0,212,170,0.05));border:1px solid rgba(0,212,170,0.3);display:flex;align-items:center;justify-content:center;margin-bottom:10px;">
+          <div style="width:12px;height:12px;border:1.5px solid #00d4aa;border-radius:1px;"></div>
+        </div>
+        <div style="font-size:11px;font-weight:600;color:#f0f0f0;margin-bottom:5px;letter-spacing:-0.01em;">Shortlist Mgmt</div>
+        <div style="font-size:8px;color:#6e7680;line-height:1.5;margin-bottom:10px;">Curate & monitor your watchlist with real-time prices and alerts.</div>
+        <div style="display:flex;align-items:center;gap:4px;">
+          <div style="width:16px;height:1px;background:#00d4aa;"></div>
+          <div style="font-size:7px;color:#00d4aa;letter-spacing:0.15em;text-transform:uppercase;">Explore</div>
+        </div>
+      </div>
+      <div style="background:#0e1218;border:1px solid rgba(0,212,170,0.25);padding:14px;position:relative;overflow:hidden;box-shadow:0 0 20px rgba(0,212,170,0.06),inset 0 0 20px rgba(0,212,170,0.03);">
+        <!-- Hovered state -->
+        <div style="position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,#00d4aa,transparent);"></div>
+        <div style="width:32px;height:32px;background:linear-gradient(135deg,rgba(0,212,170,0.25),rgba(0,212,170,0.1));border:1px solid rgba(0,212,170,0.5);display:flex;align-items:center;justify-content:center;margin-bottom:10px;">
+          <div style="width:12px;height:10px;border:1.5px solid #00d4aa;"></div>
+        </div>
+        <div style="font-size:11px;font-weight:600;color:#ffffff;margin-bottom:5px;letter-spacing:-0.01em;">AI Equity Reports</div>
+        <div style="font-size:8px;color:#8a9ab0;line-height:1.5;margin-bottom:10px;">Full institutional-grade reports generated in under 2 minutes.</div>
+        <div style="display:flex;align-items:center;gap:4px;">
+          <div style="width:16px;height:1px;background:#00d4aa;"></div>
+          <div style="font-size:7px;color:#00d4aa;letter-spacing:0.15em;text-transform:uppercase;">Explore</div>
+        </div>
+        <div style="position:absolute;bottom:6px;right:8px;font-size:8px;color:rgba(0,212,170,0.5);">↗</div>
+      </div>
+      <div style="background:#111418;border:1px solid #1e2530;padding:14px;">
+        <div style="width:32px;height:32px;background:linear-gradient(135deg,rgba(0,212,170,0.12),rgba(0,212,170,0.04));border:1px solid rgba(0,212,170,0.25);display:flex;align-items:center;justify-content:center;margin-bottom:10px;">
+          <div style="width:12px;height:9px;border-bottom:1.5px solid #00d4aa;"></div>
+        </div>
+        <div style="font-size:11px;font-weight:600;color:#f0f0f0;margin-bottom:5px;">Stock Viewer</div>
+        <div style="font-size:8px;color:#6e7680;line-height:1.5;margin-bottom:10px;">Deep charts, fundamentals, and insider activity.</div>
+        <div style="display:flex;align-items:center;gap:4px;">
+          <div style="width:16px;height:1px;background:#00d4aa;"></div>
+          <div style="font-size:7px;color:#00d4aa;letter-spacing:0.15em;text-transform:uppercase;">Explore</div>
+        </div>
+      </div>
+      <div style="background:#111418;border:1px solid #1e2530;padding:14px;">
+        <div style="width:32px;height:32px;background:linear-gradient(135deg,rgba(0,212,170,0.12),rgba(0,212,170,0.04));border:1px solid rgba(0,212,170,0.25);display:flex;align-items:center;justify-content:center;margin-bottom:10px;">
+          <div style="width:10px;height:10px;border:1.5px solid #00d4aa;transform:rotate(45deg);"></div>
+        </div>
+        <div style="font-size:11px;font-weight:600;color:#f0f0f0;margin-bottom:5px;">Sector Overview</div>
+        <div style="font-size:8px;color:#6e7680;line-height:1.5;margin-bottom:10px;">Heatmap and sector rotation insights.</div>
+        <div style="display:flex;align-items:center;gap:4px;">
+          <div style="width:16px;height:1px;background:#00d4aa;"></div>
+          <div style="font-size:7px;color:#00d4aa;letter-spacing:0.15em;text-transform:uppercase;">Explore</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Elevated Hover Reveal</h3>
+      <p>Cards with more visual presence: gradient icon boxes, scanline top-edge highlight on hover, glow border, and an "Explore →" affordance. The second card shows the hover state. Keeps the current click-to-expand pattern but makes cards feel more alive.</p>
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:24px;">The second card in option C is shown in its hover state. All three work with the existing click-to-expand modal.</p>

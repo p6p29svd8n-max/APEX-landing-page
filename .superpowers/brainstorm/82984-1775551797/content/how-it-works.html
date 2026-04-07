@@ -1,0 +1,145 @@
+<h2>How It Works — redesign direction?</h2>
+<p class="subtitle">Currently: 3 horizontal steps with SVG connector arrows and large watermark numbers. Three stronger alternatives:</p>
+
+<div class="cards">
+
+  <div class="card" data-choice="timeline" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0a0d12;padding:24px 20px;font-family:Inter,sans-serif;min-height:210px;position:relative;overflow:hidden;">
+      <!-- Vertical timeline with connector line -->
+      <div style="font-size:8px;letter-spacing:0.25em;color:#00d4aa;text-transform:uppercase;margin-bottom:18px;">HOW IT WORKS</div>
+      <div style="position:relative;padding-left:28px;">
+        <!-- Vertical line -->
+        <div style="position:absolute;left:7px;top:8px;bottom:8px;width:1px;background:linear-gradient(to bottom,#00d4aa,rgba(0,212,170,0.1));"></div>
+        <!-- Step 1 -->
+        <div style="margin-bottom:18px;position:relative;">
+          <div style="position:absolute;left:-28px;top:2px;width:14px;height:14px;border:1px solid #00d4aa;background:#0a0d12;display:flex;align-items:center;justify-content:center;">
+            <div style="width:5px;height:5px;background:#00d4aa;box-shadow:0 0 6px #00d4aa;"></div>
+          </div>
+          <div style="font-size:8px;letter-spacing:0.15em;color:#00d4aa;text-transform:uppercase;margin-bottom:3px;">Step 01</div>
+          <div style="font-size:11px;font-weight:600;color:#f0f0f0;margin-bottom:3px;">Start your free 24h trial</div>
+          <div style="font-size:8px;color:#6e7680;line-height:1.5;">Sign up instantly — no card required. Browser-based, nothing to install.</div>
+        </div>
+        <!-- Step 2 -->
+        <div style="margin-bottom:18px;position:relative;">
+          <div style="position:absolute;left:-28px;top:2px;width:14px;height:14px;border:1px solid rgba(0,212,170,0.4);background:#0a0d12;display:flex;align-items:center;justify-content:center;">
+            <div style="width:5px;height:5px;background:rgba(0,212,170,0.4);"></div>
+          </div>
+          <div style="font-size:8px;letter-spacing:0.15em;color:rgba(0,212,170,0.5);text-transform:uppercase;margin-bottom:3px;">Step 02</div>
+          <div style="font-size:11px;font-weight:600;color:#c9d1d9;margin-bottom:3px;">Configure your watchlist</div>
+          <div style="font-size:8px;color:#6e7680;line-height:1.5;">Add stocks, explore live data across all 10 feature tabs.</div>
+        </div>
+        <!-- Step 3 -->
+        <div style="position:relative;">
+          <div style="position:absolute;left:-28px;top:2px;width:14px;height:14px;border:1px solid rgba(0,212,170,0.2);background:#0a0d12;display:flex;align-items:center;justify-content:center;">
+            <div style="width:5px;height:5px;background:rgba(0,212,170,0.2);"></div>
+          </div>
+          <div style="font-size:8px;letter-spacing:0.15em;color:rgba(0,212,170,0.3);text-transform:uppercase;margin-bottom:3px;">Step 03</div>
+          <div style="font-size:11px;font-weight:600;color:#6e7680;margin-bottom:3px;">Generate reports with AI</div>
+          <div style="font-size:8px;color:#4a5568;line-height:1.5;">Institutional-grade research in under 2 minutes.</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A — Vertical Timeline</h3>
+      <p>A glowing vertical connector line with step nodes that fade from active (teal) to upcoming (dim). Feels like a progress tracker — visually suggests a journey. Works well at half-page height and reads beautifully on mobile too.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="panels" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0a0d12;padding:16px;font-family:Inter,sans-serif;min-height:210px;display:flex;flex-direction:column;gap:6px;">
+      <!-- Large numbered panel cards -->
+      <div style="flex:1;background:#111418;border:1px solid #1e2530;border-left:2px solid #00d4aa;padding:12px 14px;display:flex;align-items:center;gap:14px;position:relative;">
+        <div style="font-size:32px;font-weight:800;color:rgba(0,212,170,0.08);line-height:1;flex-shrink:0;letter-spacing:-0.05em;">01</div>
+        <div>
+          <div style="font-size:10px;font-weight:600;color:#f0f0f0;margin-bottom:3px;">Start your free trial</div>
+          <div style="font-size:8px;color:#6e7680;">Sign up instantly. No card required.</div>
+        </div>
+        <div style="position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:14px;color:#00d4aa;opacity:0.4;">→</div>
+      </div>
+      <div style="flex:1;background:#111418;border:1px solid #1e2530;border-left:2px solid rgba(0,212,170,0.35);padding:12px 14px;display:flex;align-items:center;gap:14px;position:relative;">
+        <div style="font-size:32px;font-weight:800;color:rgba(0,212,170,0.05);line-height:1;flex-shrink:0;letter-spacing:-0.05em;">02</div>
+        <div>
+          <div style="font-size:10px;font-weight:600;color:#c9d1d9;margin-bottom:3px;">Configure your watchlist</div>
+          <div style="font-size:8px;color:#6e7680;">Add stocks, explore live data.</div>
+        </div>
+        <div style="position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:14px;color:rgba(0,212,170,0.25);opacity:0.4;">→</div>
+      </div>
+      <div style="flex:1;background:#111418;border:1px solid #1e2530;border-left:2px solid rgba(0,212,170,0.15);padding:12px 14px;display:flex;align-items:center;gap:14px;position:relative;">
+        <div style="font-size:32px;font-weight:800;color:rgba(0,212,170,0.03);line-height:1;flex-shrink:0;letter-spacing:-0.05em;">03</div>
+        <div>
+          <div style="font-size:10px;font-weight:600;color:#6e7680;margin-bottom:3px;">Generate AI reports</div>
+          <div style="font-size:8px;color:#4a5568;">Institutional research in 2 minutes.</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B — Stacked Panel Cards</h3>
+      <p>Three horizontal rows, each a panel card with a left-edge teal accent that fades per step. Large ghosted step number as background detail. Clean, minimal, very scannable. Feels like a product checklist — every line is actionable.</p>
+    </div>
+  </div>
+
+  <div class="card" data-choice="split" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#0a0d12;padding:16px;font-family:Inter,sans-serif;min-height:210px;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#1a2030;position:relative;">
+      <!-- Split: steps left, live preview right -->
+      <div style="background:#0a0d12;padding:14px;display:flex;flex-direction:column;gap:16px;">
+        <div style="font-size:8px;letter-spacing:0.2em;color:#00d4aa;text-transform:uppercase;margin-bottom:2px;">3 STEPS TO INSIGHT</div>
+        <div style="display:flex;gap:8px;align-items:flex-start;">
+          <div style="width:18px;height:18px;border:1px solid #00d4aa;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">
+            <div style="font-size:7px;color:#00d4aa;font-weight:700;">1</div>
+          </div>
+          <div>
+            <div style="font-size:9px;font-weight:600;color:#f0f0f0;margin-bottom:2px;">Start free trial</div>
+            <div style="font-size:7px;color:#6e7680;">No card needed</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:flex-start;">
+          <div style="width:18px;height:18px;border:1px solid rgba(0,212,170,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">
+            <div style="font-size:7px;color:rgba(0,212,170,0.5);font-weight:700;">2</div>
+          </div>
+          <div>
+            <div style="font-size:9px;font-weight:600;color:#c9d1d9;margin-bottom:2px;">Build watchlist</div>
+            <div style="font-size:7px;color:#6e7680;">Explore all 10 tabs</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;align-items:flex-start;">
+          <div style="width:18px;height:18px;border:1px solid rgba(0,212,170,0.15);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">
+            <div style="font-size:7px;color:rgba(0,212,170,0.3);font-weight:700;">3</div>
+          </div>
+          <div>
+            <div style="font-size:9px;font-weight:600;color:#6e7680;margin-bottom:2px;">Generate reports</div>
+            <div style="font-size:7px;color:#4a5568;">AI in 2 minutes</div>
+          </div>
+        </div>
+      </div>
+      <!-- Right: mini app preview -->
+      <div style="background:#0d1117;padding:12px;border-left:1px solid #1e2530;position:relative;overflow:hidden;">
+        <div style="font-size:7px;color:#6e7680;letter-spacing:0.1em;margin-bottom:8px;text-transform:uppercase;">Live Preview</div>
+        <div style="background:#111418;border:1px solid #1e2530;padding:8px;margin-bottom:6px;">
+          <div style="font-size:7px;color:#00d4aa;margin-bottom:3px;letter-spacing:0.1em;">AAPL · $198.42</div>
+          <div style="display:flex;gap:1px;align-items:flex-end;height:24px;">
+            <div style="flex:1;background:rgba(0,212,170,0.3);height:40%;"></div>
+            <div style="flex:1;background:rgba(0,212,170,0.4);height:60%;"></div>
+            <div style="flex:1;background:rgba(0,212,170,0.5);height:45%;"></div>
+            <div style="flex:1;background:rgba(0,212,170,0.6);height:80%;"></div>
+            <div style="flex:1;background:rgba(0,212,170,0.8);height:70%;"></div>
+            <div style="flex:1;background:#00d4aa;height:100%;"></div>
+          </div>
+        </div>
+        <div style="background:#111418;border:1px solid #1e2530;padding:8px;">
+          <div style="font-size:7px;color:#6e7680;margin-bottom:4px;">AI Report</div>
+          <div style="height:4px;background:#1e2530;margin-bottom:3px;"><div style="width:80%;height:100%;background:rgba(0,212,170,0.4);"></div></div>
+          <div style="height:4px;background:#1e2530;margin-bottom:3px;"><div style="width:60%;height:100%;background:rgba(0,212,170,0.25);"></div></div>
+          <div style="height:4px;background:#1e2530;"><div style="width:90%;height:100%;background:rgba(0,212,170,0.2);"></div></div>
+        </div>
+        <div style="position:absolute;bottom:0;left:0;right:0;height:30px;background:linear-gradient(transparent,rgba(0,212,170,0.04));"></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C — Split: Steps + Live Preview</h3>
+      <p>Left column has numbered steps, right column shows a miniature app preview that hints at what the user gets at each step. Makes the onboarding feel tangible and reduces abstract friction — you can see what you're signing up for.</p>
+    </div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:24px;">All options replace the current SVG connector arrow layout.</p>
