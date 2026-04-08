@@ -51,6 +51,10 @@
         html { overflow-y: scroll; }
         section.page { height: 100vh; overflow: hidden; position: relative; z-index: 1; }
 
+        /* ── Section reveal animation ── */
+        section.page { opacity: 0; transform: translateY(16px); transition: opacity 0.55s ease, transform 0.55s ease; }
+        section.page.in-view { opacity: 1; transform: translateY(0); }
+
         /* ── Section decoration overlay (uniform across all non-hero pages) ── */
         .section-deco {
             position: absolute; inset: 0; pointer-events: none; z-index: 0;
@@ -1663,6 +1667,17 @@
     window.addEventListener('scroll', () => {
         if (scrollIndicator) scrollIndicator.style.opacity = window.scrollY > 20 ? '0' : '1';
     }, { passive: true });
+
+    // ── Section reveal on scroll ──
+    const revealSectionObs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+            }
+        });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('section.page').forEach(s => revealSectionObs.observe(s));
 
     // ── Active nav links ──────────────────────
     const navLinks = {
