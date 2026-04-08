@@ -733,8 +733,8 @@
     </div>
 
     <!-- 10-cell grid — gap:1px on border-coloured wrapper = hairline lines -->
-    <div class="flex-1 overflow-hidden" style="background:#252b34; min-height:0;">
-        <div class="feat-grid" style="display:grid; grid-template-columns:repeat(5,1fr); grid-template-rows:repeat(2,1fr); gap:1px; height:100%; background:#252b34;">
+    <div class="flex-1" style="display:flex; align-items:center; padding:0 0 clamp(16px,2vmin,32px);">
+        <div class="feat-grid" style="display:grid; grid-template-columns:repeat(5,1fr); grid-template-rows:repeat(2,auto); gap:1px; width:100%; background:#252b34;">
 
             <!-- Feat 1: Shortlist Management -->
             <div class="feat-card" style="cursor:pointer;" onclick="openFeature('shortlist')">
