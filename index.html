@@ -182,6 +182,7 @@
         .feat-card:hover .feat-explore { opacity: 1; transform: translateY(0); }
         .feat-bg {
             position: absolute; inset: 0; overflow: hidden;
+            z-index: 0;
             opacity: 0; transition: opacity 0.35s; pointer-events: none;
         }
         .feat-bg img {
@@ -735,6 +736,7 @@
 
             <!-- Feat 1: Shortlist Management -->
             <div class="feat-card" style="cursor:pointer;" onclick="openFeature('shortlist')">
+                <div class="feat-bg"><img src="shortlist_management.png" alt=""></div>
                 <div class="feat-content">
                     <div class="flex items-center feat-header-row">
                         <div class="feat-icon-box flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
@@ -745,11 +747,11 @@
                     <p class="feat-desc leading-relaxed" style="color:#6e7680;">Curate your highest-conviction stock picks and ideas with live prices, key figures, fair value estimates and AI-based recommendations in one focused view.</p>
                     <div class="feat-explore">— Explore</div>
                 </div>
-                <div class="feat-thumb"><img src="shortlist_management.png" alt="Shortlist Management screenshot"></div>
             </div>
 
             <!-- Feat 2: AI Equity Research Reports -->
             <div class="feat-card" style="cursor:pointer;" onclick="openFeature('reports')">
+                <div class="feat-bg"><img src="AI_equityreports.png" alt=""></div>
                 <div class="feat-content">
                     <div class="flex items-center feat-header-row">
                         <div class="feat-icon-box flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
@@ -760,11 +762,11 @@
                     <p class="feat-desc leading-relaxed" style="color:#6e7680;">Generate on-demand, in-depth, structured reports in 2 minutes — investment thesis, DCF & other valuations, risk factors, catalysts, and personalized investment fit.</p>
                     <div class="feat-explore">— Explore</div>
                 </div>
-                <div class="feat-thumb"><img src="AI_equityreports.png" alt="AI Equity Research Reports screenshot"></div>
             </div>
 
             <!-- Feat 3: Stock Viewer -->
             <div class="feat-card" style="cursor:pointer;" onclick="openFeature('stock')">
+                <div class="feat-bg"><img src="stock_viewer.png" alt=""></div>
                 <div class="feat-content">
                     <div class="flex items-center feat-header-row">
                         <div class="feat-icon-box flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
@@ -775,11 +777,11 @@
                     <p class="feat-desc leading-relaxed" style="color:#6e7680;">Explore live stock charts, financial and business data, short-interest, insider transactions, wall street analyst consensus, and current news in one panel.</p>
                     <div class="feat-explore">— Explore</div>
                 </div>
-                <div class="feat-thumb"><img src="stock_viewer.png" alt="Stock Viewer screenshot"></div>
             </div>
 
             <!-- Feat 4: Sector Overview -->
             <div class="feat-card" style="cursor:pointer;" onclick="openFeature('sectors')">
+                <div class="feat-bg"><img src="sector_overview.png" alt=""></div>
                 <div class="feat-content">
                     <div class="flex items-center feat-header-row">
                         <div class="feat-icon-box flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
@@ -790,11 +792,11 @@
                     <p class="feat-desc leading-relaxed" style="color:#6e7680;">Evaluate and filter current and historical market performance across prominent sectors, and gain insight into leading companies within each sector.</p>
                     <div class="feat-explore">— Explore</div>
                 </div>
-                <div class="feat-thumb"><img src="sector_overview.png" alt="Sector Overview screenshot"></div>
             </div>
 
             <!-- Feat 5: Macro + News + Earnings -->
             <div class="feat-card" style="cursor:pointer;" onclick="openFeature('macro')">
+                <div class="feat-bg"><img src="news_world_earnings.png" alt=""></div>
                 <div class="feat-content">
                     <div class="flex items-center feat-header-row">
                         <div class="feat-icon-box flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
@@ -805,11 +807,11 @@
                     <p class="feat-desc leading-relaxed" style="color:#6e7680;">Understand current yield curves, FX, commodities, global news feed, upcoming earnings and an estimated fear & greed index — all in one tab.</p>
                     <div class="feat-explore">— Explore</div>
                 </div>
-                <div class="feat-thumb"><img src="news_world_earnings.png" alt="Macro Data, World News & Earnings screenshot"></div>
             </div>
 
             <!-- Feat 6: Recession Radar -->
             <div class="feat-card" style="cursor:pointer;" onclick="openFeature('recession')">
+                <div class="feat-bg"><img src="recession_radar.png" alt=""></div>
                 <div class="feat-content">
                     <div class="flex items-center feat-header-row">
                         <div class="feat-icon-box flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
@@ -820,11 +822,11 @@
                     <p class="feat-desc leading-relaxed" style="color:#6e7680;">Track 11 macro signals, merged into one composite score across 5 regimes, to understand recession risks and market sentiment.</p>
                     <div class="feat-explore">— Explore</div>
                 </div>
-                <div class="feat-thumb"><img src="recession_radar.png" alt="Recession Radar screenshot"></div>
             </div>
 
             <!-- Feat 7: Portfolio Tracking -->
             <div class="feat-card" style="cursor:pointer;" onclick="openFeature('portfolio')">
+                <div class="feat-bg"><img src="portfolio_analyzer.png" alt=""></div>
                 <div class="feat-content">
                     <div class="flex items-center feat-header-row">
                         <div class="feat-icon-box flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
@@ -835,11 +837,11 @@
                     <p class="feat-desc leading-relaxed" style="color:#6e7680;">Monitor your portfolio performance and understand sector allocation, value history chart, and challenge via critical AI-based portfolio analysis.</p>
                     <div class="feat-explore">— Explore</div>
                 </div>
-                <div class="feat-thumb"><img src="portfolio_analyzer.png" alt="Portfolio Tracking & AI Analysis screenshot"></div>
             </div>
 
             <!-- Feat 8: DCF Analyzer -->
             <div class="feat-card" style="cursor:pointer;" onclick="openFeature('dcf')">
+                <div class="feat-bg"><img src="DCF_analyzer.png" alt=""></div>
                 <div class="feat-content">
                     <div class="flex items-center feat-header-row">
                         <div class="feat-icon-box flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
@@ -850,11 +852,11 @@
                     <p class="feat-desc leading-relaxed" style="color:#6e7680;">Build comprehensive DCF models with adjustable inputs (i.e. WACC/terminal growth) and leverage AI commentary on key value drivers in under 30 seconds.</p>
                     <div class="feat-explore">— Explore</div>
                 </div>
-                <div class="feat-thumb"><img src="DCF_analyzer.png" alt="DCF Analyzer screenshot"></div>
             </div>
 
             <!-- Feat 9: Trend-Based Company Finder -->
             <div class="feat-card" style="cursor:pointer;" onclick="openFeature('trends')">
+                <div class="feat-bg"><img src="company_finder.png" alt=""></div>
                 <div class="feat-content">
                     <div class="flex items-center feat-header-row">
                         <div class="feat-icon-box flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
@@ -865,7 +867,6 @@
                     <p class="feat-desc leading-relaxed" style="color:#6e7680;">Research trends, filter by various performance metrics and geolocation, and uncover associated stocks enriched with live financial data.</p>
                     <div class="feat-explore">— Explore</div>
                 </div>
-                <div class="feat-thumb"><img src="company_finder.png" alt="Trend-Based Company Finder screenshot"></div>
             </div>
 
             <!-- Feat 10: Trend Intelligence (Coming Soon) -->
