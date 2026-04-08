@@ -160,6 +160,12 @@
         .feat-title { font-size: clamp(13px, 1.5vmin, 16px) !important; }
         .feat-desc  { font-size: clamp(12px, 1.35vmin, 15px) !important; margin: 0; }
         .feat-header-row { gap: clamp(8px, 0.8vmin, 12px); margin-bottom: clamp(6px, 0.7vmin, 12px); }
+        .feat-subtitle {
+            font-size: clamp(13px, 1.3vmin, 15px);
+            color: #6e7680;
+            margin-top: 8px;
+            text-align: center;
+        }
         .feat-content { position: relative; z-index: 2; flex-shrink: 0; }
         .feat-explore {
             font-size: 11px; color: #00d4aa; letter-spacing: 0.15em;
@@ -723,6 +729,7 @@
         <h2 class="font-display mt-2 leading-snug" style="font-size:clamp(36px,4vw,60px); color:#f0f0f0;">
             Everything in one place.
         </h2>
+        <p class="feat-subtitle">9 Core features are already live in the beta, more are in development.</p>
     </div>
 
     <!-- 10-cell grid — gap:1px on border-coloured wrapper = hairline lines -->
@@ -934,7 +941,7 @@
                     <div style="width:7px; height:7px; background:#00d4aa; border-radius:50%; box-shadow:0 0 10px #00d4aa;"></div>
                 </div>
                 <div class="font-mono uppercase mb-2" style="font-size:10px; color:#00d4aa; letter-spacing:0.2em;">03 — Research</div>
-                <div class="font-sans font-semibold mb-2" style="font-size:17px; color:#f0f0f0;">Generate your AI report</div>
+                <div class="font-sans font-semibold mb-2" style="font-size:17px; color:#f0f0f0;">Generate your first AI report</div>
                 <p style="font-size:14px; color:#6e7680; line-height:1.65; margin:0;">9-section institutional research, grounded in live data from four independent sources. Delivered in under 2 minutes.</p>
             </div>
         </div>
@@ -1152,7 +1159,7 @@
             </p>
 
             <!-- Bullets -->
-            <div class="space-y-3 font-mono mb-8" style="font-size:13px; color:#c9d1d9;">
+            <div class="space-y-3 font-mono" style="font-size:13px; color:#c9d1d9;">
                 <div class="flex items-start gap-3"><div class="w-1 h-1 rounded-full shrink-0 mt-2" style="background:#00d4aa;"></div>Personalised investment fit per report — calibrated to your risk profile and time horizon</div>
                 <div class="flex items-start gap-3"><div class="w-1 h-1 rounded-full shrink-0 mt-2" style="background:#00d4aa;"></div>Full DCF model with WACC &amp; terminal growth sensitivity — valuation in under a minute</div>
                 <div class="flex items-start gap-3"><div class="w-1 h-1 rounded-full shrink-0 mt-2" style="background:#00d4aa;"></div>Structured research — not chatbot output. 9 sections, every report, every ticker.</div>
@@ -1160,28 +1167,6 @@
                 <div class="flex items-start gap-3"><div class="w-1 h-1 rounded-full shrink-0 mt-2" style="background:#00d4aa;"></div>Self-hosted on your machine — your portfolio data never leaves your device</div>
             </div>
 
-            <!-- Data sources strip -->
-            <div style="border-top:1px solid #1e2530; padding-top:18px;">
-                <div class="font-mono uppercase mb-3" style="font-size:9px; color:#4a5568; letter-spacing:0.2em;">Live Data Sources</div>
-                <div style="display:flex; gap:10px; flex-wrap:wrap;">
-                    <div style="display:flex; align-items:center; gap:6px; padding:6px 12px; background:#111418; border:1px solid #1e2530;">
-                        <i data-lucide="trending-up" style="width:11px; height:11px; color:#00d4aa;"></i>
-                        <span style="font-size:11px; font-weight:500; color:#c9d1d9;">Yahoo Finance</span>
-                    </div>
-                    <div style="display:flex; align-items:center; gap:6px; padding:6px 12px; background:#111418; border:1px solid #1e2530;">
-                        <i data-lucide="activity" style="width:11px; height:11px; color:#00d4aa;"></i>
-                        <span style="font-size:11px; font-weight:500; color:#c9d1d9;">Finnhub</span>
-                    </div>
-                    <div style="display:flex; align-items:center; gap:6px; padding:6px 12px; background:#111418; border:1px solid #1e2530;">
-                        <i data-lucide="search" style="width:11px; height:11px; color:#00d4aa;"></i>
-                        <span style="font-size:11px; font-weight:500; color:#c9d1d9;">Perplexity</span>
-                    </div>
-                    <div style="display:flex; align-items:center; gap:6px; padding:6px 12px; background:#111418; border:1px solid #1e2530;">
-                        <i data-lucide="landmark" style="width:11px; height:11px; color:#00d4aa;"></i>
-                        <span style="font-size:11px; font-weight:500; color:#c9d1d9;">FRED</span>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- Right: AI Pipeline Diagram -->
@@ -1478,7 +1463,7 @@
             </div>
             <h2 class="font-display mb-5 leading-tight" style="font-size:clamp(24px,2.8vw,42px); font-weight:300; letter-spacing:-0.03em; color:#f0f0f0; line-height:1.15;">
                 Research like an institution.<br>
-                <span style="color:#00d4aa;">Act like a founder.</span>
+                <span style="color:#00d4aa;">Invest like a pro.</span>
             </h2>
             <div style="display:flex; flex-direction:column; gap:12px; margin-top:8px;">
                 <div style="display:flex; align-items:center; gap:12px;">
