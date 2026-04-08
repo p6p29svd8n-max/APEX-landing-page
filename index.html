@@ -143,6 +143,7 @@
             position: relative; overflow: hidden; background: #111418;
             border: 1px solid #1e2530;
             display: flex; flex-direction: column; cursor: pointer;
+            aspect-ratio: 1.88 / 1;
             padding: clamp(10px, 1.8vmin, 24px) clamp(10px, 1.5vmin, 20px) !important;
             transition: border-color 0.25s, box-shadow 0.25s;
         }
@@ -172,27 +173,23 @@
             margin-top: 10px; opacity: 0; transform: translateY(4px);
             transition: opacity 0.2s, transform 0.2s; font-family: Inter, sans-serif;
         }
-        .feat-thumb {
-            flex: 1; min-height: 0;
-            margin: 8px calc(-1 * clamp(10px, 1.5vmin, 20px)) calc(-1 * clamp(10px, 1.8vmin, 24px));
-            padding: 0 6px; overflow: hidden; background: #111418;
-        }
-        .feat-thumb img {
-            width: 100%; height: 100%;
-            object-fit: contain; object-position: top center;
-            display: block; opacity: 0.55;
-            box-shadow: 0 6px 16px -4px rgba(0,212,170,0.12);
-            transition: opacity 0.3s, transform 0.4s;
-        }
         .feat-card:hover {
             border-color: rgba(0,212,170,0.3) !important;
             box-shadow: 0 0 20px rgba(0,212,170,0.06), inset 0 0 20px rgba(0,212,170,0.02);
         }
         .feat-card:hover::before { opacity: 1; }
-        .feat-card:hover .feat-thumb { background: #0d1016; }
         .feat-card:hover .feat-desc { color: #f0f0f0 !important; }
-        .feat-card:hover .feat-thumb img { opacity: 0.85; }
         .feat-card:hover .feat-explore { opacity: 1; transform: translateY(0); }
+        .feat-bg {
+            position: absolute; inset: 0; overflow: hidden;
+            opacity: 0; transition: opacity 0.35s; pointer-events: none;
+        }
+        .feat-bg img {
+            width: 100%; height: 100%;
+            object-fit: cover; object-position: top center;
+            display: block;
+        }
+        .feat-card:hover .feat-bg { opacity: 0.35; }
 
         /* ── Form ── */
         .form-input {
