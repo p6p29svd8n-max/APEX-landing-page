@@ -169,7 +169,7 @@
 
         /* ── Feature card ── */
         .feat-card {
-            position: relative; overflow: hidden; background: #111418;
+            position: relative; overflow: hidden; contain: layout; background: #111418;
             border: 1px solid #1e2530;
             display: flex; flex-direction: column; cursor: pointer;
             aspect-ratio: 1.88 / 1;
@@ -188,7 +188,7 @@
         }
         .feat-icon-box i { width: clamp(12px,1.3vmin,16px) !important; height: clamp(12px,1.3vmin,16px) !important; }
         .feat-title { font-size: clamp(13px, 1.5vmin, 16px) !important; }
-        .feat-desc  { font-size: clamp(12px, 1.35vmin, 15px) !important; margin: 0; }
+        .feat-desc  { font-size: clamp(12px, 1.35vmin, 15px) !important; margin: 0; display: -webkit-box; -webkit-line-clamp: 3; line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
         .feat-header-row { gap: clamp(8px, 0.8vmin, 12px); margin-bottom: clamp(6px, 0.7vmin, 12px); }
         .feat-subtitle {
             font-size: clamp(18px, 2.2vmin, 28px);

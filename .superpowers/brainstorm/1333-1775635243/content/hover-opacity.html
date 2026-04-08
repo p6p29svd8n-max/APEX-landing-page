@@ -1,0 +1,177 @@
+<h2>How visible should the screenshot be on hover?</h2>
+<p class="subtitle">The screenshot starts invisible and appears when the user hovers. How visible should it be?</p>
+
+<style>
+  .demo-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .demo-card {
+    position: relative;
+    aspect-ratio: 1.88 / 1;
+    background: #111418;
+    border: 1px solid #1e2530;
+    overflow: hidden;
+    padding: 16px;
+    cursor: pointer;
+    transition: border-color 0.25s, box-shadow 0.25s;
+  }
+  .demo-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #00d4aa, transparent);
+    opacity: 0;
+    transition: opacity 0.25s;
+  }
+  .demo-card:hover::before { opacity: 1; }
+  .demo-card:hover {
+    border-color: rgba(0,212,170,0.3);
+    box-shadow: 0 0 20px rgba(0,212,170,0.06), inset 0 0 20px rgba(0,212,170,0.02);
+  }
+  .demo-bg {
+    position: absolute;
+    inset: 0;
+    background: url('http://localhost:62623/proxy?url=https://placehold.co/940x500/0d1016/00d4aa?text=Screenshot') center/cover no-repeat;
+    opacity: 0;
+    transition: opacity 0.35s;
+  }
+  /* Simulate a screenshot-like pattern */
+  .demo-bg-sim {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+  .demo-bg-sim .sim-bar {
+    height: 28px;
+    background: #0d1016;
+    border-bottom: 1px solid #1e2530;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    gap: 6px;
+  }
+  .sim-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .sim-row { height: 10px; background: #1e2530; margin: 8px 10px 0; border-radius: 2px; }
+  .sim-row.short { width: 60%; }
+  .sim-row.medium { width: 80%; }
+  .sim-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin: 8px 10px 0; }
+  .sim-cell { height: 40px; background: #1a2030; border-radius: 2px; }
+  .sim-cell.accent { background: rgba(0,212,170,0.15); }
+
+  .demo-content {
+    position: relative;
+    z-index: 2;
+  }
+  .demo-icon {
+    width: 28px; height: 28px;
+    background: rgba(0,212,170,0.1);
+    border: 1px solid rgba(0,212,170,0.3);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+  .demo-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #00d4aa;
+    margin-bottom: 6px;
+    font-family: Inter, sans-serif;
+  }
+  .demo-desc {
+    font-size: 11px;
+    color: #6e7680;
+    line-height: 1.55;
+    transition: color 0.25s;
+  }
+  .demo-card:hover .demo-desc { color: #c8cdd4; }
+  .demo-explore {
+    font-size: 10px; color: #00d4aa;
+    letter-spacing: 0.15em; margin-top: 8px;
+    opacity: 0; transform: translateY(4px);
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .demo-card:hover .demo-explore { opacity: 1; transform: translateY(0); }
+
+  .opacity-label {
+    text-align: center;
+    font-size: 11px;
+    color: #6e7680;
+    margin-top: 8px;
+    font-family: monospace;
+    letter-spacing: 0.05em;
+  }
+
+  /* Hover opacity variants */
+  .card-a:hover .demo-bg-sim { opacity: 0.18; }
+  .card-b:hover .demo-bg-sim { opacity: 0.35; }
+  .card-c:hover .demo-bg-sim { opacity: 0.55; }
+
+  .demo-bg-sim { opacity: 0; transition: opacity 0.35s; }
+</style>
+
+<div class="demo-grid">
+
+  <!-- Option A: Subtle ghost -->
+  <div>
+    <div class="demo-card card-a option" data-choice="a" onclick="toggleSelect(this)">
+      <div class="demo-bg-sim">
+        <div class="sim-bar"><div class="sim-dot" style="background:#ff5f56"></div><div class="sim-dot" style="background:#ffbd2e"></div><div class="sim-dot" style="background:#27c93f"></div></div>
+        <div class="sim-row"></div>
+        <div class="sim-row short"></div>
+        <div class="sim-cols"><div class="sim-cell accent"></div><div class="sim-cell"></div><div class="sim-cell"></div><div class="sim-cell accent"></div></div>
+      </div>
+      <div class="demo-content">
+        <div class="demo-icon">◈</div>
+        <div class="demo-title">Feature Name</div>
+        <div class="demo-desc">Short description of what this feature does and why it matters.</div>
+        <div class="demo-explore">— Explore</div>
+      </div>
+    </div>
+    <div class="opacity-label">A — Subtle ghost (opacity 0.18)<br>Text stays fully readable</div>
+  </div>
+
+  <!-- Option B: Medium reveal -->
+  <div>
+    <div class="demo-card card-b option" data-choice="b" onclick="toggleSelect(this)">
+      <div class="demo-bg-sim">
+        <div class="sim-bar"><div class="sim-dot" style="background:#ff5f56"></div><div class="sim-dot" style="background:#ffbd2e"></div><div class="sim-dot" style="background:#27c93f"></div></div>
+        <div class="sim-row"></div>
+        <div class="sim-row short"></div>
+        <div class="sim-cols"><div class="sim-cell accent"></div><div class="sim-cell"></div><div class="sim-cell"></div><div class="sim-cell accent"></div></div>
+      </div>
+      <div class="demo-content">
+        <div class="demo-icon">◈</div>
+        <div class="demo-title">Feature Name</div>
+        <div class="demo-desc">Short description of what this feature does and why it matters.</div>
+        <div class="demo-explore">— Explore</div>
+      </div>
+    </div>
+    <div class="opacity-label">B — Medium reveal (opacity 0.35)<br>Screenshot hint without overwhelming</div>
+  </div>
+
+  <!-- Option C: Strong reveal -->
+  <div>
+    <div class="demo-card card-c option" data-choice="c" onclick="toggleSelect(this)">
+      <div class="demo-bg-sim">
+        <div class="sim-bar"><div class="sim-dot" style="background:#ff5f56"></div><div class="sim-dot" style="background:#ffbd2e"></div><div class="sim-dot" style="background:#27c93f"></div></div>
+        <div class="sim-row"></div>
+        <div class="sim-row short"></div>
+        <div class="sim-cols"><div class="sim-cell accent"></div><div class="sim-cell"></div><div class="sim-cell"></div><div class="sim-cell accent"></div></div>
+      </div>
+      <div class="demo-content">
+        <div class="demo-icon">◈</div>
+        <div class="demo-title">Feature Name</div>
+        <div class="demo-desc">Short description of what this feature does and why it matters.</div>
+        <div class="demo-explore">— Explore</div>
+      </div>
+    </div>
+    <div class="opacity-label">C — Strong reveal (opacity 0.55)<br>Screenshot clearly visible, text competes</div>
+  </div>
+
+</div>
+
+<p class="subtitle" style="margin-top:20px; font-size:12px;">Hover over each card to preview. Note: these use a simulated pattern — the real screenshots will look even better with actual app UI.</p>

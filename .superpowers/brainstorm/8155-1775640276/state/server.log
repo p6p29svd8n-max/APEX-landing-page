@@ -1,0 +1,11 @@
+{"type":"server-started","port":51069,"host":"127.0.0.1","url_host":"localhost","url":"http://localhost:51069","screen_dir":"/Users/jonas/Documents/apex/landing page/.superpowers/brainstorm/8155-1775640276/content","state_dir":"/Users/jonas/Documents/apex/landing page/.superpowers/brainstorm/8155-1775640276/state"}
+{"type":"screen-added","file":"/Users/jonas/Documents/apex/landing page/.superpowers/brainstorm/8155-1775640276/content/flow-approaches.html"}
+{"type":"screen-updated","file":"/Users/jonas/Documents/apex/landing page/.superpowers/brainstorm/8155-1775640276/content/flow-approaches.html"}
+{"type":"screen-updated","file":"/Users/jonas/Documents/apex/landing page/.superpowers/brainstorm/8155-1775640276/content/flow-approaches.html"}
+{"type":"screen-updated","file":"/Users/jonas/Documents/apex/landing page/.superpowers/brainstorm/8155-1775640276/content/flow-approaches.html"}
+{"type":"screen-added","file":"/Users/jonas/Documents/apex/landing page/.superpowers/brainstorm/8155-1775640276/content/waiting.html"}
+{"type":"screen-updated","file":"/Users/jonas/Documents/apex/landing page/.superpowers/brainstorm/8155-1775640276/content/waiting.html"}
+{"type":"screen-updated","file":"/Users/jonas/Documents/apex/landing page/.superpowers/brainstorm/8155-1775640276/content/waiting.html"}
+{"type":"screen-updated","file":"/Users/jonas/Documents/apex/landing page/.superpowers/brainstorm/8155-1775640276/content/waiting.html"}
+{"type":"screen-updated","file":"/Users/jonas/Documents/apex/landing page/.superpowers/brainstorm/8155-1775640276/content/waiting.html"}
+{"type":"server-stopped","reason":"idle timeout"}

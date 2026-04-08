@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Scroll Flow Approaches</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0a0d12; color: #f0f0f0; font-family: Inter, sans-serif; padding: 32px 24px; }
+h2 { font-size: 18px; font-weight: 300; color: #f0f0f0; margin-bottom: 6px; letter-spacing: -0.02em; }
+.subtitle { font-size: 12px; color: #6e7680; margin-bottom: 28px; line-height: 1.6; }
+
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+.approach { cursor: pointer; }
+.approach-label { font-size: 12px; color: #6e7680; margin-top: 10px; line-height: 1.55; }
+.approach-label strong { color: #c8cdd4; display: block; margin-bottom: 3px; font-size: 13px; }
+.approach-label .rec { color: #00d4aa; font-size: 10px; letter-spacing: 0.1em; }
+
+/* The page strip mockups */
+.strip {
+  height: 480px;
+  border: 1px solid #1e2530;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.strip:hover, .strip.selected { border-color: rgba(0,212,170,0.5); }
+.strip.selected::after {
+  content: '✓ Selected';
+  position: absolute; top: 10px; right: 10px;
+  background: rgba(0,212,170,0.15); border: 1px solid rgba(0,212,170,0.4);
+  color: #00d4aa; font-size: 10px; padding: 3px 8px; letter-spacing: 0.1em;
+}
+
+/* ── APPROACH A: Unified Canvas with interior glows ── */
+.a-wrap {
+  height: 100%;
+  background: #0a0d12;
+  position: relative;
+  overflow: hidden;
+}
+.a-sec {
+  padding: 28px 20px 0;
+  position: relative;
+  z-index: 2;
+}
+.a-sec + .a-sec { padding-top: 22px; }
+.a-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  pointer-events: none;
+}
+.a-label { font-size: 7px; letter-spacing: 0.2em; text-transform: uppercase; color: #00d4aa; margin-bottom: 5px; }
+.a-title { font-size: 14px; font-weight: 600; color: #f0f0f0; margin-bottom: 8px; line-height: 1.2; }
+.a-content { display: flex; gap: 4px; flex-wrap: wrap; }
+.a-block { height: 28px; background: #111418; border: 1px solid #1e2530; flex: 1; min-width: 40px; }
+.a-block.accent { background: rgba(0,212,170,0.08); border-color: rgba(0,212,170,0.2); }
+.a-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0,212,170,0.15), transparent);
+  margin: 18px 0 0;
+  position: relative; z-index: 2;
+}
+.a-text-lines { display: flex; flex-direction: column; gap: 4px; margin-top: 6px; }
+.a-line { height: 3px; background: #1e2530; border-radius: 2px; }
+.a-line.w90 { width: 90%; }
+.a-line.w70 { width: 70%; }
+.a-line.w80 { width: 80%; }
+
+/* ── APPROACH B: Continuous Ambient Background ── */
+.b-wrap {
+  height: 100%;
+  background: #080b0f;
+  position: relative;
+  overflow: hidden;
+}
+.b-ambient {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.b-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(50px);
+}
+.b-grid-lines {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+.b-sec {
+  position: relative;
+  z-index: 2;
+  padding: 26px 18px 0;
+}
+.b-sec + .b-sec { padding-top: 20px; }
+.b-label { font-size: 7px; letter-spacing: 0.2em; text-transform: uppercase; color: #00d4aa; margin-bottom: 4px; }
+.b-title { font-size: 13px; font-weight: 600; color: #f0f0f0; margin-bottom: 7px; line-height: 1.2; }
+.b-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 3px; }
+.b-card { height: 24px; background: rgba(17,20,24,0.7); border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(4px); }
+.b-card.ac { background: rgba(0,212,170,0.06); border-color: rgba(0,212,170,0.15); }
+.b-text { height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; margin-top: 5px; }
+.b-text.w75 { width: 75%; }
+.b-text.w55 { width: 55%; }
+
+/* ── APPROACH C: Spanning Cross-Section Elements ── */
+.c-wrap {
+  height: 100%;
+  background: #0a0d12;
+  position: relative;
+  overflow: hidden;
+}
+.c-sec {
+  padding: 24px 18px 0;
+  position: relative;
+  z-index: 2;
+}
+.c-sec + .c-sec { padding-top: 20px; }
+.c-label { font-size: 7px; letter-spacing: 0.2em; text-transform: uppercase; color: #00d4aa; margin-bottom: 4px; }
+.c-title { font-size: 13px; font-weight: 600; color: #f0f0f0; margin-bottom: 7px; line-height: 1.2; }
+.c-blocks { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+.c-bl { height: 22px; background: #111418; border: 1px solid #1e2530; }
+.c-text { height: 3px; background: #1e2530; border-radius: 2px; margin-top: 5px; }
+.c-text.w80 { width: 80%; }
+.c-text.w60 { width: 60%; }
+
+/* Cross-section spanning element */
+.c-span-line {
+  position: absolute;
+  left: 18px;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, #00d4aa 20%, #00d4aa 80%, transparent);
+  z-index: 3;
+  opacity: 0.4;
+}
+.c-span-dot {
+  position: absolute;
+  left: 11px;
+  width: 16px; height: 16px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,212,170,0.5);
+  background: rgba(0,212,170,0.1);
+  z-index: 4;
+  display: flex; align-items: center; justify-content: center;
+}
+.c-span-dot::after {
+  content: '';
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: #00d4aa;
+}
+/* Diagonal cross-section accent */
+.c-diagonal {
+  position: absolute;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(0,212,170,0.3), transparent);
+  transform-origin: left center;
+  z-index: 3;
+}
+</style>
+</head>
+<body>
+
+<h2>How should sections flow into each other?</h2>
+<p class="subtitle">All three remove the hard scroll snap. The difference is in how sections connect visually.</p>
+
+<div class="grid">
+
+  <!-- ── APPROACH A ── -->
+  <div class="approach">
+    <div class="strip" id="opt-a" onclick="select('a')">
+      <div class="a-wrap">
+        <!-- Interior glow for section 1 -->
+        <div class="a-glow" style="width:180px;height:120px;background:rgba(0,212,170,0.07);top:10px;left:-20px;"></div>
+
+        <div class="a-sec">
+          <div class="a-label">What You Get</div>
+          <div class="a-title">Everything in<br>one place.</div>
+          <div class="a-content">
+            <div class="a-block accent"></div><div class="a-block"></div>
+            <div class="a-block"></div><div class="a-block accent"></div>
+          </div>
+        </div>
+
+        <div class="a-divider"></div>
+
+        <!-- Interior glow for section 2 -->
+        <div class="a-glow" style="width:160px;height:100px;background:rgba(0,212,170,0.05);top:220px;right:-10px;"></div>
+
+        <div class="a-sec">
+          <div class="a-label">How It Works</div>
+          <div class="a-title">Three steps to<br>institutional insight.</div>
+          <div class="a-text-lines">
+            <div class="a-line w90"></div>
+            <div class="a-line w70"></div>
+            <div class="a-line w80"></div>
+          </div>
+        </div>
+
+        <div class="a-divider"></div>
+
+        <!-- Interior glow for section 3 -->
+        <div class="a-glow" style="width:200px;height:80px;background:rgba(59,130,246,0.04);top:400px;left:30px;"></div>
+
+        <div class="a-sec">
+          <div class="a-label">Pricing</div>
+          <div class="a-title">Simple, transparent<br>pricing.</div>
+          <div class="a-content">
+            <div class="a-block"></div><div class="a-block accent"></div><div class="a-block"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="approach-label">
+      <strong>A — Unified Dark Canvas</strong>
+      One consistent background (#0a0d12) throughout. Sections separated by ultra-thin teal gradient hairlines. Each section has a unique interior radial glow as its identity. Backgrounds no longer shift — content and lighting differentiate sections.
+      <br><span class="rec">↑ Lowest risk, most cohesive</span>
+    </div>
+  </div>
+
+  <!-- ── APPROACH B ── -->
+  <div class="approach">
+    <div class="strip" id="opt-b" onclick="select('b')">
+      <div class="b-wrap">
+        <!-- Continuous ambient background layer -->
+        <div class="b-ambient">
+          <div class="b-grid-lines"></div>
+          <!-- Large ambient orbs spanning sections -->
+          <div class="b-orb" style="width:220px;height:220px;background:rgba(0,212,170,0.04);top:-40px;left:-60px;"></div>
+          <div class="b-orb" style="width:180px;height:180px;background:rgba(0,212,170,0.035);top:160px;right:-50px;"></div>
+          <div class="b-orb" style="width:200px;height:200px;background:rgba(59,130,246,0.03);top:350px;left:-30px;"></div>
+        </div>
+
+        <div class="b-sec">
+          <div class="b-label">What You Get</div>
+          <div class="b-title">Everything in<br>one place.</div>
+          <div class="b-grid">
+            <div class="b-card ac"></div><div class="b-card"></div><div class="b-card"></div>
+            <div class="b-card"></div><div class="b-card ac"></div><div class="b-card"></div>
+          </div>
+        </div>
+
+        <div class="b-sec">
+          <div class="b-label">How It Works</div>
+          <div class="b-title">Three steps to<br>institutional insight.</div>
+          <div class="b-text w75"></div>
+          <div class="b-text w55"></div>
+        </div>
+
+        <div class="b-sec">
+          <div class="b-label">Technology</div>
+          <div class="b-title">Real-time data.<br>AI-powered.</div>
+          <div class="b-grid">
+            <div class="b-card"></div><div class="b-card ac"></div><div class="b-card"></div>
+          </div>
+        </div>
+
+        <div class="b-sec">
+          <div class="b-label">Pricing</div>
+          <div class="b-title">Simple, transparent<br>pricing.</div>
+          <div class="b-grid">
+            <div class="b-card"></div><div class="b-card ac"></div><div class="b-card"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="approach-label">
+      <strong>B — Continuous Ambient Layer</strong>
+      A shared decorative background (grid + large teal/blue glow orbs) stretches behind all sections. Sections become transparent "windows" into one unified space. The ambient layer shifts subtly as you scroll, connecting pages.
+      <br><span class="rec">↑ Most immersive, "one page" feeling</span>
+    </div>
+  </div>
+
+  <!-- ── APPROACH C ── -->
+  <div class="approach">
+    <div class="strip" id="opt-c" onclick="select('c')">
+      <div class="c-wrap">
+        <!-- Spanning vertical timeline line -->
+        <div class="c-span-line" style="top:60px;height:180px;"></div>
+        <div class="c-span-dot" style="top:58px;"></div>
+        <div class="c-span-dot" style="top:160px;"></div>
+        <div class="c-span-dot" style="top:248px;"></div>
+
+        <!-- Diagonal accent at transition -->
+        <div class="c-diagonal" style="top:218px;left:36px;width:120px;transform:rotate(-8deg);"></div>
+
+        <div class="c-sec" style="padding-left: 44px;">
+          <div class="c-label">What You Get</div>
+          <div class="c-title">Everything in<br>one place.</div>
+          <div class="c-blocks">
+            <div class="c-bl"></div><div class="c-bl"></div>
+            <div class="c-bl"></div><div class="c-bl"></div>
+          </div>
+        </div>
+
+        <div class="c-sec" style="padding-left: 44px;">
+          <div class="c-label">How It Works</div>
+          <div class="c-title">Three steps to<br>institutional insight.</div>
+          <div class="c-text w80"></div>
+          <div class="c-text w60"></div>
+        </div>
+
+        <!-- Second spanning element -->
+        <div class="c-span-line" style="top:310px;height:160px;left:auto;right:18px;background:linear-gradient(to bottom,transparent,rgba(0,212,170,0.3) 20%,rgba(0,212,170,0.3) 80%,transparent);"></div>
+        <div class="c-diagonal" style="top:308px;left:20px;width:140px;transform:rotate(6deg);background:linear-gradient(90deg,transparent,rgba(0,212,170,0.2));"></div>
+
+        <div class="c-sec">
+          <div class="c-label">Technology</div>
+          <div class="c-title">Real-time data.<br>AI-powered.</div>
+          <div class="c-blocks">
+            <div class="c-bl"></div><div class="c-bl"></div>
+          </div>
+        </div>
+
+        <div class="c-sec">
+          <div class="c-label">Pricing</div>
+          <div class="c-title">Simple, transparent<br>pricing.</div>
+          <div class="c-blocks">
+            <div class="c-bl"></div><div class="c-bl"></div><div class="c-bl" style="grid-column:span 2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="approach-label">
+      <strong>C — Cross-Section Spanning Elements</strong>
+      Decorative elements (vertical timeline, diagonal accent lines, connecting nodes) physically cross section boundaries. A visual thread literally bridges one section to the next, making the page feel like one continuous narrative.
+      <br><span class="rec">↑ Strongest narrative flow</span>
+    </div>
+  </div>
+
+</div>
+
+<p style="font-size:11px;color:#4a5568;margin-top:24px;">These approaches can also be combined. Click to select your preference.</p>
+
+<script>
+function select(id) {
+  document.querySelectorAll('.strip').forEach(s => s.classList.remove('selected'));
+  document.getElementById('opt-'+id).classList.add('selected');
+  if(window.toggleSelect) {
+    document.querySelectorAll('.strip').forEach(s => {
+      s.dataset.choice = s.id.replace('opt-','');
+    });
+  }
+}
+// Wire into the companion selection system if available
+document.querySelectorAll('.strip').forEach(el => {
+  el.setAttribute('data-choice', el.id.replace('opt-',''));
+  el.setAttribute('onclick', `toggleSelect(this); select('${el.id.replace('opt-','')}');`);
+});
+</script>
+</body>
+</html>

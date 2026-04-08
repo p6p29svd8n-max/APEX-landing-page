@@ -1,0 +1,16 @@
+{"type":"server-started","port":62623,"host":"127.0.0.1","url_host":"localhost","url":"http://localhost:62623","screen_dir":"/Users/jonas/Documents/apex/landing page/.superpowers/brainstorm/1333-1775635243/content","state_dir":"/Users/jonas/Documents/apex/landing page/.superpowers/brainstorm/1333-1775635243/state"}
+{"type":"screen-added","file":"/Users/jonas/Documents/apex/landing page/.superpowers/brainstorm/1333-1775635243/content/hover-opacity.html"}
+{"type":"screen-updated","file":"/Users/jonas/Documents/apex/landing page/.superpowers/brainstorm/1333-1775635243/content/hover-opacity.html"}
+{"type":"screen-updated","file":"/Users/jonas/Documents/apex/landing page/.superpowers/brainstorm/1333-1775635243/content/hover-opacity.html"}
+{"type":"screen-updated","file":"/Users/jonas/Documents/apex/landing page/.superpowers/brainstorm/1333-1775635243/content/hover-opacity.html"}
+{"source":"user-event","type":"click","text":"◈\n        Feature Name\n        Short description of what this feature does and why it matters.\n        — Explore","choice":"b","id":null,"timestamp":1775635482690}
+{"type":"screen-added","file":"/Users/jonas/Documents/apex/landing page/.superpowers/brainstorm/1333-1775635243/content/layout-approaches.html"}
+{"type":"screen-updated","file":"/Users/jonas/Documents/apex/landing page/.superpowers/brainstorm/1333-1775635243/content/layout-approaches.html"}
+{"type":"screen-updated","file":"/Users/jonas/Documents/apex/landing page/.superpowers/brainstorm/1333-1775635243/content/layout-approaches.html"}
+{"type":"screen-updated","file":"/Users/jonas/Documents/apex/landing page/.superpowers/brainstorm/1333-1775635243/content/layout-approaches.html"}
+{"type":"screen-added","file":"/Users/jonas/Documents/apex/landing page/.superpowers/brainstorm/1333-1775635243/content/waiting.html"}
+{"type":"screen-updated","file":"/Users/jonas/Documents/apex/landing page/.superpowers/brainstorm/1333-1775635243/content/waiting.html"}
+{"type":"screen-updated","file":"/Users/jonas/Documents/apex/landing page/.superpowers/brainstorm/1333-1775635243/content/waiting.html"}
+{"type":"screen-updated","file":"/Users/jonas/Documents/apex/landing page/.superpowers/brainstorm/1333-1775635243/content/waiting.html"}
+{"type":"screen-updated","file":"/Users/jonas/Documents/apex/landing page/.superpowers/brainstorm/1333-1775635243/content/waiting.html"}
+{"type":"server-stopped","reason":"idle timeout"}
