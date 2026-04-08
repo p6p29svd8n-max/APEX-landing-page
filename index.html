@@ -97,6 +97,35 @@
             -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 100%);
         }
 
+        /* ── Ambient background layer ── */
+        #ambient-bg {
+            position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+            background-size: 44px 44px;
+        }
+        .amb-orb {
+            position: absolute; border-radius: 50%;
+            filter: blur(80px); pointer-events: none;
+        }
+        #amb-orb-1 {
+            width: 500px; height: 500px;
+            background: radial-gradient(circle, rgba(0,212,170,0.07) 0%, transparent 70%);
+            top: -100px; left: -120px;
+        }
+        #amb-orb-2 {
+            width: 420px; height: 420px;
+            background: radial-gradient(circle, rgba(0,212,170,0.045) 0%, transparent 70%);
+            top: 40vh; right: -80px;
+        }
+        #amb-orb-3 {
+            width: 560px; height: 560px;
+            background: radial-gradient(circle, rgba(59,130,246,0.035) 0%, transparent 70%);
+            bottom: -80px; left: -60px;
+        }
+        section#hero { z-index: 1; }
+
         /* ── Chart line draw ── */
         .path-draw {
             stroke-dasharray: 1400;
@@ -162,9 +191,9 @@
         .feat-desc  { font-size: clamp(12px, 1.35vmin, 15px) !important; margin: 0; }
         .feat-header-row { gap: clamp(8px, 0.8vmin, 12px); margin-bottom: clamp(6px, 0.7vmin, 12px); }
         .feat-subtitle {
-            font-size: clamp(13px, 1.3vmin, 15px);
-            color: #6e7680;
-            margin-top: 8px;
+            font-size: clamp(18px, 2.2vmin, 28px);
+            color: #00d4aa;
+            margin-top: 20px;
             text-align: center;
         }
         .feat-content { position: relative; z-index: 2; flex-shrink: 0; }
@@ -418,6 +447,13 @@
     </style>
 </head>
 <body>
+
+<!-- ── Ambient background layer ── -->
+<div id="ambient-bg" aria-hidden="true">
+    <div class="amb-orb" id="amb-orb-1"></div>
+    <div class="amb-orb" id="amb-orb-2"></div>
+    <div class="amb-orb" id="amb-orb-3"></div>
+</div>
 
 <!-- ══════════════════════════════════════════════
      NAV
@@ -727,7 +763,7 @@
         <h2 class="font-display mt-2 leading-snug" style="font-size:clamp(36px,4vw,60px); color:#f0f0f0;">
             Everything in one place.
         </h2>
-        <p class="feat-subtitle">9 Core features are already live in the beta, more are in development.</p>
+        <p class="feat-subtitle">APEX includes 9 core features - more in development.</p>
     </div>
 
     <!-- 10-cell grid — gap:1px on border-coloured wrapper = hairline lines -->
