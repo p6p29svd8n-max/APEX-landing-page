@@ -48,8 +48,8 @@
         body { color: #f0f0f0; overflow-x: hidden; -webkit-font-smoothing: antialiased; background: #0a0d12; }
 
         /* ── Scroll snap ── */
-        html { scroll-snap-type: y mandatory; overflow-y: scroll; }
-        section.page { scroll-snap-align: start; scroll-snap-stop: always; height: 100vh; overflow: hidden; position: relative; }
+        html { overflow-y: scroll; }
+        section.page { height: 100vh; overflow: hidden; position: relative; z-index: 1; }
 
         /* ── Section decoration overlay (uniform across all non-hero pages) ── */
         .section-deco {
@@ -64,7 +64,6 @@
         .sc-bl { bottom: 16px; left: 16px; border-bottom: 1px solid rgba(0,212,170,0.2); border-left: 1px solid rgba(0,212,170,0.2); }
         .sc-br { bottom: 16px; right: 16px; border-bottom: 1px solid rgba(0,212,170,0.2); border-right: 1px solid rgba(0,212,170,0.2); }
         @media (max-width: 768px) {
-            html { scroll-snap-type: none; }
             #how { grid-template-columns: 1fr !important; height: auto !important; overflow-y: auto !important; }
             #technology .tech-inner { grid-template-columns: 1fr !important; }
             #beta > div:last-child { grid-template-columns: 1fr !important; height: auto !important; padding: 3rem 1.5rem !important; }
@@ -494,7 +493,7 @@
      HERO (Page 1)
 ══════════════════════════════════════════════ -->
 <section id="hero" class="relative flex flex-col items-center justify-center pb-6 px-4 overflow-hidden"
-     style="height:calc(100vh - 60px); margin-top:60px; scroll-snap-align:start; scroll-snap-stop:always;">
+     style="height:calc(100vh - 60px); margin-top:60px;">
 
     <!-- Video background -->
     <video class="hero-video" autoplay muted loop playsinline>
