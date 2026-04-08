@@ -749,7 +749,7 @@
 <!-- ══════════════════════════════════════════════
      FEATURES (Page 2) — 10-cell 2×5 grid
 ══════════════════════════════════════════════ -->
-<section id="features" class="page flex flex-col" style="background:#0b0d0f; padding-left:clamp(16px,5vw,80px); padding-right:clamp(16px,5vw,80px);">
+<section id="features" class="page flex flex-col" style="background:#0a0d12; padding-left:clamp(16px,5vw,80px); padding-right:clamp(16px,5vw,80px);">
 
     <!-- Section decoration overlay -->
     <div class="section-deco" aria-hidden="true">
@@ -1356,7 +1356,7 @@
 <!-- ══════════════════════════════════════════════
      PRICING (Page 4)
 ══════════════════════════════════════════════ -->
-<section id="pricing" class="page flex flex-col items-center justify-center overflow-hidden" style="background:#111418;">
+<section id="pricing" class="page flex flex-col items-center justify-center overflow-hidden" style="background:#0a0d12;">
     <div class="section-deco" aria-hidden="true">
         <div class="sc sc-tl"></div><div class="sc sc-tr"></div>
         <div class="sc sc-bl"></div><div class="sc sc-br"></div>
@@ -1483,7 +1483,6 @@
         <div class="sc sc-tl"></div><div class="sc sc-tr"></div>
         <div class="sc sc-bl"></div><div class="sc sc-br"></div>
     </div>
-    <div class="absolute inset-0 bg-grid pointer-events-none z-0"></div>
     <!-- Radial teal glow from bottom -->
     <div class="absolute inset-0 pointer-events-none z-0" style="background:radial-gradient(ellipse 60% 40% at 50% 100%, rgba(0,212,170,0.07), transparent);"></div>
 
@@ -1676,6 +1675,17 @@
     }, { threshold: 0.08 });
 
     document.querySelectorAll('section.page').forEach(s => revealSectionObs.observe(s));
+
+    // ── Ambient orb parallax ──
+    const _orb1 = document.getElementById('amb-orb-1');
+    const _orb2 = document.getElementById('amb-orb-2');
+    const _orb3 = document.getElementById('amb-orb-3');
+    window.addEventListener('scroll', () => {
+        const y = window.scrollY;
+        if (_orb1) _orb1.style.transform = `translateY(${y * 0.06}px)`;
+        if (_orb2) _orb2.style.transform = `translateY(${y * -0.04}px)`;
+        if (_orb3) _orb3.style.transform = `translateY(${y * 0.03}px)`;
+    }, { passive: true });
 
     // ── Active nav links ──────────────────────
     const navLinks = {
