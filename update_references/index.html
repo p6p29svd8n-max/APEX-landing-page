@@ -172,8 +172,8 @@
             position: relative; overflow: hidden; background: #111418;
             border: 1px solid #1e2530;
             display: flex; flex-direction: column; cursor: pointer;
-            min-height: 200px;
-            padding: clamp(16px, 2.2vmin, 28px) clamp(14px, 2vmin, 26px) !important;
+            min-height: clamp(120px, 14vw, 200px);
+            padding: clamp(10px, 1.8vmin, 24px) clamp(10px, 1.5vmin, 20px) !important;
             transition: border-color 0.25s, box-shadow 0.25s;
         }
         .feat-card::before {
@@ -187,7 +187,7 @@
             border: 1px solid rgba(0,212,170,0.3) !important;
         }
         .feat-icon-box i { width: clamp(12px,1.3vmin,16px) !important; height: clamp(12px,1.3vmin,16px) !important; }
-        .feat-title { font-size: clamp(15px, 1.8vmin, 18px) !important; font-weight: 500; letter-spacing: -0.01em; }
+        .feat-title { font-size: clamp(13px, 1.5vmin, 16px) !important; }
         .feat-desc  { font-size: clamp(12px, 1.35vmin, 15px) !important; margin: 0; }
         .feat-header-row { gap: clamp(8px, 0.8vmin, 12px); margin-bottom: clamp(6px, 0.7vmin, 12px); }
         .feat-subtitle {
@@ -196,7 +196,7 @@
             margin-top: 20px;
             text-align: center;
         }
-        .feat-content { position: relative; z-index: 2; flex: 1; display: flex; flex-direction: column; gap: 14px; }
+        .feat-content { position: relative; z-index: 2; flex-shrink: 0; }
         .feat-explore {
             font-size: 11px; color: #00d4aa; letter-spacing: 0.15em;
             margin-top: 10px; opacity: 0; transform: translateY(4px);
@@ -449,64 +449,6 @@
             .mockup-sidebar { display: none; }
             .mockup-right  { display: none; }
         }
-
-        /* ── Feature section split (MVP vs Planned) ── */
-        .feat-subsection-label {
-            font-family: 'Inter', monospace;
-            font-size: 11px;
-            color: #00d4aa;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            margin-bottom: 14px;
-        }
-        .feat-grid--3col { grid-template-columns: repeat(3, 1fr) !important; }
-        @media (max-width: 1023px) { .feat-grid--3col { grid-template-columns: repeat(2, 1fr) !important; } }
-        @media (max-width: 639px)  { .feat-grid--3col { grid-template-columns: 1fr !important; } }
-        .feat-divider {
-            position: relative;
-            margin: 36px 0 20px;
-            border-top: 1px solid #252b34;
-            text-align: center;
-        }
-        .feat-divider-label {
-            position: relative;
-            top: -10px;
-            background: #0a0d12;
-            padding: 0 16px;
-            font-family: 'Inter', monospace;
-            font-size: 11px;
-            color: #6e7680;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-        }
-        .feat-live-badge {
-            position: absolute;
-            top: 9px; right: 9px;
-            z-index: 3;
-            font-size: 9px;
-            font-family: 'Inter', monospace;
-            color: #3fb950;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            pointer-events: none;
-        }
-        .feat-dev-badge {
-            position: absolute;
-            top: 9px; right: 9px;
-            z-index: 3;
-            font-size: 9px;
-            font-family: 'Inter', monospace;
-            color: #6e7680;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            border: 1px solid #252b34;
-            padding: 2px 6px;
-            pointer-events: none;
-        }
-        .feat-card--planned { cursor: default !important; }
-        .feat-card--planned:hover { border-color: #1e2530 !important; box-shadow: none !important; }
-        .feat-card--planned:hover::before { opacity: 0 !important; }
-        .feat-card--planned:hover .feat-desc { color: #6e7680 !important; }
     </style>
 </head>
 <body>
@@ -810,7 +752,7 @@
 
 
 <!-- ══════════════════════════════════════════════
-     FEATURES (Page 2) — MVP split + planned
+     FEATURES (Page 2) — 10-cell 2×5 grid
 ══════════════════════════════════════════════ -->
 <section id="features" class="page flex flex-col" style="background:#0a0d12; padding-left:clamp(16px,5vw,80px); padding-right:clamp(16px,5vw,80px);">
 
@@ -821,179 +763,170 @@
     </div>
 
     <!-- Section header -->
-    <div class="pt-12 pb-0 shrink-0">
-        <div class="reveal flex items-baseline justify-between mb-2" style="gap:20px; flex-wrap:wrap;">
-            <span class="font-mono uppercase tracking-[0.24em]" style="font-size:11px; color:#00d4aa;">What you get — MVP</span>
-            <span class="font-mono" style="font-size:10px; color:#6e7680;">06 / CURRENT · 03 / PLANNED</span>
-        </div>
-        <h2 class="reveal d1 font-display leading-snug" style="font-size:clamp(32px,4vw,56px); color:#f0f0f0; margin:0 0 16px; max-width:20ch;">
+    <div class="px-8 pt-12 pb-5 text-center shrink-0">
+        <span class="font-mono text-[10px] text-apex-muted uppercase tracking-[0.24em]">What You Get</span>
+        <h2 class="font-display mt-2 leading-snug" style="font-size:clamp(36px,4vw,60px); color:#f0f0f0;">
             Everything in one place.
         </h2>
-        <p class="reveal d2" style="font-size:15px; color:#8a97a6; max-width:60ch; margin-bottom:36px; line-height:1.6;">
-            Six core tools live at beta. Three more land in the months after — each unlocked automatically as they ship.
-        </p>
+        <p class="feat-subtitle">Aurealis includes 9 core features - more in development.</p>
     </div>
 
-    <!-- Features container -->
-    <div class="flex-1" style="padding:0 0 clamp(16px,2vmin,32px);">
+    <!-- 10-cell grid — gap:1px on border-coloured wrapper = hairline lines -->
+    <div class="flex-1" style="display:flex; align-items:center; padding:0 0 clamp(16px,2vmin,32px);">
+        <div class="feat-grid" style="display:grid; grid-template-columns:repeat(5,1fr); grid-template-rows:repeat(2,auto); gap:1px; width:100%; background:#252b34;">
 
-        <!-- MVP grid: 6 cards, 3×2 -->
-        <div class="feat-grid feat-grid--3col" style="display:grid; gap:1px; width:100%; background:#252b34;">
-
-            <!-- MVP 1: Shortlist Management -->
-            <div class="feat-card" onclick="openFeature('shortlist')">
-
+            <!-- Feat 1: Shortlist Management -->
+            <div class="feat-card" style="cursor:pointer;" onclick="openFeature('shortlist')">
+                <div class="feat-bg"><img src="shortlist_management.png" alt=""></div>
                 <div class="feat-content">
-                    <div style="display:flex; align-items:center; gap:12px;">
-                        <div class="feat-icon-box flex items-center justify-center shrink-0" style="width:36px; height:36px; background:rgba(0,212,170,0.1); border:1px solid #00d4aa;">
+                    <div class="flex items-center feat-header-row">
+                        <div class="feat-icon-box flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
                             <i data-lucide="bookmark" class="w-4 h-4" style="color:#00d4aa;"></i>
                         </div>
-                        <span class="font-mono" style="font-size:10px; color:#6e7680; letter-spacing:0.12em;">01</span>
+                        <h3 class="feat-title font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Shortlist Management</h3>
                     </div>
-                    <h3 class="feat-title" style="color:#00d4aa;">Shortlist Management</h3>
-                    <p class="feat-desc leading-relaxed" style="font-size:13.5px; color:#6e7680;">Curate your highest-conviction stock picks and ideas with live prices, key figures, fair value estimates and AI-based recommendations in one focused view.</p>
-                    <span class="font-mono" style="font-size:10px; color:#00d4aa; margin-top:auto; padding-top:10px; border-top:1px solid #252b34; letter-spacing:0.2em; display:block;">LIVE AT BETA</span>
+                    <p class="feat-desc leading-relaxed" style="color:#6e7680;">Curate your highest-conviction stock picks and ideas with live prices, key figures, fair value estimates and AI-based recommendations in one focused view.</p>
+                    <div class="feat-explore">— Explore</div>
                 </div>
             </div>
 
-            <!-- MVP 2: AI Equity Research Reports -->
-            <div class="feat-card" onclick="openFeature('reports')">
-
+            <!-- Feat 2: AI Equity Research Reports -->
+            <div class="feat-card" style="cursor:pointer;" onclick="openFeature('reports')">
+                <div class="feat-bg"><img src="AI_equityreports.png" alt=""></div>
                 <div class="feat-content">
-                    <div style="display:flex; align-items:center; gap:12px;">
-                        <div class="feat-icon-box flex items-center justify-center shrink-0" style="width:36px; height:36px; background:rgba(0,212,170,0.1); border:1px solid #00d4aa;">
+                    <div class="flex items-center feat-header-row">
+                        <div class="feat-icon-box flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
                             <i data-lucide="file-text" class="w-4 h-4" style="color:#00d4aa;"></i>
                         </div>
-                        <span class="font-mono" style="font-size:10px; color:#6e7680; letter-spacing:0.12em;">02</span>
+                        <h3 class="feat-title font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">AI Equity Research Reports</h3>
                     </div>
-                    <h3 class="feat-title" style="color:#00d4aa;">AI Equity Research Reports</h3>
-                    <p class="feat-desc leading-relaxed" style="font-size:13.5px; color:#6e7680;">Generate on-demand, in-depth, structured reports in 2 minutes — investment thesis, DCF &amp; other valuations, risk factors, catalysts, and personalized investment fit.</p>
-                    <span class="font-mono" style="font-size:10px; color:#00d4aa; margin-top:auto; padding-top:10px; border-top:1px solid #252b34; letter-spacing:0.2em; display:block;">LIVE AT BETA</span>
+                    <p class="feat-desc leading-relaxed" style="color:#6e7680;">Generate on-demand, in-depth, structured reports in 2 minutes — investment thesis, DCF & other valuations, risk factors, catalysts, and personalized investment fit.</p>
+                    <div class="feat-explore">— Explore</div>
                 </div>
             </div>
 
-            <!-- MVP 3: Stock Viewer -->
-            <div class="feat-card" onclick="openFeature('stock')">
-
+            <!-- Feat 3: Stock Viewer -->
+            <div class="feat-card" style="cursor:pointer;" onclick="openFeature('stock')">
+                <div class="feat-bg"><img src="stock_viewer.png" alt=""></div>
                 <div class="feat-content">
-                    <div style="display:flex; align-items:center; gap:12px;">
-                        <div class="feat-icon-box flex items-center justify-center shrink-0" style="width:36px; height:36px; background:rgba(0,212,170,0.1); border:1px solid #00d4aa;">
+                    <div class="flex items-center feat-header-row">
+                        <div class="feat-icon-box flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
                             <i data-lucide="bar-chart-2" class="w-4 h-4" style="color:#00d4aa;"></i>
                         </div>
-                        <span class="font-mono" style="font-size:10px; color:#6e7680; letter-spacing:0.12em;">03</span>
+                        <h3 class="feat-title font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Stock Viewer</h3>
                     </div>
-                    <h3 class="feat-title" style="color:#00d4aa;">Stock Viewer</h3>
-                    <p class="feat-desc leading-relaxed" style="font-size:13.5px; color:#6e7680;">Explore live stock charts, financial and business data, short-interest, insider transactions, wall street analyst consensus, and current news in one panel.</p>
-                    <span class="font-mono" style="font-size:10px; color:#00d4aa; margin-top:auto; padding-top:10px; border-top:1px solid #252b34; letter-spacing:0.2em; display:block;">LIVE AT BETA</span>
+                    <p class="feat-desc leading-relaxed" style="color:#6e7680;">Explore live stock charts, financial and business data, short-interest, insider transactions, wall street analyst consensus, and current news in one panel.</p>
+                    <div class="feat-explore">— Explore</div>
                 </div>
             </div>
 
-            <!-- MVP 4: Recession Radar -->
-            <div class="feat-card" onclick="openFeature('recession')">
-
+            <!-- Feat 4: Sector Overview -->
+            <div class="feat-card" style="cursor:pointer;" onclick="openFeature('sectors')">
+                <div class="feat-bg"><img src="sector_overview.png" alt=""></div>
                 <div class="feat-content">
-                    <div style="display:flex; align-items:center; gap:12px;">
-                        <div class="feat-icon-box flex items-center justify-center shrink-0" style="width:36px; height:36px; background:rgba(0,212,170,0.1); border:1px solid #00d4aa;">
+                    <div class="flex items-center feat-header-row">
+                        <div class="feat-icon-box flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
+                            <i data-lucide="layers" class="w-4 h-4" style="color:#00d4aa;"></i>
+                        </div>
+                        <h3 class="feat-title font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Key Sector Overview &amp; Insights</h3>
+                    </div>
+                    <p class="feat-desc leading-relaxed" style="color:#6e7680;">Evaluate and filter current and historical market performance across prominent sectors, and gain insight into leading companies within each sector.</p>
+                    <div class="feat-explore">— Explore</div>
+                </div>
+            </div>
+
+            <!-- Feat 5: Macro + News + Earnings -->
+            <div class="feat-card" style="cursor:pointer;" onclick="openFeature('macro')">
+                <div class="feat-bg"><img src="news_world_earnings.png" alt=""></div>
+                <div class="feat-content">
+                    <div class="flex items-center feat-header-row">
+                        <div class="feat-icon-box flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
+                            <i data-lucide="globe" class="w-4 h-4" style="color:#00d4aa;"></i>
+                        </div>
+                        <h3 class="feat-title font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Macro Data, World News &amp; Earnings</h3>
+                    </div>
+                    <p class="feat-desc leading-relaxed" style="color:#6e7680;">Understand current yield curves, FX, commodities, global news feed, upcoming earnings and an estimated fear & greed index — all in one tab.</p>
+                    <div class="feat-explore">— Explore</div>
+                </div>
+            </div>
+
+            <!-- Feat 6: Recession Radar -->
+            <div class="feat-card" style="cursor:pointer;" onclick="openFeature('recession')">
+                <div class="feat-bg"><img src="recession_radar.png" alt=""></div>
+                <div class="feat-content">
+                    <div class="flex items-center feat-header-row">
+                        <div class="feat-icon-box flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
                             <i data-lucide="activity" class="w-4 h-4" style="color:#00d4aa;"></i>
                         </div>
-                        <span class="font-mono" style="font-size:10px; color:#6e7680; letter-spacing:0.12em;">04</span>
+                        <h3 class="feat-title font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Recession Radar &amp; Fear &amp; Greed</h3>
                     </div>
-                    <h3 class="feat-title" style="color:#00d4aa;">Recession Radar</h3>
-                    <p class="feat-desc leading-relaxed" style="font-size:13.5px; color:#6e7680;">Track 11 macro signals, merged into one composite score across 5 regimes, to understand recession risks and market sentiment.</p>
-                    <span class="font-mono" style="font-size:10px; color:#00d4aa; margin-top:auto; padding-top:10px; border-top:1px solid #252b34; letter-spacing:0.2em; display:block;">LIVE AT BETA</span>
+                    <p class="feat-desc leading-relaxed" style="color:#6e7680;">Track 11 macro signals, merged into one composite score across 5 regimes, to understand recession risks and market sentiment.</p>
+                    <div class="feat-explore">— Explore</div>
                 </div>
             </div>
 
-            <!-- MVP 5: Portfolio Tracking & AI Analysis -->
-            <div class="feat-card" onclick="openFeature('portfolio')">
-
+            <!-- Feat 7: Portfolio Tracking -->
+            <div class="feat-card" style="cursor:pointer;" onclick="openFeature('portfolio')">
+                <div class="feat-bg"><img src="portfolio_analyzer.png" alt=""></div>
                 <div class="feat-content">
-                    <div style="display:flex; align-items:center; gap:12px;">
-                        <div class="feat-icon-box flex items-center justify-center shrink-0" style="width:36px; height:36px; background:rgba(0,212,170,0.1); border:1px solid #00d4aa;">
+                    <div class="flex items-center feat-header-row">
+                        <div class="feat-icon-box flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
                             <i data-lucide="briefcase" class="w-4 h-4" style="color:#00d4aa;"></i>
                         </div>
-                        <span class="font-mono" style="font-size:10px; color:#6e7680; letter-spacing:0.12em;">05</span>
+                        <h3 class="feat-title font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Portfolio Tracking &amp; AI Analysis</h3>
                     </div>
-                    <h3 class="feat-title" style="color:#00d4aa;">Portfolio Tracking &amp; AI Analysis</h3>
-                    <p class="feat-desc leading-relaxed" style="font-size:13.5px; color:#6e7680;">Monitor your portfolio performance and understand sector allocation, value history chart, and challenge via critical AI-based portfolio analysis.</p>
-                    <span class="font-mono" style="font-size:10px; color:#00d4aa; margin-top:auto; padding-top:10px; border-top:1px solid #252b34; letter-spacing:0.2em; display:block;">LIVE AT BETA</span>
+                    <p class="feat-desc leading-relaxed" style="color:#6e7680;">Monitor your portfolio performance and understand sector allocation, value history chart, and challenge via critical AI-based portfolio analysis.</p>
+                    <div class="feat-explore">— Explore</div>
                 </div>
             </div>
 
-            <!-- MVP 6: DCF Analyzer -->
-            <div class="feat-card" onclick="openFeature('dcf')">
-
+            <!-- Feat 8: DCF Analyzer -->
+            <div class="feat-card" style="cursor:pointer;" onclick="openFeature('dcf')">
+                <div class="feat-bg"><img src="DCF_analyzer.png" alt=""></div>
                 <div class="feat-content">
-                    <div style="display:flex; align-items:center; gap:12px;">
-                        <div class="feat-icon-box flex items-center justify-center shrink-0" style="width:36px; height:36px; background:rgba(0,212,170,0.1); border:1px solid #00d4aa;">
+                    <div class="flex items-center feat-header-row">
+                        <div class="feat-icon-box flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
                             <i data-lucide="calculator" class="w-4 h-4" style="color:#00d4aa;"></i>
                         </div>
-                        <span class="font-mono" style="font-size:10px; color:#6e7680; letter-spacing:0.12em;">06</span>
+                        <h3 class="feat-title font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Plug &amp; Play DCF Analyzer</h3>
                     </div>
-                    <h3 class="feat-title" style="color:#00d4aa;">Plug &amp; Play DCF Analyzer</h3>
-                    <p class="feat-desc leading-relaxed" style="font-size:13.5px; color:#6e7680;">Build comprehensive DCF models with adjustable inputs (i.e. WACC/terminal growth) and leverage AI commentary on key value drivers in under 30 seconds.</p>
-                    <span class="font-mono" style="font-size:10px; color:#00d4aa; margin-top:auto; padding-top:10px; border-top:1px solid #252b34; letter-spacing:0.2em; display:block;">LIVE AT BETA</span>
+                    <p class="feat-desc leading-relaxed" style="color:#6e7680;">Build comprehensive DCF models with adjustable inputs (i.e. WACC/terminal growth) and leverage AI commentary on key value drivers in under 30 seconds.</p>
+                    <div class="feat-explore">— Explore</div>
+                </div>
+            </div>
+
+            <!-- Feat 9: Trend-Based Company Finder -->
+            <div class="feat-card" style="cursor:pointer;" onclick="openFeature('trends')">
+                <div class="feat-bg"><img src="company_finder.png" alt=""></div>
+                <div class="feat-content">
+                    <div class="flex items-center feat-header-row">
+                        <div class="feat-icon-box flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
+                            <i data-lucide="search" class="w-4 h-4" style="color:#00d4aa;"></i>
+                        </div>
+                        <h3 class="feat-title font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Trend-Based Company Finder</h3>
+                    </div>
+                    <p class="feat-desc leading-relaxed" style="color:#6e7680;">Research trends, filter by various performance metrics and geolocation, and uncover associated stocks enriched with live financial data.</p>
+                    <div class="feat-explore">— Explore</div>
+                </div>
+            </div>
+
+            <!-- Feat 10: Trend Intelligence (Coming Soon) -->
+            <div class="feat-card" style="opacity:0.65; cursor:default;">
+                <div class="feat-content">
+                    <div class="flex items-center feat-header-row">
+                        <div class="feat-icon-box flex items-center justify-center shrink-0" style="background:rgba(0,212,170,0.08); border:1px solid #252b34;">
+                            <i data-lucide="zap" class="w-4 h-4" style="color:#00d4aa;"></i>
+                        </div>
+                        <div>
+                            <h3 class="feat-title font-bold leading-tight" style="font-family:Inter,sans-serif; color:#00d4aa;">Trend Intelligence </h3>
+                            <span class="font-mono text-[8px] uppercase tracking-wider" style="color:#00d4aa;">Under development</span>
+                        </div>
+                    </div>
+                    <p class="feat-desc leading-relaxed" style="color:#6e7680;">Vertical and horizontal trend analysis to identify key market movements and investment opportunities, across supply-chains and sectors.</p>
                 </div>
             </div>
 
         </div>
-
-        <!-- Planned section header -->
-        <div class="reveal flex items-baseline justify-between" style="margin:72px 0 20px; gap:20px; flex-wrap:wrap;">
-            <span class="font-mono uppercase tracking-[0.24em]" style="font-size:11px; color:#6e7680;">Planned — post-beta</span>
-            <span class="font-mono" style="font-size:10px; color:#4a5568; letter-spacing:0.15em;">ROADMAP / IN DEVELOPMENT</span>
-        </div>
-
-        <!-- Planned grid: 3 cards, single row -->
-        <div class="feat-grid feat-grid--3col" style="display:grid; gap:1px; width:100%; background:#252b34;">
-
-            <!-- Planned 1: Sector Insights -->
-            <div class="feat-card feat-card--planned" style="opacity:0.62; cursor:default;">
-                <div class="feat-content">
-                    <div style="display:flex; align-items:center; gap:12px;">
-                        <div class="feat-icon-box flex items-center justify-center shrink-0" style="width:36px; height:36px; background:transparent; border:1px solid #252b34;">
-                            <i data-lucide="layers" class="w-4 h-4" style="color:#6e7680;"></i>
-                        </div>
-                        <span class="font-mono" style="font-size:10px; color:#4a5568; letter-spacing:0.12em;">07</span>
-                    </div>
-                    <h3 class="feat-title" style="color:#c9d1d9;">Sector Insights</h3>
-                    <p class="feat-desc leading-relaxed" style="font-size:13.5px; color:#6e7680;">Evaluate and filter current and historical market performance across prominent sectors, and gain insight into leading companies within each sector.</p>
-                    <span class="font-mono" style="font-size:10px; color:#4a5568; margin-top:auto; padding-top:10px; border-top:1px solid #1e2530; letter-spacing:0.2em; display:block;">IN DEVELOPMENT</span>
-                </div>
-            </div>
-
-            <!-- Planned 2: Macro, World News & Earnings -->
-            <div class="feat-card feat-card--planned" style="opacity:0.62; cursor:default;">
-                <div class="feat-content">
-                    <div style="display:flex; align-items:center; gap:12px;">
-                        <div class="feat-icon-box flex items-center justify-center shrink-0" style="width:36px; height:36px; background:transparent; border:1px solid #252b34;">
-                            <i data-lucide="globe" class="w-4 h-4" style="color:#6e7680;"></i>
-                        </div>
-                        <span class="font-mono" style="font-size:10px; color:#4a5568; letter-spacing:0.12em;">08</span>
-                    </div>
-                    <h3 class="feat-title" style="color:#c9d1d9;">Macro, World News &amp; Earnings</h3>
-                    <p class="feat-desc leading-relaxed" style="font-size:13.5px; color:#6e7680;">Understand current yield curves, FX, commodities, global news feed, upcoming earnings and an estimated fear &amp; greed index — all in one tab.</p>
-                    <span class="font-mono" style="font-size:10px; color:#4a5568; margin-top:auto; padding-top:10px; border-top:1px solid #1e2530; letter-spacing:0.2em; display:block;">IN DEVELOPMENT</span>
-                </div>
-            </div>
-
-            <!-- Planned 3: Trend Intelligence -->
-            <div class="feat-card feat-card--planned" style="opacity:0.62; cursor:default;">
-                <div class="feat-content">
-                    <div style="display:flex; align-items:center; gap:12px;">
-                        <div class="feat-icon-box flex items-center justify-center shrink-0" style="width:36px; height:36px; background:transparent; border:1px solid #252b34;">
-                            <i data-lucide="search" class="w-4 h-4" style="color:#6e7680;"></i>
-                        </div>
-                        <span class="font-mono" style="font-size:10px; color:#4a5568; letter-spacing:0.12em;">09</span>
-                    </div>
-                    <h3 class="feat-title" style="color:#c9d1d9;">Trend Intelligence</h3>
-                    <p class="feat-desc leading-relaxed" style="font-size:13.5px; color:#6e7680;">Vertical and horizontal trend analysis to identify key market movements and investment opportunities, across supply-chains and sectors.</p>
-                    <span class="font-mono" style="font-size:10px; color:#4a5568; margin-top:auto; padding-top:10px; border-top:1px solid #1e2530; letter-spacing:0.2em; display:block;">IN DEVELOPMENT</span>
-                </div>
-            </div>
-
-        </div>
-
     </div>
 </section>
 
@@ -1450,8 +1383,8 @@
             </div>
         </div>
 
-        <!-- Cards: hairline gap, 3 tiers -->
-        <div class="pricing-grid reveal" style="display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:#252b34;">
+        <!-- Cards: hairline gap -->
+        <div class="pricing-grid reveal" style="display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:#252b34;">
 
             <!-- Free Trial -->
             <div class="plan-card flex flex-col p-6" style="background:#0a0d12;">
@@ -1460,10 +1393,10 @@
                     <span class="font-display text-apex-text" style="font-size:52px; line-height:1;">€0</span>
                     <span class="text-apex-muted text-[13px] ml-1 font-mono">/ 24h</span>
                 </div>
-                <div class="text-[12px] text-apex-muted mb-5">Full platform access for 24 hours.</div>
+                <div class="text-[12px] text-apex-muted mb-5">No credit card. Full platform access for 24 hours.</div>
                 <ul class="space-y-2.5 text-[12px] text-apex-sub flex-1 mb-8">
                     <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>3 AI research reports</li>
-                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>All dashboard tabs</li>
+                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>All 10 dashboard tabs</li>
                     <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Live prices &amp; charts</li>
                     <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Portfolio tracker</li>
                     <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Recession Radar</li>
@@ -1471,9 +1404,31 @@
                 <a href="#beta" class="btn-outline text-center text-[12px] uppercase tracking-wider">Start Free Trial</a>
             </div>
 
-            <!-- Starter — Most Popular (featured) -->
+            <!-- Base — Best Value -->
             <div class="plan-card plan-featured flex flex-col p-6 relative">
-                <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 text-[9px] font-mono font-semibold uppercase tracking-wider" style="background:#00d4aa;color:#0a0d12;">Most Popular</div>
+                <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 text-[9px] font-mono font-semibold uppercase tracking-wider" style="background:#00d4aa;color:#0a0d12;">Best Value</div>
+                <div class="text-[10px] font-mono text-apex-muted uppercase tracking-[0.2em] mb-4">Base</div>
+                <div class="mb-1 whitespace-nowrap">
+                    <span class="font-display text-apex-text price-mo" id="base-price-mo" style="font-size:52px; line-height:1;">€9.99</span>
+                    <span class="font-display text-apex-text price-yr hidden" id="base-price-yr" style="font-size:52px; line-height:1;">€99.99</span>
+                    <span class="text-apex-muted text-[13px] ml-1 font-mono price-mo">/ mo</span>
+                    <span class="text-apex-muted text-[13px] ml-1 font-mono price-yr hidden">/ yr</span>
+                </div>
+                <div class="text-[11px] font-mono mb-4" style="color:#00d4aa;">Bring your own API keys</div>
+                <ul class="space-y-2.5 text-[12px] text-apex-sub flex-1 mb-5">
+                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span><span><strong class="text-apex-text">Unlimited</strong> AI reports (BYOK)</span></li>
+                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>All 10 dashboard tabs</li>
+                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Newsletter ingestion</li>
+                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Portfolio AI analysis</li>
+                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>DCF valuation model</li>
+                </ul>
+                <div class="text-[11px] text-apex-muted font-mono mb-4 leading-relaxed" style="border-top:1px solid #252b34; padding-top:0.875rem;">Takes ~10 min to set up.<br>Cost (depending on usage) ≈ <span class="text-apex-sub">€20/mo</span>.</div>
+                <a href="#beta" class="btn-primary text-center text-[12px] uppercase tracking-wider">Join Beta →</a>
+            </div>
+
+            <!-- Starter — Most Popular -->
+            <div class="plan-card flex flex-col p-6 relative" style="background:#0a0d12;">
+                <div class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 text-[9px] font-mono font-semibold uppercase tracking-wider" style="background:#252b34;color:#f0f0f0;">Most Popular</div>
                 <div class="text-[10px] font-mono text-apex-muted uppercase tracking-[0.2em] mb-4">Starter</div>
                 <div class="mb-1 whitespace-nowrap">
                     <span class="font-display text-apex-text price-mo" id="starter-price-mo" style="font-size:52px; line-height:1;">€12.99</span>
@@ -1484,12 +1439,13 @@
                 <div class="text-[11px] font-mono text-apex-muted mb-4">No setup required</div>
                 <ul class="space-y-2.5 text-[12px] text-apex-sub flex-1 mb-8">
                     <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span><span><strong class="text-apex-text">10 reports</strong> / month</span></li>
-                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>All dashboard tabs</li>
-                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Live prices &amp; charts</li>
-                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Portfolio tracker</li>
-                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Recession Radar</li>
+                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>All 10 dashboard tabs</li>
+                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Newsletter ingestion</li>
+                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Portfolio AI analysis</li>
+                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>DCF valuation model</li>
+                    <li class="flex items-start gap-2.5 text-apex-muted"><span>—</span>No API key setup</li>
                 </ul>
-                <a href="#beta" class="btn-primary text-center text-[12px] uppercase tracking-wider">Join Beta →</a>
+                <a href="#beta" class="btn-outline text-center text-[12px] uppercase tracking-wider">Join Beta →</a>
             </div>
 
             <!-- Pro -->
@@ -1501,14 +1457,14 @@
                     <span class="text-apex-muted text-[13px] ml-1 font-mono price-mo">/ mo</span>
                     <span class="text-apex-muted text-[13px] ml-1 font-mono price-yr hidden">/ yr</span>
                 </div>
-                <div class="text-[11px] font-mono text-apex-muted mb-4">&nbsp;</div>
+                <div class="text-[11px] font-mono text-apex-muted mb-4">BYOK optional for unlimited</div>
                 <ul class="space-y-2.5 text-[12px] text-apex-sub flex-1 mb-8">
                     <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span><span><strong class="text-apex-text">30 reports</strong> / month</span></li>
-                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>All dashboard tabs</li>
-                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Live prices &amp; charts</li>
-                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Portfolio tracker</li>
-                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Recession Radar</li>
-                    <li class="flex items-start gap-2.5"><span style="color:#d29922;">✦</span>Early access to new features</li>
+                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>All 10 dashboard tabs</li>
+                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Newsletter ingestion</li>
+                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Portfolio AI analysis</li>
+                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>DCF valuation model</li>
+                    <li class="flex items-start gap-2.5 text-apex-muted"><span>—</span>No API key setup</li>
                 </ul>
                 <a href="#beta" class="btn-outline text-center text-[12px] uppercase tracking-wider">Join Beta →</a>
             </div>
@@ -1595,7 +1551,7 @@
             </div>
 
             <p class="mt-5 text-[11px] font-mono" style="color:#4a5568;">
-                Browser-based · No lock-in · 24h free trial
+                Browser-based · No credit card required
             </p>
         </div>
 
@@ -1607,49 +1563,31 @@
 <!-- ══════════════════════════════════════════════
      FOOTER
 ══════════════════════════════════════════════ -->
-<footer style="background:#111418; border-top:1px solid #252b34; flex-shrink:0; padding:28px 0;">
+<footer style="background:#111418; border-top:1px solid #252b34; flex-shrink:0; padding:16px 0;">
     <div class="max-w-5xl mx-auto px-6 w-full">
-        <!-- Top row: logo + 3 link columns -->
-        <div class="flex flex-col md:flex-row justify-between items-start gap-8 pb-5" style="border-bottom:1px solid #1e2530;">
-            <!-- Brand -->
-            <div class="flex items-center gap-2.5 shrink-0">
+        <!-- Top row: logo · copyright · nav links -->
+        <div class="flex flex-col md:flex-row justify-between items-center gap-3 pb-4" style="border-bottom:1px solid #1e2530;">
+            <div class="flex items-center gap-2.5">
                 <img src="logo.png" alt="Aurealis" width="20" height="20" style="display:block; opacity:0.75;">
                 <span class="font-mono text-[11px] text-apex-muted uppercase tracking-[0.2em]">Aurealis Investment Intelligence</span>
             </div>
-            <!-- Link columns -->
-            <div class="flex gap-12">
-                <!-- Product -->
-                <div>
-                    <div class="font-mono text-[9px] uppercase tracking-[0.2em] mb-3" style="color:#6e7680;">Product</div>
-                    <div class="flex flex-col gap-2 font-mono text-[11px] uppercase tracking-wider" style="color:#4a5568;">
-                        <a href="#features" class="hover:text-apex-accent transition-colors duration-150">Features</a>
-                        <a href="#pricing"  class="hover:text-apex-accent transition-colors duration-150">Pricing</a>
-                        <a href="#beta"     class="hover:text-apex-accent transition-colors duration-150">Join Beta</a>
-                    </div>
-                </div>
-                <!-- Company -->
-                <div>
-                    <div class="font-mono text-[9px] uppercase tracking-[0.2em] mb-3" style="color:#6e7680;">Company</div>
-                    <div class="flex flex-col gap-2 font-mono text-[11px] uppercase tracking-wider" style="color:#4a5568;">
-                        <a href="#" class="hover:text-apex-accent transition-colors duration-150">About</a>
-                        <a href="#" class="hover:text-apex-accent transition-colors duration-150">Contact</a>
-                    </div>
-                </div>
-                <!-- Legal -->
-                <div>
-                    <div class="font-mono text-[9px] uppercase tracking-[0.2em] mb-3" style="color:#6e7680;">Legal</div>
-                    <div class="flex flex-col gap-2 font-mono text-[11px] uppercase tracking-wider" style="color:#4a5568;">
-                        <a href="#" class="hover:text-apex-accent transition-colors duration-150" title="To be published">Terms of Service</a>
-                        <a href="#" class="hover:text-apex-accent transition-colors duration-150" title="To be published">Privacy Policy</a>
-                        <a href="#" class="hover:text-apex-accent transition-colors duration-150" title="To be published">Imprint</a>
-                    </div>
-                </div>
+            <div class="text-[11px] font-mono text-apex-muted">
+                © 2026 — Built for private investors.
+            </div>
+            <div class="flex gap-5 text-[11px] font-mono text-apex-muted uppercase tracking-wider">
+                <a href="#features" class="hover:text-apex-accent transition-colors duration-150">Features</a>
+                <a href="#pricing"  class="hover:text-apex-accent transition-colors duration-150">Pricing</a>
+                <a href="#beta"     class="hover:text-apex-accent transition-colors duration-150">Join Beta</a>
             </div>
         </div>
-        <!-- Bottom row: disclaimer + copyright -->
-        <div class="flex flex-wrap justify-center md:justify-between items-center gap-x-6 gap-y-1 pt-4">
+        <!-- Bottom row: regulatory links -->
+        <div class="flex flex-wrap justify-center md:justify-between items-center gap-x-6 gap-y-1 pt-3">
             <span class="font-mono text-[10px]" style="color:#3a4555; letter-spacing:0.1em;">Aurealis is not a registered financial advisor. Content is for informational purposes only.</span>
-            <div class="text-[10px] font-mono" style="color:#4a5568;">© 2026 — Built for private investors.</div>
+            <div class="flex gap-5 font-mono text-[10px] uppercase tracking-wider" style="color:#4a5568;">
+                <a href="#" class="hover:text-apex-accent transition-colors duration-150" title="To be published">Terms of Service</a>
+                <a href="#" class="hover:text-apex-accent transition-colors duration-150" title="To be published">Privacy Policy</a>
+                <a href="#" class="hover:text-apex-accent transition-colors duration-150" title="To be published">Imprint</a>
+            </div>
         </div>
     </div>
 </footer>

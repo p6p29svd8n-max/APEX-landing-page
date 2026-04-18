@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurealis Landing — Claude Code Handoff</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0d12;
+    --surface: #111418;
+    --surface-2: #14181f;
+    --line: #1a2030;
+    --line-2: #252b34;
+    --ink: #f0f0f0;
+    --ink-2: #c9d1d9;
+    --ink-3: #8a97a6;
+    --ink-4: #6e7680;
+    --accent: #00d4aa;
+    --accent-dim: rgba(0, 212, 170, 0.12);
+    --pos: #3fb950;
+    --neg: #f85149;
+    --warn: #d29922;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); }
+  body {
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; }
+
+  /* ========= layout ========= */
+  .wrap {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 48px 32px 120px;
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 56px;
+    align-items: start;
+  }
+  @media (max-width: 900px) {
+    .wrap { grid-template-columns: 1fr; gap: 24px; padding: 32px 20px 80px; }
+    .toc { position: static !important; }
+  }
+
+  /* ========= TOC ========= */
+  .toc {
+    position: sticky;
+    top: 32px;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .toc-label {
+    color: var(--ink-4);
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+    display: flex; justify-content: space-between;
+  }
+  .toc ol { list-style: none; padding: 0; margin: 0; counter-reset: toc; }
+  .toc li { counter-increment: toc; margin: 0; }
+  .toc a {
+    display: flex;
+    gap: 12px;
+    padding: 8px 0;
+    color: var(--ink-3);
+    text-decoration: none;
+    border-bottom: 1px dashed transparent;
+    transition: color 0.15s;
+  }
+  .toc a::before {
+    content: counter(toc, decimal-leading-zero);
+    color: var(--ink-4);
+    font-weight: 500;
+  }
+  .toc a:hover { color: var(--accent); }
+  .toc a.active { color: var(--ink); }
+  .toc a.active::before { color: var(--accent); }
+
+  /* ========= main ========= */
+  main { min-width: 0; }
+
+  .hdr {
+    display: flex; align-items: center; justify-content: space-between;
+    padding-bottom: 28px; margin-bottom: 40px;
+    border-bottom: 1px solid var(--line);
+  }
+  .hdr-title { display: flex; align-items: center; gap: 16px; }
+  .hdr-title .logo {
+    width: 36px; height: 36px;
+    border: 1px solid var(--line-2);
+    display: grid; place-items: center;
+    font-weight: 300; font-size: 22px;
+    color: var(--accent);
+  }
+  .hdr-title h1 {
+    margin: 0; font-weight: 300; font-size: 22px; letter-spacing: -0.01em;
+  }
+  .hdr-title h1 small {
+    display: block; color: var(--ink-4);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .hdr .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--ink-4); text-align: right;
+  }
+  .hdr .meta .live {
+    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--accent);
+  }
+  .hdr .meta .live::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent); box-shadow: 0 0 8px var(--accent);
+  }
+
+  /* ========= sections ========= */
+  section { margin-bottom: 64px; scroll-margin-top: 32px; }
+  .kicker {
+    display: flex; align-items: baseline; gap: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--ink-4);
+    margin-bottom: 14px;
+  }
+  .kicker .n { color: var(--accent); }
+  .kicker::after {
+    content: ''; flex: 1; height: 1px; background: var(--line); margin-left: 8px;
+  }
+  h2 {
+    font-weight: 300; font-size: 28px; letter-spacing: -0.015em;
+    margin: 0 0 20px; color: var(--ink);
+  }
+  h3 {
+    font-weight: 500; font-size: 14px; letter-spacing: 0.02em;
+    margin: 28px 0 10px; color: var(--ink);
+  }
+  p { margin: 0 0 14px; color: var(--ink-2); max-width: 68ch; }
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color 0.15s; }
+  a:hover { border-bottom-color: var(--accent); }
+  ul { margin: 0 0 16px; padding-left: 0; list-style: none; }
+  li { padding: 6px 0 6px 20px; position: relative; color: var(--ink-2); }
+  li::before {
+    content: '→'; position: absolute; left: 0; top: 6px;
+    color: var(--accent); font-family: 'JetBrains Mono', monospace; font-size: 12px;
+  }
+
+  /* ========= boxes ========= */
+  .box {
+    border: 1px solid var(--line);
+    background: var(--surface);
+    padding: 20px 24px;
+    margin: 16px 0;
+    position: relative;
+  }
+  .box.callout {
+    border-left: 2px solid var(--accent);
+    background: linear-gradient(90deg, var(--accent-dim) 0%, transparent 30%);
+  }
+  .box-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 8px;
+  }
+  .box-label.warn { color: var(--warn); }
+
+  code, .code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    background: var(--surface-2);
+    padding: 2px 6px;
+    border: 1px solid var(--line);
+    color: var(--accent);
+  }
+  pre {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 16px 20px;
+    margin: 12px 0 20px;
+    overflow-x: auto;
+    font-size: 12px; line-height: 1.6;
+    color: var(--ink-2);
+    font-family: 'JetBrains Mono', monospace;
+  }
+  pre .k { color: var(--accent); }
+  pre .s { color: #d29922; }
+  pre .c { color: var(--ink-4); font-style: italic; }
+  pre .n { color: #79c0ff; }
+
+  /* ========= tables ========= */
+  table {
+    width: 100%; border-collapse: collapse;
+    font-size: 12px; margin: 12px 0 24px;
+  }
+  th, td {
+    text-align: left; padding: 10px 14px;
+    border-bottom: 1px solid var(--line);
+    vertical-align: top;
+  }
+  th {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--ink-4); font-weight: 500;
+    border-bottom-color: var(--line-2);
+  }
+  td { color: var(--ink-2); }
+  td.mono-td { font-family: 'JetBrains Mono', monospace; color: var(--accent); font-size: 11px; }
+  td.tag { font-family: 'JetBrains Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
+
+  /* ========= swatch grid ========= */
+  .swatches {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+    background: var(--line); border: 1px solid var(--line);
+    margin: 16px 0 24px;
+  }
+  @media (max-width: 700px) { .swatches { grid-template-columns: repeat(2, 1fr); } }
+  .sw {
+    background: var(--surface); padding: 14px 16px;
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .sw .chip {
+    height: 44px; margin: -14px -16px 8px; border-bottom: 1px solid var(--line);
+  }
+  .sw .name { color: var(--ink); text-transform: uppercase; letter-spacing: 0.1em; }
+  .sw .hex { color: var(--ink-4); }
+
+  /* ========= spec rows ========= */
+  .spec {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    gap: 0;
+    border-top: 1px solid var(--line);
+  }
+  .spec > div {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .spec .k {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--ink-4);
+    padding-right: 16px;
+  }
+  .spec .v { color: var(--ink-2); }
+  .spec .v code { font-size: 11px; }
+
+  /* ========= routes ========= */
+  .route {
+    display: grid;
+    grid-template-columns: 60px 1fr 2fr;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line);
+    align-items: baseline;
+  }
+  .route .anchor {
+    font-family: 'JetBrains Mono', monospace; font-size: 11px;
+    color: var(--accent); letter-spacing: 0.05em;
+  }
+  .route .title {
+    font-weight: 500; color: var(--ink);
+  }
+  .route .desc {
+    color: var(--ink-3); font-size: 13px;
+  }
+
+  /* ========= feature pills ========= */
+  .feat-list {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 16px 0 24px;
+  }
+  @media (max-width: 700px) { .feat-list { grid-template-columns: 1fr; } }
+  .feat-list li {
+    padding: 12px 16px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    list-style: none;
+  }
+  .feat-list li::before { display: none; }
+  .feat-list .t {
+    font-weight: 500; color: var(--ink);
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 4px;
+  }
+  .feat-list .t .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px; letter-spacing: 0.15em;
+    color: var(--ink-4);
+  }
+  .feat-list .d { font-size: 12px; color: var(--ink-3); line-height: 1.5; }
+
+  /* footer */
+  footer {
+    margin-top: 96px; padding-top: 24px;
+    border-top: 1px solid var(--line);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--ink-4);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px;
+  }
+
+  /* pill */
+  .pill {
+    display: inline-flex; align-items: center;
+    padding: 3px 10px;
+    border: 1px solid var(--line-2);
+    background: var(--surface);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .pill.ok { color: var(--accent); border-color: var(--accent); background: var(--accent-dim); }
+  .pill.later { color: var(--warn); border-color: rgba(210, 153, 34, 0.4); }
+
+  .arrow-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 20px;
+    background: var(--accent); color: #0a0d12;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+    font-weight: 600;
+    border: 1px solid var(--accent);
+    text-decoration: none;
+    transition: transform 0.15s;
+    margin: 8px 12px 8px 0;
+  }
+  .arrow-btn:hover { transform: translateY(-1px); border-bottom-color: transparent; }
+  .arrow-btn.ghost {
+    background: transparent; color: var(--accent);
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+  <!-- ======== TOC ======== -->
+  <nav class="toc" aria-label="Table of contents">
+    <div class="toc-label"><span>Contents</span><span>V1 · CMPCT</span></div>
+    <ol id="toc-list">
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#design-system">Design system</a></li>
+      <li><a href="#page-structure">Page structure</a></li>
+      <li><a href="#copy-content">Copy &amp; content</a></li>
+      <li><a href="#assets">Assets to provide</a></li>
+      <li><a href="#implementation">Implementation notes</a></li>
+      <li><a href="#acceptance">Acceptance checklist</a></li>
+      <li><a href="#files">File manifest</a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+    <header class="hdr">
+      <div class="hdr-title">
+        <div class="logo">A</div>
+        <h1>
+          Aurealis Landing — Build Handoff
+          <small>V1 Quant · Compact · Dark</small>
+        </h1>
+      </div>
+      <div class="meta">
+        <div class="live">Beta Build</div>
+        <div style="margin-top:4px;">Target: Next.js / Vite</div>
+      </div>
+    </header>
+
+    <!-- ================ OVERVIEW ================ -->
+    <section id="overview">
+      <div class="kicker"><span class="n">01</span> Overview</div>
+      <h2>Ship the V1 Quant direction, dark, compact density.</h2>
+
+      <p>
+        This is the handoff brief for the Aurealis landing-page rebuild. The visual reference
+        is <code>Landing Page.html</code> in the project root — open it alongside this doc to
+        see every section rendered. <strong>Only V1 (Quant Terminal, dark theme) at compact
+        density ships.</strong> V2 (Editorial) and V3 (Research) were exploratory and should
+        not be ported.
+      </p>
+
+      <div class="box callout">
+        <div class="box-label">Design intent</div>
+        <p style="margin:0;">
+          Bloomberg-terminal vibe for sophisticated retail investors. Mono labels, tight data
+          grids, scientific precision, teal (<code>#00d4aa</code>) as the only chromatic accent.
+          No gradients, no glassmorphism, no rounded cards. Hairline borders, <code>1px</code>
+          everywhere.
+        </p>
+      </div>
+
+      <h3>Primary goals</h3>
+      <ul>
+        <li>Funnel qualified users to the <code>#beta</code> form (primary CTA).</li>
+        <li>Communicate institutional-grade tooling in under 10 seconds above the fold.</li>
+        <li>Showcase MVP feature set clearly separated from post-beta roadmap.</li>
+        <li>Feel fast, weightless, and respectful of the reader's time.</li>
+      </ul>
+
+      <h3>Non-goals</h3>
+      <ul>
+        <li>Marketing illustrations, stock photos, AI-generated imagery.</li>
+        <li>Live market data — all tickers are static visual chrome.</li>
+        <li>Dark/light toggle — the page is dark-only for V1.</li>
+      </ul>
+    </section>
+
+    <!-- ================ DESIGN SYSTEM ================ -->
+    <section id="design-system">
+      <div class="kicker"><span class="n">02</span> Design system</div>
+      <h2>Tokens, type, motion.</h2>
+
+      <h3>Color palette</h3>
+      <div class="swatches">
+        <div class="sw"><div class="chip" style="background:#0a0d12;"></div><span class="name">bg</span><span class="hex">#0a0d12</span></div>
+        <div class="sw"><div class="chip" style="background:#0d1016;"></div><span class="name">bg-2</span><span class="hex">#0d1016</span></div>
+        <div class="sw"><div class="chip" style="background:#111418;"></div><span class="name">surface</span><span class="hex">#111418</span></div>
+        <div class="sw"><div class="chip" style="background:#14181f;"></div><span class="name">surface-2</span><span class="hex">#14181f</span></div>
+        <div class="sw"><div class="chip" style="background:#1a2030;"></div><span class="name">line</span><span class="hex">#1a2030</span></div>
+        <div class="sw"><div class="chip" style="background:#252b34;"></div><span class="name">line-2</span><span class="hex">#252b34</span></div>
+        <div class="sw"><div class="chip" style="background:#f0f0f0;"></div><span class="name">ink</span><span class="hex">#f0f0f0</span></div>
+        <div class="sw"><div class="chip" style="background:#c9d1d9;"></div><span class="name">ink-2</span><span class="hex">#c9d1d9</span></div>
+        <div class="sw"><div class="chip" style="background:#8a97a6;"></div><span class="name">ink-3</span><span class="hex">#8a97a6</span></div>
+        <div class="sw"><div class="chip" style="background:#6e7680;"></div><span class="name">ink-4</span><span class="hex">#6e7680</span></div>
+        <div class="sw"><div class="chip" style="background:#00d4aa;"></div><span class="name">accent</span><span class="hex">#00d4aa</span></div>
+        <div class="sw"><div class="chip" style="background:#3fb950;"></div><span class="name">pos</span><span class="hex">#3fb950</span></div>
+        <div class="sw"><div class="chip" style="background:#f85149;"></div><span class="name">neg</span><span class="hex">#f85149</span></div>
+      </div>
+
+      <div class="box">
+        <div class="box-label warn">Non-negotiable</div>
+        <p style="margin:0;">
+          Teal accent <code>#00d4aa</code> is the single chromatic accent and must be used
+          sparingly — CTAs, active states, positive deltas, hairline focus rings. Never as
+          large background fills. Never gradient.
+        </p>
+      </div>
+
+      <h3>Typography</h3>
+      <table>
+        <thead><tr><th>Use</th><th>Family</th><th>Weight</th><th>Tracking</th><th>Example size</th></tr></thead>
+        <tbody>
+          <tr><td class="tag">Display</td><td>Inter</td><td>300</td><td class="mono-td">-0.02em</td><td>64–80px hero, 32–42px section</td></tr>
+          <tr><td class="tag">Body</td><td>Inter</td><td>400</td><td class="mono-td">0</td><td>14–16px</td></tr>
+          <tr><td class="tag">UI label</td><td>Inter</td><td>500</td><td class="mono-td">0.02em</td><td>12–14px</td></tr>
+          <tr><td class="tag">Mono / meta</td><td>JetBrains Mono</td><td>400–500</td><td class="mono-td">0.15–0.2em</td><td>10–12px · uppercase</td></tr>
+          <tr><td class="tag">Numeric</td><td>JetBrains Mono</td><td>500</td><td class="mono-td">0.05em</td><td>tabular-nums — prices, deltas</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Scale &amp; density</h3>
+      <div class="spec">
+        <div class="k">Container max</div><div class="v">1200px, 32px gutter</div>
+        <div class="k">Section padding</div><div class="v">72px top/bottom · compact density</div>
+        <div class="k">Grid gap</div><div class="v">1px (hairline dividers) or 24px (cards)</div>
+        <div class="k">Border radius</div><div class="v"><code>0</code> — everything square. Zero rounding.</div>
+        <div class="k">Border width</div><div class="v"><code>1px</code> solid. Never 2px. Never dashed except focus.</div>
+        <div class="k">Shadows</div><div class="v">None. Elevation via border + surface shift only.</div>
+      </div>
+
+      <h3>Motion</h3>
+      <ul>
+        <li><strong>Scroll reveals:</strong> 28px translateY + opacity, 900ms cubic-bezier(0.16,1,0.3,1). Stagger children with <code>.d1</code>, <code>.d2</code>, <code>.d3</code>, <code>.d4</code> (80ms steps).</li>
+        <li><strong>Hero background:</strong> canvas-drawn drifting grid + pulsing data nodes. Low opacity, never distracting. Pause on <code>prefers-reduced-motion</code>.</li>
+        <li><strong>Ticker ribbon:</strong> infinite horizontal scroll, 60s linear cycle, duplicate content for seamless loop.</li>
+        <li><strong>Hover:</strong> 150ms color/border transitions only. No lift, no scale.</li>
+      </ul>
+    </section>
+
+    <!-- ================ PAGE STRUCTURE ================ -->
+    <section id="page-structure">
+      <div class="kicker"><span class="n">03</span> Page structure</div>
+      <h2>Sections, in order.</h2>
+
+      <p>Each row below is a top-level section. Anchor IDs are already in use for smooth-scroll nav and must be preserved.</p>
+
+      <div class="route">
+        <div class="anchor">#top</div>
+        <div class="title">Nav bar</div>
+        <div class="desc">Fixed. Logo · 3 links (Features, How It Works, Pricing) · "Beta Live" chip · "Join the Beta →" CTA. Becomes opaque with hairline border on scroll.</div>
+      </div>
+      <div class="route">
+        <div class="anchor">#hero</div>
+        <div class="title">Hero</div>
+        <div class="desc">Full-viewport. Animated canvas background (drifting grid + nodes). Mono eyebrow → 2-line display headline → 1-line subhead → dual CTA (primary + outline) → trust row ("beta live · no card required · 24h free trial").</div>
+      </div>
+      <div class="route">
+        <div class="anchor">#ticker</div>
+        <div class="title">Ticker ribbon</div>
+        <div class="desc">Infinite-scroll tape with ~12 static tickers + deltas (green/red). Purely decorative.</div>
+      </div>
+      <div class="route">
+        <div class="anchor">#product</div>
+        <div class="title">Product shot</div>
+        <div class="desc">Single full-bleed screenshot of the dashboard, hairline-framed. Caption above in mono: <code>FIG.01 — DASHBOARD OVERVIEW</code>.</div>
+      </div>
+      <div class="route">
+        <div class="anchor">#features</div>
+        <div class="title">Features (split)</div>
+        <div class="desc">Two tracks: <strong>Current (MVP)</strong> — 6 items, live now. <strong>Planned</strong> — 3 items, post-beta. Mono label above each track. 3-column grid, hairline dividers.</div>
+      </div>
+      <div class="route">
+        <div class="anchor">#how</div>
+        <div class="title">How it works</div>
+        <div class="desc">4 numbered steps (01 Sign Up · 02 Configure · 03 Research · 04 Iterate). Large mono numerals, short body.</div>
+      </div>
+      <div class="route">
+        <div class="anchor">#sample</div>
+        <div class="title">Sample report</div>
+        <div class="desc">Mocked 9-section AI report in a framed reader. Scrollable within its frame. Demonstrates depth of output.</div>
+      </div>
+      <div class="route">
+        <div class="anchor">#pricing</div>
+        <div class="title">Pricing</div>
+        <div class="desc">3 tiers. Monthly/Annual toggle. Middle tier is featured with teal border. "Start Free Trial" / "Join Beta →" CTAs per tier. Small-print note about annual discount.</div>
+      </div>
+      <div class="route">
+        <div class="anchor">#beta</div>
+        <div class="title">Beta form</div>
+        <div class="desc">Single email field + submit. On success → inline confirmation state (no modal). Wire to existing beta-signup endpoint.</div>
+      </div>
+      <div class="route">
+        <div class="anchor">#footer</div>
+        <div class="title">Footer</div>
+        <div class="desc">Logo · 3 inline links (Features, Pricing, Join Beta) · disclaimer row · legal links (Terms, Privacy, Imprint — currently placeholder <code>#</code>).</div>
+      </div>
+    </section>
+
+    <!-- ================ COPY / CONTENT ================ -->
+    <section id="copy-content">
+      <div class="kicker"><span class="n">04</span> Copy &amp; content</div>
+      <h2>Feature content — split for MVP.</h2>
+
+      <p>
+        Canonical copy lives in <code>landing/content.jsx</code>. The split below reflects the
+        agreed MVP scope — current features ship with beta, planned features are roadmap.
+        Do not reword without sign-off.
+      </p>
+
+      <h3>Current features <span class="pill ok">MVP · 6</span></h3>
+      <ul class="feat-list">
+        <li><div class="t">Shortlist Management <span class="tag">bookmark</span></div><div class="d">Curate your highest-conviction picks with live prices, key figures, fair-value estimates and AI recommendations in one focused view.</div></li>
+        <li><div class="t">AI Equity Research Reports <span class="tag">file-text</span></div><div class="d">On-demand, 9-section institutional reports in under 2 minutes — thesis, DCF, risk factors, catalysts, and personalised investment fit.</div></li>
+        <li><div class="t">Stock Viewer <span class="tag">bar-chart-2</span></div><div class="d">Live charts, financial &amp; business data, short-interest, insider transactions, analyst consensus, and news in one panel.</div></li>
+        <li><div class="t">Recession Radar <span class="tag">activity</span></div><div class="d">11 macro signals merged into one composite score across 5 regimes. Understand recession risk and market sentiment at a glance.</div></li>
+        <li><div class="t">Portfolio AI Analysis <span class="tag">briefcase</span></div><div class="d">Monitor performance, sector allocation and value history. Challenge your positions via critical AI-based portfolio analysis.</div></li>
+        <li><div class="t">Plug &amp; Play DCF Analyzer <span class="tag">calculator</span></div><div class="d">Build comprehensive DCF models with adjustable WACC and terminal growth. AI commentary on key value drivers in under 30 seconds.</div></li>
+      </ul>
+
+      <h3>Planned features <span class="pill later">POST-BETA · 3</span></h3>
+      <ul class="feat-list">
+        <li><div class="t">Sector Insights <span class="tag">layers</span></div><div class="d">Evaluate and filter current and historical performance across prominent sectors, with insight into leading companies in each.</div></li>
+        <li><div class="t">Macro, World News &amp; Earnings <span class="tag">globe</span></div><div class="d">Yield curves, FX, commodities, global news, upcoming earnings and an estimated fear &amp; greed index — in one tab.</div></li>
+        <li><div class="t">Trend Intelligence <span class="tag">search</span></div><div class="d">Vertical and horizontal trend analysis to identify market movements and investment opportunities across supply-chains and sectors.</div></li>
+      </ul>
+
+      <div class="box">
+        <div class="box-label">Visual treatment</div>
+        <p style="margin:0;">
+          Render planned features at reduced opacity (~0.7) with a small <code>COMING SOON</code>
+          pill in the corner, OR in a visually distinct second block below the current-features
+          grid. Reference the rendered version in <code>Landing Page.html</code> for the exact
+          treatment.
+        </p>
+      </div>
+    </section>
+
+    <!-- ================ ASSETS ================ -->
+    <section id="assets">
+      <div class="kicker"><span class="n">05</span> Assets to provide</div>
+      <h2>What you need to hand off with this doc.</h2>
+
+      <table>
+        <thead><tr><th>Asset</th><th>Format</th><th>Notes</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td>Dashboard hero screenshot</td><td>PNG @ 2x, ≥2400px wide</td><td>Full dashboard, no chrome. Dark UI.</td><td><span class="pill ok">Have <code>dashboard-overview.png</code></span></td></tr>
+          <tr><td>Feature screenshots (6)</td><td>PNG @ 2x</td><td>One per MVP feature. Crop to relevant panel.</td><td><span class="pill later">Need</span></td></tr>
+          <tr><td>Sample AI report</td><td>JSON or MDX</td><td>9-section structure. Static content OK for landing.</td><td><span class="pill later">Need</span></td></tr>
+          <tr><td>Logo (A mark)</td><td>SVG</td><td>Currently drawn in CSS. SVG preferred.</td><td><span class="pill later">Need</span></td></tr>
+          <tr><td>Favicon</td><td>ICO + SVG</td><td>Teal A on dark.</td><td><span class="pill later">Need</span></td></tr>
+          <tr><td>Legal pages</td><td>MD</td><td>Terms, Privacy, Imprint — footer links are <code>#</code> until ready.</td><td><span class="pill later">Post-launch</span></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- ================ IMPLEMENTATION ================ -->
+    <section id="implementation">
+      <div class="kicker"><span class="n">06</span> Implementation notes</div>
+      <h2>How to port this into the real codebase.</h2>
+
+      <h3>Stack recommendation</h3>
+      <ul>
+        <li><strong>Next.js 14 (App Router)</strong> or <strong>Vite + React 18</strong> — either works. Landing is a single static route.</li>
+        <li><strong>CSS:</strong> keep tokens as CSS variables on <code>:root</code> (as in the reference). Tailwind optional; not required.</li>
+        <li><strong>Icons:</strong> <code>lucide-react</code> — the <code>icon</code> key in content maps 1:1 to Lucide names.</li>
+        <li><strong>Fonts:</strong> self-host Inter + JetBrains Mono via <code>next/font</code> or <code>@fontsource</code>. Don't rely on Google Fonts CDN in prod.</li>
+      </ul>
+
+      <h3>Component split (suggested)</h3>
+<pre><span class="c">// app/(marketing)/page.tsx</span>
+<span class="k">import</span> { <span class="n">Nav</span>, <span class="n">Hero</span>, <span class="n">Ticker</span>, <span class="n">Product</span>,
+         <span class="n">Features</span>, <span class="n">How</span>, <span class="n">Sample</span>, <span class="n">Pricing</span>,
+         <span class="n">Beta</span>, <span class="n">Footer</span> } <span class="k">from</span> <span class="s">'@/components/landing'</span>;
+
+<span class="k">export default function</span> <span class="n">Landing</span>() {
+  <span class="k">return</span> (
+    &lt;&gt;
+      &lt;<span class="n">Nav</span> /&gt;
+      &lt;<span class="n">Hero</span> /&gt;        <span class="c">{/* canvas bg + copy */}</span>
+      &lt;<span class="n">Ticker</span> /&gt;
+      &lt;<span class="n">Product</span> /&gt;     <span class="c">{/* FIG.01 screenshot */}</span>
+      &lt;<span class="n">Features</span> /&gt;    <span class="c">{/* MVP + Planned */}</span>
+      &lt;<span class="n">How</span> /&gt;         <span class="c">{/* 4 steps */}</span>
+      &lt;<span class="n">Sample</span> /&gt;      <span class="c">{/* 9-section report */}</span>
+      &lt;<span class="n">Pricing</span> /&gt;     <span class="c">{/* 3 tiers, mo/yr toggle */}</span>
+      &lt;<span class="n">Beta</span> /&gt;        <span class="c">{/* email form */}</span>
+      &lt;<span class="n">Footer</span> /&gt;
+    &lt;/&gt;
+  );
+}</pre>
+
+      <h3>Token file</h3>
+      <p>Lift the <code>.v1</code> block from <code>Landing Page.html</code> (lines ~24–49) into <code>styles/tokens.css</code> and scope to <code>:root</code>. Drop the <code>.v1</code> class prefix — V1 is now the only theme.</p>
+
+      <h3>Content source</h3>
+      <p><code>landing/content.jsx</code> is already structured. Copy it as-is to <code>lib/landing-content.ts</code>, convert the icon-name strings into Lucide imports, done.</p>
+
+      <h3>Hero canvas</h3>
+      <p>
+        The animated hero background is a small canvas component (~80 lines). See
+        <code>V1HeroBg</code> in <code>Landing Page.html</code>. It draws a slowly-drifting
+        dot grid with randomly-pulsing accent nodes. Port verbatim; respect
+        <code>prefers-reduced-motion</code>.
+      </p>
+
+      <h3>Accessibility</h3>
+      <ul>
+        <li>All <code>.mono</code> labels must still meet WCAG AA against their surface (they do at 12px <code>#8a97a6</code> on <code>#0a0d12</code>; verify if darkened).</li>
+        <li>Ticker must pause on focus/hover per WCAG 2.2.2.</li>
+        <li>Focus rings: 1px dashed <code>#00d4aa</code> with 2px offset. Never remove.</li>
+        <li>Hero canvas: <code>aria-hidden="true"</code>.</li>
+      </ul>
+
+      <h3>Performance</h3>
+      <ul>
+        <li>Landing should score ≥95 Lighthouse Performance on mobile.</li>
+        <li>Hero screenshot: serve AVIF + WebP fallback, <code>loading="eager"</code>, <code>fetchpriority="high"</code>.</li>
+        <li>Feature screenshots: lazy-load, <code>loading="lazy"</code>.</li>
+        <li>No client-side routing on landing — single static page.</li>
+      </ul>
+    </section>
+
+    <!-- ================ ACCEPTANCE ================ -->
+    <section id="acceptance">
+      <div class="kicker"><span class="n">07</span> Acceptance checklist</div>
+      <h2>Done when all of this is true.</h2>
+
+      <ul>
+        <li>Renders identically to <code>Landing Page.html</code> at 1440px, 1024px, 768px, 375px.</li>
+        <li>All anchor links (<code>#features</code>, <code>#how</code>, <code>#pricing</code>, <code>#beta</code>) smooth-scroll with ~60px offset for the fixed nav.</li>
+        <li>Hero animated background runs at 60fps on a 2020 MacBook Air; pauses with <code>prefers-reduced-motion</code>.</li>
+        <li>Ticker loops seamlessly — no visible reset.</li>
+        <li>Pricing monthly/annual toggle updates all three tiers and the footnote.</li>
+        <li>Beta form submits to the real endpoint, shows inline success state, errors inline.</li>
+        <li>Lighthouse: Perf ≥95 · A11y ≥95 · Best Practices 100 · SEO 100.</li>
+        <li>No console errors, no CLS on hero.</li>
+        <li>OG image + meta tags set (title: "Aurealis — Institutional-grade research for retail investors").</li>
+      </ul>
+    </section>
+
+    <!-- ================ FILES ================ -->
+    <section id="files">
+      <div class="kicker"><span class="n">08</span> File manifest</div>
+      <h2>What's in this handoff folder.</h2>
+
+      <div class="spec">
+        <div class="k">Landing Page.html</div><div class="v">Living visual reference — V1 is what ships. Open in browser alongside this doc. <em>(located in project root, one level up)</em></div>
+        <div class="k">landing/content.jsx</div><div class="v">Canonical copy: features, steps, pricing tiers, tickers. Port as-is.</div>
+        <div class="k">landing/shared.jsx</div><div class="v">Shared components: Nav, Footer, Ticker, BetaForm, useReveal hook.</div>
+        <div class="k">landing/v1-quant.jsx</div><div class="v">All V1 section components (Hero, Product, Features, How, Sample, Pricing, Beta).</div>
+        <div class="k">landing/styles.css</div><div class="v">Token layer + utility classes. Extract the <code>.v1</code> block into <code>:root</code>.</div>
+        <div class="k">dashboard-overview.png</div><div class="v">Hero product screenshot. Use as <code>#product</code> section image.</div>
+        <div class="k">handoff/index.html</div><div class="v">This document.</div>
+      </div>
+
+      <div style="margin-top:32px;">
+        <a class="arrow-btn" href="../Landing Page.html">Open reference →</a>
+        <a class="arrow-btn ghost" href="../landing/content.jsx">content.jsx</a>
+        <a class="arrow-btn ghost" href="../landing/v1-quant.jsx">v1-quant.jsx</a>
+      </div>
+    </section>
+
+    <footer>
+      <span>Aurealis · Landing Handoff · v1.0</span>
+      <span>For Claude Code · VS Code</span>
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  // Active TOC highlighting via IntersectionObserver
+  const links = document.querySelectorAll('.toc a');
+  const sections = [...document.querySelectorAll('main section[id]')];
+  const byId = Object.fromEntries([...links].map(a => [a.getAttribute('href').slice(1), a]));
+
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        links.forEach(a => a.classList.remove('active'));
+        byId[e.target.id]?.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+
+  sections.forEach(s => obs.observe(s));
+
+  // Smooth-scroll for TOC
+  links.forEach(a => a.addEventListener('click', (e) => {
+    const id = a.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (el) { e.preventDefault(); window.scrollTo({ top: el.offsetTop - 24, behavior: 'smooth' }); history.replaceState(null, '', '#' + id); }
+  }));
+</script>
+
+</body>
+</html>

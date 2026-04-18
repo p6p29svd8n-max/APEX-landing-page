@@ -1,0 +1,90 @@
+APEX — Investment Intelligence Platform
+MVP Summary
+================================================================================
+
+OVERVIEW
+--------
+APEX is a local-first investment research tool built on a Node.js/Express backend
+and a single-page React frontend (all UI in Dashboard.jsx). Data comes from Yahoo
+Finance, FRED, Finnhub, Claude (Anthropic), and Perplexity. Everything is stored
+in a local SQLite database.
+
+STACK
+-----
+  Backend   : Node.js + Express, served on port 3001
+  Frontend  : React (Vite), all in client/src/Dashboard.jsx (~7,200 lines)
+  Database  : SQLite via better-sqlite3 (data/apex.db)
+  AI        : Claude Sonnet 4.6 (analysis, reports, DCF, trends)
+              Perplexity Sonar (real-time research, analyst data)
+  Data      : Yahoo Finance (quotes, fundamentals, chart OHLCV)
+              Finnhub (news, earnings, insiders)
+              FRED public CSVs (Sahm Rule, HY OAS, LEI, permits, yield curve)
+
+BACKEND ROUTES  (server/routes/)
+---------------------------------
+  watchlist.js    CRUD for monitored tickers
+  market.js       Live quotes + macro snapshot (indices, FX, yields, crypto)
+  stock.js        Per-ticker detail: fundamentals, chart, news, insiders
+  generate.js     AI report generation (Claude + Perplexity)
+  reports.js      Report file linking + JSON preview
+  analyze.js      Deep per-ticker Claude analysis (24h SQLite cache)
+  portfolio.js    Position tracking, sell ledger, history, AI analysis
+  recession.js    11-signal recession radar composite score (4h cache)
+  earnings.js     Upcoming earnings calendar with YF name enrichment
+  sector.js       12-sector ETF snapshot + sparklines
+  benchmark.js    Multi-ticker normalized return comparison
+  dcf.js          DCF valuation model with AI commentary
+  trends.js       AI thematic company discovery + live YF enrichment
+  newsletters.js  Gmail IMAP ingestion + Claude highlight extraction
+  settings.js     API key + cache interval read/write
+
+FRONTEND TABS  (client/src/Dashboard.jsx)
+------------------------------------------
+  Overview        Watchlist table + market strip + news + report panel
+  Shortlist       Sortable table with live prices, P&L, ratings
+  Stock View      Candlestick/line chart, fundamentals, news, insiders
+  Sector Insights 12-sector cards with ETF performance + top movers
+  News & World    Tabbed news feed + SVG world map + earnings calendar
+  Macro           Indices, FX, yield curve, commodities, crypto, CB rates
+  Newsletters     Gmail newsletter list + extracted AI highlights
+  Portfolio       Holdings, value chart, allocation donuts, AI analysis
+  Benchmark       Normalized % return chart for up to 5 tickers
+  Recession Radar 11-signal composite score (0–100), 5 risk regimes,
+                  capital allocation suggestions per regime
+  DCF Analysis    DCF model with sensitivity table + AI commentary
+  Trend Intel     Theme-driven AI company discovery with live data filters
+
+CACHING LAYERS
+--------------
+  SQLite (persistent)   : AI analyses (24h), portfolio AI (manual refresh)
+  In-memory Map (ephemeral):
+    2 min  — quotes, macro
+    5 min  — portfolio quotes
+    10 min — sector snapshot
+    1 h    — portfolio history, sector charts
+    4 h    — recession signals, earnings calendar
+    6 h    — DCF models, insider data
+
+KEY CONVENTIONS
+---------------
+  - Dark theme color tokens: T.accent, T.pos, T.neg, T.ghost (no hardcoded hex)
+  - All new routes include in-memory Map cache with TTL
+  - Yahoo Finance quoteSummary always uses { validateResult: false }
+  - Claude responses strip markdown fences before JSON.parse
+  - Backend logs: console.log(`[routeName] TICKER — step...`)
+  - New tab components go just before makeCSS() in Dashboard.jsx
+
+EXTERNAL API KEYS (.env)
+-------------------------
+  ANTHROPIC_API_KEY      Claude Sonnet 4.6
+  PERPLEXITY_API_KEY     Perplexity Sonar
+  FINNHUB_API_KEY        News, earnings, insiders
+  NEWSLETTER_EMAIL       Gmail address
+  NEWSLETTER_PASS        Gmail app password (16 chars)
+
+START COMMANDS
+--------------
+  npm run dev     Server (3001) + client (5173) with hot reload
+  npm run build   Build client/dist/
+  npm start       Serve API + static client from port 3001
+================================================================================

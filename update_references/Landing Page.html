@@ -1,0 +1,2193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aurealis — Landing Page Redesign</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Fraunces:ital,wght@0,300;0,400;0,500;1,300;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   Aurealis Landing — shared tokens + per-variation theme
+   Each variation sets its own token values on .variation-root.
+   ============================================================ */
+
+:root {
+  --accent-h: 168;
+  --accent-s: 100%;
+  --accent-l: 42%;
+  --density: 1;
+}
+
+/* ---------- V1 QUANT TERMINAL (dark) ---------- */
+.v1 {
+  --bg:       #0a0d12;
+  --bg-2:     #0d1016;
+  --surface:  #111418;
+  --surface-2:#14181f;
+  --elev:     #181c23;
+  --line:     #1a2030;
+  --line-2:   #252b34;
+  --ink:      #f0f0f0;
+  --ink-2:    #c9d1d9;
+  --ink-3:    #8a97a6;
+  --ink-4:    #6e7680;
+  --ink-5:    #4a5568;
+  --accent:   #00d4aa;
+  --accent-soft: color-mix(in oklab, var(--accent) 14%, transparent);
+  --accent-dim:  color-mix(in oklab, var(--accent) 6%, transparent);
+  --accent-fg: #0a0d12;
+  --pos:      #3fb950;
+  --neg:      #f85149;
+  --font-display: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-body:    'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, monospace;
+  --display-weight: 300;
+  --display-tracking: -0.02em;
+  color-scheme: dark;
+}
+
+/* ---------- V2 EDITORIAL BRIEF (cream) ---------- */
+.v2 {
+  --bg:       #f6f1e8;
+  --bg-2:     #ede7d9;
+  --surface:  #ffffff;
+  --surface-2:#faf6ec;
+  --elev:     #ffffff;
+  --line:     #d9d2c2;
+  --line-2:   #c4bca9;
+  --ink:      #1a1612;
+  --ink-2:    #2a241d;
+  --ink-3:    #5a5248;
+  --ink-4:    #7d746a;
+  --ink-5:    #a39c90;
+  --accent:   #00806a;
+  --accent-soft: color-mix(in oklab, var(--accent) 12%, transparent);
+  --accent-dim:  color-mix(in oklab, var(--accent) 5%, transparent);
+  --accent-fg: #faf6ec;
+  --pos:      #1f6b3a;
+  --neg:      #8a2e28;
+  --font-display: 'Fraunces', 'Times New Roman', Georgia, serif;
+  --font-body:    'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono:    'IBM Plex Mono', ui-monospace, monospace;
+  --display-weight: 400;
+  --display-tracking: -0.025em;
+  color-scheme: light;
+}
+
+/* ---------- V3 RESEARCH STATION (light quant) ---------- */
+.v3 {
+  --bg:       #ffffff;
+  --bg-2:     #f5f6f7;
+  --surface:  #ffffff;
+  --surface-2:#fafbfc;
+  --elev:     #ffffff;
+  --line:     #e5e7eb;
+  --line-2:   #cfd3d8;
+  --ink:      #0a0a0a;
+  --ink-2:    #222426;
+  --ink-3:    #595d63;
+  --ink-4:    #8a8f96;
+  --ink-5:    #b4b8be;
+  --accent:   #00806a;
+  --accent-soft: color-mix(in oklab, var(--accent) 10%, transparent);
+  --accent-dim:  color-mix(in oklab, var(--accent) 4%, transparent);
+  --accent-fg: #ffffff;
+  --pos:      #126b2e;
+  --neg:      #a8201a;
+  --font-display: 'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-body:    'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono:    'IBM Plex Mono', ui-monospace, monospace;
+  --display-weight: 300;
+  --display-tracking: -0.03em;
+  color-scheme: light;
+}
+
+/* ---------- global reset ---------- */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+.variation-root {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+}
+
+/* Density factor — multiplies section paddings */
+.density-compact    { --density: 0.72; }
+.density-comfortable{ --density: 1.0; }
+.density-spacious   { --density: 1.35; }
+
+/* ---------- utility ---------- */
+.mono { font-family: var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
+.display { font-family: var(--font-display); font-weight: var(--display-weight); letter-spacing: var(--display-tracking); }
+.hairline { border-top: 1px solid var(--line); }
+.sect {
+  padding: calc(120px * var(--density)) clamp(24px, 4vw, 80px);
+  position: relative;
+}
+.sect-inner { max-width: 1320px; margin: 0 auto; position: relative; }
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.eyebrow-muted {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ink-4);
+}
+
+/* ---------- reveal ---------- */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s cubic-bezier(0.16,1,0.3,1), transform 0.9s cubic-bezier(0.16,1,0.3,1); }
+.reveal.in { opacity: 1; transform: translateY(0); }
+.reveal.d1 { transition-delay: 80ms; }
+.reveal.d2 { transition-delay: 160ms; }
+.reveal.d3 { transition-delay: 240ms; }
+.reveal.d4 { transition-delay: 320ms; }
+
+/* ---------- buttons ---------- */
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 14px 22px;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.2s;
+}
+.btn-primary {
+  background: var(--accent);
+  color: var(--accent-fg);
+  border-radius: 0;
+}
+.v2 .btn-primary { border-radius: 2px; }
+.v3 .btn-primary { border-radius: 2px; }
+.btn-primary:hover { transform: translateY(-1px); }
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line-2);
+}
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+/* ---------- nav ---------- */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 50;
+  padding: 18px clamp(24px, 4vw, 60px);
+  display: flex; align-items: center; justify-content: space-between;
+  backdrop-filter: blur(14px);
+  background: color-mix(in oklab, var(--bg) 72%, transparent);
+  border-bottom: 1px solid var(--line);
+  font-family: var(--font-body);
+}
+.nav-brand {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+.v2 .nav-brand { font-style: italic; }
+.nav-brand .logo-mark {
+  width: 22px; height: 22px;
+  background: var(--accent);
+  display: grid; place-items: center;
+  color: var(--accent-fg);
+  font-family: var(--font-mono);
+  font-size: 12px; font-weight: 700;
+}
+.v2 .nav-brand .logo-mark { border-radius: 50%; }
+.nav-links { display: flex; gap: 32px; align-items: center; }
+.nav-links a {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  text-decoration: none;
+  transition: color 0.18s;
+}
+.nav-links a:hover { color: var(--ink); }
+.nav-cta {
+  padding: 8px 18px;
+  background: var(--accent);
+  color: var(--accent-fg);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 600;
+  text-decoration: none;
+  transition: transform 0.2s;
+}
+.nav-cta:hover { transform: translateY(-1px); }
+
+/* ---------- feature cards ---------- */
+.feat-grid {
+  display: grid;
+  gap: calc(1px);
+  background: var(--line);
+}
+.feat-card {
+  background: var(--surface);
+  padding: calc(28px * var(--density)) calc(26px * var(--density));
+  position: relative;
+  transition: background 0.2s;
+  display: flex; flex-direction: column; gap: 14px;
+  min-height: 200px;
+}
+.feat-card:hover { background: var(--surface-2); }
+.feat-card.planned { opacity: 0.62; }
+.feat-icon {
+  width: 36px; height: 36px;
+  display: grid; place-items: center;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.feat-title {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--accent);
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+.v2 .feat-title { font-weight: 400; color: var(--ink); font-style: italic; }
+.v3 .feat-title { color: var(--ink); font-weight: 400; }
+.feat-desc {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: var(--ink-3);
+  margin: 0;
+}
+
+/* ---------- pricing ---------- */
+.price-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border: 1px solid var(--line);
+  background: var(--line);
+}
+.price-card {
+  background: var(--surface);
+  padding: calc(32px * var(--density)) 24px;
+  display: flex; flex-direction: column; gap: 18px;
+}
+.price-card.featured { background: var(--surface-2); border-top: 2px solid var(--accent); }
+.price-name {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.price-card.featured .price-name { color: var(--accent); }
+.price-value {
+  font-family: var(--font-display);
+  font-size: 44px;
+  font-weight: var(--display-weight);
+  color: var(--ink);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.price-unit {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-4);
+  letter-spacing: 0.08em;
+}
+.price-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+.price-list li {
+  display: flex; gap: 10px; align-items: baseline;
+  font-size: 13px;
+  color: var(--ink-2);
+  line-height: 1.4;
+}
+.price-list li::before {
+  content: '✓';
+  color: var(--accent);
+  font-size: 11px;
+  transform: translateY(-1px);
+}
+.price-list li.off {
+  color: var(--ink-5);
+}
+.price-list li.off::before { content: '—'; color: var(--ink-5); }
+
+/* ---------- form ---------- */
+.form-input {
+  background: var(--surface);
+  border: 1px solid var(--line-2);
+  color: var(--ink);
+  padding: 14px 16px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  width: 100%;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.form-input:focus { border-color: var(--accent); }
+.form-input::placeholder { color: var(--ink-4); }
+
+/* ---------- ticker ribbon (V1/V3) ---------- */
+.ticker-ribbon {
+  display: flex; gap: 36px;
+  animation: tickerScroll 60s linear infinite;
+  white-space: nowrap;
+}
+@keyframes tickerScroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.ticker-item {
+  display: inline-flex; gap: 8px; align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-3);
+  letter-spacing: 0.1em;
+}
+.ticker-item .tk { color: var(--ink); font-weight: 600; }
+.ticker-item .up { color: var(--pos); }
+.ticker-item .dn { color: var(--neg); }
+
+/* ---------- chip / badge ---------- */
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 10px;
+  background: var(--accent-soft);
+  border: 1px solid color-mix(in oklab, var(--accent) 35%, transparent);
+  color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+.chip .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent);
+  animation: pulseDot 2.4s ease-in-out infinite;
+}
+@keyframes pulseDot {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 55%, transparent); }
+  50%      { box-shadow: 0 0 0 6px color-mix(in oklab, var(--accent) 0%, transparent); }
+}
+
+/* ---------- hairline corners ---------- */
+.corners { position: absolute; inset: 16px; pointer-events: none; }
+.corners::before, .corners::after,
+.corners > span::before, .corners > span::after {
+  content: ''; position: absolute; width: 18px; height: 18px;
+  border-color: color-mix(in oklab, var(--accent) 55%, transparent);
+  border-style: solid; border-width: 0;
+}
+.corners::before { top: 0; left: 0; border-top-width: 1px; border-left-width: 1px; }
+.corners::after  { top: 0; right: 0; border-top-width: 1px; border-right-width: 1px; }
+.corners > span::before { bottom: 0; left: 0; border-bottom-width: 1px; border-left-width: 1px; }
+.corners > span::after  { bottom: 0; right: 0; border-bottom-width: 1px; border-right-width: 1px; }
+
+/* ---------- TWEAKS panel ---------- */
+.tweaks-panel {
+  position: fixed;
+  bottom: 20px; right: 20px;
+  width: 280px;
+  background: rgba(20, 24, 30, 0.95);
+  backdrop-filter: blur(20px);
+  color: #f0f0f0;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 4px;
+  padding: 18px;
+  z-index: 999;
+  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  font-size: 12px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+.tweaks-panel h3 {
+  margin: 0 0 14px;
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #00d4aa;
+}
+.tweaks-row { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+.tweaks-row > label {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #a0a6b0;
+}
+.tweaks-seg {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 2px;
+  background: rgba(255,255,255,0.06);
+  padding: 2px;
+  border-radius: 3px;
+}
+.tweaks-seg button {
+  background: transparent;
+  border: none;
+  padding: 6px 8px;
+  color: #c0c5cc;
+  font-family: inherit;
+  font-size: 11px;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: background 0.15s, color 0.15s;
+}
+.tweaks-seg button.active {
+  background: #00d4aa;
+  color: #0a0d12;
+  font-weight: 600;
+}
+.tweaks-slider {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 3px;
+  background: rgba(255,255,255,0.12);
+  outline: none;
+}
+.tweaks-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: #00d4aa;
+  cursor: pointer;
+}
+.tweaks-slider::-moz-range-thumb {
+  width: 14px; height: 14px; border-radius: 50%;
+  background: #00d4aa;
+  cursor: pointer; border: none;
+}
+
+</style>
+
+<template id="__bundler_thumbnail" data-bg-color="#0a0d12">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#0a0d12"/>
+    <text x="600" y="430" text-anchor="middle" font-family="Inter,sans-serif" font-weight="300" font-size="120" fill="#00d4aa" letter-spacing="-4">A</text>
+    <text x="600" y="520" text-anchor="middle" font-family="JetBrains Mono,monospace" font-size="20" fill="#6e7680" letter-spacing="6">AUREALIS</text>
+  </svg>
+</template>
+
+<script>
+  const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "variation": "v1",
+    "density": "compact",
+    "accent_hue": 194,
+    "scheme": "auto"
+  }/*EDITMODE-END*/;
+</script>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel" data-presets="env,react">
+/* Shared content for Aurealis landing — referenced by all 3 variations */
+
+const FEATURES_MVP = [
+  {
+    icon: 'bookmark',
+    title: 'Shortlist Management',
+    desc: 'Curate your highest-conviction picks with live prices, key figures, fair-value estimates and AI recommendations in one focused view.',
+  },
+  {
+    icon: 'file-text',
+    title: 'AI Equity Research Reports',
+    desc: 'On-demand, 9-section institutional reports in under 2 minutes — thesis, DCF, risk factors, catalysts, and personalised investment fit.',
+  },
+  {
+    icon: 'bar-chart-2',
+    title: 'Stock Viewer',
+    desc: 'Live charts, financial & business data, short-interest, insider transactions, analyst consensus, and news in one panel.',
+  },
+  {
+    icon: 'activity',
+    title: 'Recession Radar',
+    desc: '11 macro signals merged into one composite score across 5 regimes. Understand recession risk and market sentiment at a glance.',
+  },
+  {
+    icon: 'briefcase',
+    title: 'Portfolio AI Analysis',
+    desc: 'Monitor performance, sector allocation and value history. Challenge your positions via critical AI-based portfolio analysis.',
+  },
+  {
+    icon: 'calculator',
+    title: 'Plug & Play DCF Analyzer',
+    desc: 'Build comprehensive DCF models with adjustable WACC and terminal growth. AI commentary on key value drivers in under 30 seconds.',
+  },
+];
+
+const FEATURES_PLANNED = [
+  {
+    icon: 'layers',
+    title: 'Sector Insights',
+    desc: 'Evaluate and filter current and historical performance across prominent sectors, with insight into leading companies in each.',
+  },
+  {
+    icon: 'globe',
+    title: 'Macro, World News & Earnings',
+    desc: 'Yield curves, FX, commodities, global news, upcoming earnings and an estimated fear & greed index — in one tab.',
+  },
+  {
+    icon: 'search',
+    title: 'Trend Intelligence',
+    desc: 'Vertical and horizontal trend analysis to identify market movements and investment opportunities across supply-chains and sectors.',
+  },
+];
+
+const STEPS = [
+  {
+    n: '01',
+    kicker: 'Sign Up',
+    title: 'Start your free 24h trial',
+    body: 'No credit card. Browser-based. Full platform unlocked — nothing gated.',
+  },
+  {
+    n: '02',
+    kicker: 'Configure',
+    title: 'Build your watchlist',
+    body: 'Add your tickers. Live prices, sector data, macro signals, recession radar and portfolio tracking — one place.',
+  },
+  {
+    n: '03',
+    kicker: 'Research',
+    title: 'Generate your first AI report',
+    body: '9-section institutional research grounded in live data from four independent sources. Delivered in under 2 minutes.',
+  },
+];
+
+const STATS = [
+  { value: '10',  label: 'Tools' },
+  { value: '<2m', label: 'Per Report', accent: true },
+  { value: '4',   label: 'Data Sources' },
+  { value: '9',   label: 'Report Sections' },
+];
+
+const PRICING = [
+  {
+    name: 'Free Trial',
+    price: { mo: '€0', yr: '€0' },
+    unit: { mo: '/ 24h', yr: '/ 24h' },
+    blurb: 'No credit card. Full platform for 24 hours.',
+    features: [
+      { on: true,  t: '3 AI research reports' },
+      { on: true,  t: 'All dashboard tabs' },
+      { on: true,  t: 'Live prices & charts' },
+      { on: true,  t: 'Portfolio tracker' },
+      { on: true,  t: 'Recession Radar' },
+    ],
+    cta: 'Start Free Trial',
+  },
+  {
+    name: 'Base',
+    badge: 'Best Value',
+    price: { mo: '€9.99', yr: '€99.99' },
+    unit: { mo: '/ mo', yr: '/ yr' },
+    blurb: 'Bring your own API keys. ≈€20/mo in usage.',
+    features: [
+      { on: true,  t: 'Unlimited AI reports (BYOK)' },
+      { on: true,  t: 'All dashboard tabs' },
+      { on: true,  t: 'Newsletter ingestion' },
+      { on: true,  t: 'Portfolio AI analysis' },
+      { on: true,  t: 'DCF valuation model' },
+    ],
+    cta: 'Join Beta',
+  },
+  {
+    name: 'Starter',
+    badge: 'Most Popular',
+    featured: true,
+    price: { mo: '€12.99', yr: '€129.99' },
+    unit: { mo: '/ mo', yr: '/ yr' },
+    blurb: 'No setup required.',
+    features: [
+      { on: true,  t: '10 reports / month' },
+      { on: true,  t: 'All dashboard tabs' },
+      { on: true,  t: 'Newsletter ingestion' },
+      { on: true,  t: 'Portfolio AI analysis' },
+      { on: true,  t: 'DCF valuation model' },
+      { on: false, t: 'No API key setup' },
+    ],
+    cta: 'Join Beta',
+  },
+  {
+    name: 'Pro',
+    price: { mo: '€29.99', yr: '€299.99' },
+    unit: { mo: '/ mo', yr: '/ yr' },
+    blurb: 'BYOK optional for unlimited.',
+    features: [
+      { on: true,  t: '30 reports / month' },
+      { on: true,  t: 'All dashboard tabs' },
+      { on: true,  t: 'Newsletter ingestion' },
+      { on: true,  t: 'Portfolio AI analysis' },
+      { on: true,  t: 'DCF valuation model' },
+      { on: false, t: 'No API key setup' },
+    ],
+    cta: 'Join Beta',
+  },
+];
+
+const TICKERS = [
+  { t: 'SPX',   v: '5842.1', c: '+0.74%', up: true },
+  { t: 'NDX',   v: '20 114', c: '+1.12%', up: true },
+  { t: 'VIX',   v: '14.2',   c: '-3.8%',  up: false },
+  { t: 'DXY',   v: '104.8',  c: '-0.3%',  up: false },
+  { t: '10Y',   v: '4.42%',  c: '+2bp',   up: true },
+  { t: 'BTC',   v: '68 240', c: '+2.3%',  up: true },
+  { t: 'BRENT', v: '$82.4',  c: '+0.9%',  up: true },
+  { t: 'GOLD',  v: '$2 318', c: '-0.2%',  up: false },
+  { t: 'EURUSD',v: '1.0892', c: '+0.12%', up: true },
+  { t: 'ADBE',  v: '$521.4', c: '+1.24%', up: true },
+  { t: 'ASML',  v: '€824.6', c: '+0.91%', up: true },
+  { t: 'UBER',  v: '$74.2',  c: '-1.08%', up: false },
+];
+
+Object.assign(window, {
+  FEATURES_MVP, FEATURES_PLANNED, STEPS, STATS, PRICING, TICKERS,
+});
+
+</script>
+<script type="text/babel" data-presets="env,react">
+/* Shared pieces used by all 3 variations */
+const { useEffect, useRef, useState, useMemo } = React;
+
+function useReveal() {
+  useEffect(() => {
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal:not(.in)').forEach(el => io.observe(el));
+    return () => io.disconnect();
+  });
+}
+
+/* Minimal inline-SVG icon set (avoids CDN dependency) */
+const ICONS = {
+  bookmark: 'M6 3h12v18l-6-4-6 4z',
+  'file-text': 'M7 3h8l4 4v14H7zM14 3v5h5M9 13h8M9 17h5',
+  'bar-chart-2': 'M7 20V10M12 20V4M17 20v-7',
+  activity: 'M2 12h4l3-9 4 18 3-9h6',
+  briefcase: 'M4 7h16v13H4zM9 7V4h6v3',
+  calculator: 'M5 3h14v18H5zM8 7h8M8 11h2M12 11h2M16 11h2M8 15h2M12 15h2M16 15h2M8 19h2M12 19h2',
+  layers: 'M12 3l9 5-9 5-9-5zM3 13l9 5 9-5M3 18l9 5 9-5',
+  globe: 'M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18zM3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18',
+  search: 'M11 4a7 7 0 1 1 0 14 7 7 0 0 1 0-14zM21 21l-5-5',
+  arrow: 'M5 12h14m-5-5 5 5-5 5',
+  check: 'M4 12l5 5L20 6',
+};
+function Icon({ name, size = 16, stroke = 'currentColor', strokeWidth = 1.5, fill = 'none' }) {
+  const d = ICONS[name] || ICONS.bookmark;
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill={fill} stroke={stroke}
+         strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round">
+      {d.split('M').filter(Boolean).map((seg, i) => <path key={i} d={'M' + seg} />)}
+    </svg>
+  );
+}
+
+/* ------ Nav ------ */
+function Nav({ variant }) {
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onS = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', onS); onS();
+    return () => window.removeEventListener('scroll', onS);
+  }, []);
+  return (
+    <nav className="nav" style={{ boxShadow: scrolled ? '0 1px 0 var(--line)' : 'none' }}>
+      <a href="#top" className="nav-brand">
+        <span className="logo-mark">A</span>
+        <span>Aurealis<span style={{ color: 'var(--ink-4)', marginLeft: 8, fontWeight: 400 }}>Intelligence</span></span>
+      </a>
+      <div className="nav-links">
+        <a href="#features">Features</a>
+        <a href="#how">How it works</a>
+        <a href="#tech">Technology</a>
+        <a href="#pricing">Pricing</a>
+      </div>
+      <a href="#beta" className="nav-cta">Join Beta →</a>
+    </nav>
+  );
+}
+
+/* ------ Ticker ribbon ------ */
+function TickerRibbon({ border = true }) {
+  const items = [...window.TICKERS, ...window.TICKERS]; // duplicate for loop
+  return (
+    <div style={{
+      borderTop: border ? '1px solid var(--line)' : 'none',
+      borderBottom: border ? '1px solid var(--line)' : 'none',
+      padding: '10px 0',
+      overflow: 'hidden',
+      background: 'color-mix(in oklab, var(--bg) 92%, transparent)',
+      position: 'relative',
+    }}>
+      <div className="ticker-ribbon">
+        {items.map((it, i) => (
+          <span className="ticker-item" key={i}>
+            <span className="tk">{it.t}</span>
+            <span>{it.v}</span>
+            <span className={it.up ? 'up' : 'dn'}>{it.c}</span>
+            <span style={{ color: 'var(--ink-5)' }}>·</span>
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ------ Footer ------ */
+function Footer() {
+  return (
+    <footer style={{
+      borderTop: '1px solid var(--line)',
+      padding: 'calc(60px * var(--density)) clamp(24px, 4vw, 80px) 40px',
+      background: 'var(--bg-2)',
+    }}>
+      <div style={{ maxWidth: 1320, margin: '0 auto' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: 32, marginBottom: 40 }}>
+          <div style={{ maxWidth: 360 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
+              <span style={{ width: 26, height: 26, background: 'var(--accent)', color: 'var(--accent-fg)', display: 'grid', placeItems: 'center', fontFamily: 'var(--font-mono)', fontWeight: 700, fontSize: 13 }}>A</span>
+              <span style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: 'var(--ink)' }}>Aurealis Intelligence</span>
+            </div>
+            <p style={{ fontSize: 12, color: 'var(--ink-4)', lineHeight: 1.6, margin: 0 }}>
+              Aurealis is not a registered financial advisor. Content is for informational purposes only.
+              Investing involves risk, including possible loss of principal.
+            </p>
+          </div>
+          <div style={{ display: 'flex', gap: 48, flexWrap: 'wrap' }}>
+            <FooterCol title="Product" items={['Features', 'Pricing', 'Join Beta', 'Changelog']} />
+            <FooterCol title="Company" items={['About', 'Contact', 'Press kit']} />
+            <FooterCol title="Legal" items={['Terms', 'Privacy', 'Imprint']} />
+          </div>
+        </div>
+        <div style={{ borderTop: '1px solid var(--line)', paddingTop: 22, display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
+          <span className="mono" style={{ fontSize: 10, color: 'var(--ink-4)' }}>© 2026 Aurealis · Built for private investors</span>
+          <span className="mono" style={{ fontSize: 10, color: 'var(--ink-4)' }}>v0.9.3 · beta</span>
+        </div>
+      </div>
+    </footer>
+  );
+}
+function FooterCol({ title, items }) {
+  return (
+    <div>
+      <div className="mono" style={{ fontSize: 10, color: 'var(--ink-4)', marginBottom: 12 }}>{title}</div>
+      <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 8 }}>
+        {items.map(it => (
+          <li key={it}>
+            <a href="#" style={{ fontSize: 13, color: 'var(--ink-2)', textDecoration: 'none' }}>{it}</a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+/* ------ Beta form ------ */
+function BetaForm() {
+  const [sent, setSent] = useState(false);
+  return (
+    <form onSubmit={e => { e.preventDefault(); setSent(true); }}
+      style={{ display: 'grid', gap: 12 }}>
+      {!sent ? (
+        <>
+          <input className="form-input" placeholder="First name" required />
+          <input className="form-input" placeholder="Email address" type="email" required />
+          <button type="submit" className="btn btn-primary" style={{ justifyContent: 'center' }}>
+            Join Waitlist <Icon name="arrow" size={14} />
+          </button>
+          <span className="mono" style={{ fontSize: 10, color: 'var(--ink-4)' }}>No credit card · No lock-in</span>
+        </>
+      ) : (
+        <div style={{ padding: '24px', border: '1px solid var(--accent)', background: 'var(--accent-dim)', textAlign: 'center' }}>
+          <div style={{ color: 'var(--accent)', fontSize: 24, marginBottom: 8 }}>✓</div>
+          <div style={{ fontFamily: 'var(--font-display)', fontSize: 18, color: 'var(--ink)', marginBottom: 4 }}>You're on the list.</div>
+          <div style={{ fontSize: 13, color: 'var(--ink-3)' }}>We'll be in touch before launch.</div>
+        </div>
+      )}
+    </form>
+  );
+}
+
+Object.assign(window, { useReveal, Icon, Nav, TickerRibbon, Footer, BetaForm });
+
+</script>
+<script type="text/babel" data-presets="env,react">
+/* V1 — QUANT TERMINAL (refined dark) */
+const { useEffect: useEffect1, useRef: useRef1, useState: useState1 } = React;
+
+/* ---------- Hero animated background: drifting grid + data nodes ---------- */
+function V1HeroBg() {
+  const canvasRef = useRef1(null);
+  useEffect1(() => {
+    const c = canvasRef.current; if (!c) return;
+    const ctx = c.getContext('2d');
+    let w, h, dpr, raf;
+    const resize = () => {
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      w = c.clientWidth; h = c.clientHeight;
+      c.width = w * dpr; c.height = h * dpr;
+      ctx.scale(dpr, dpr);
+    };
+    resize();
+    window.addEventListener('resize', resize);
+
+    const N = 40;
+    const nodes = Array.from({ length: N }, () => ({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.25,
+      vy: (Math.random() - 0.5) * 0.25,
+      r: Math.random() * 1.4 + 0.5,
+      p: Math.random() * Math.PI * 2,
+    }));
+
+    let t0 = 0;
+    const tick = (t) => {
+      const dt = Math.min(32, t - t0); t0 = t;
+      ctx.clearRect(0, 0, w, h);
+
+      // subtle grid dots
+      ctx.fillStyle = 'rgba(255,255,255,0.025)';
+      const gap = 44;
+      for (let x = (t * 0.01) % gap; x < w; x += gap) {
+        for (let y = 0; y < h; y += gap) ctx.fillRect(x, y, 1, 1);
+      }
+
+      // nodes + connections
+      for (const n of nodes) {
+        n.x += n.vx; n.y += n.vy;
+        if (n.x < 0 || n.x > w) n.vx *= -1;
+        if (n.y < 0 || n.y > h) n.vy *= -1;
+      }
+      for (let i = 0; i < N; i++) {
+        for (let j = i + 1; j < N; j++) {
+          const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
+          const d2 = dx*dx + dy*dy;
+          if (d2 < 160*160) {
+            const a = (1 - Math.sqrt(d2)/160) * 0.18;
+            ctx.strokeStyle = `rgba(0,212,170,${a})`;
+            ctx.lineWidth = 0.5;
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.stroke();
+          }
+        }
+      }
+      for (const n of nodes) {
+        n.p += 0.02;
+        const alpha = 0.4 + 0.35 * Math.sin(n.p);
+        ctx.fillStyle = `rgba(0,212,170,${alpha * 0.6})`;
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => { cancelAnimationFrame(raf); window.removeEventListener('resize', resize); };
+  }, []);
+
+  return (
+    <>
+      <canvas ref={canvasRef} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }} />
+      {/* ambient orbs */}
+      <div style={{ position: 'absolute', width: 600, height: 600, borderRadius: '50%', top: '-200px', left: '-200px', background: 'radial-gradient(circle, rgba(0,212,170,0.08), transparent 70%)', filter: 'blur(40px)' }} />
+      <div style={{ position: 'absolute', width: 500, height: 500, borderRadius: '50%', bottom: '-150px', right: '-150px', background: 'radial-gradient(circle, rgba(0,212,170,0.05), transparent 70%)', filter: 'blur(50px)' }} />
+      {/* top/bottom fades */}
+      <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(10,13,18,0.4) 0%, transparent 20%, transparent 70%, var(--bg) 100%)' }} />
+    </>
+  );
+}
+
+/* ---------- Hero ---------- */
+function V1Hero() {
+  return (
+    <section id="top" style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden', paddingTop: 96, paddingBottom: 40 }}>
+      <V1HeroBg />
+      <div style={{ position: 'relative', maxWidth: 1320, margin: '0 auto', padding: '0 clamp(24px, 4vw, 80px)', minHeight: 'calc(100vh - 140px)', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <div className="reveal" style={{ marginBottom: 24 }}>
+          <span className="chip"><span className="dot"/>Beta registration live</span>
+        </div>
+        <h1 className="reveal d1 display" style={{ fontSize: 'clamp(44px, 6.8vw, 96px)', lineHeight: 1.02, margin: 0, maxWidth: '16ch', color: 'var(--ink)' }}>
+          Institutional research.<br />
+          <span style={{ color: 'var(--accent)' }}>Built for you.</span>
+        </h1>
+        <p className="reveal d2" style={{ fontSize: 'clamp(16px, 1.3vw, 19px)', lineHeight: 1.6, color: 'var(--ink-3)', maxWidth: '52ch', marginTop: 28 }}>
+          Aurealis is an AI-powered investment research platform that generates on-demand equity reports, tracks your portfolio, and monitors the macro cycle — in a single, browser-based dashboard.
+        </p>
+        <div className="reveal d3" style={{ display: 'flex', gap: 14, marginTop: 36, flexWrap: 'wrap' }}>
+          <a href="#beta" className="btn btn-primary">Request early access <Icon name="arrow" size={14} /></a>
+          <a href="#features" className="btn btn-ghost">Explore features ↓</a>
+        </div>
+        <div className="reveal d4" style={{ display: 'flex', gap: 28, marginTop: 48, flexWrap: 'wrap' }}>
+          {[
+            ['Free 24h trial', 'on launch'],
+            ['Browser-based', 'no install'],
+            ['4 data sources', 'independent'],
+            ['Under 2 min', 'per report'],
+          ].map(([a, b]) => (
+            <div key={a} style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+              <span className="mono" style={{ fontSize: 10, color: 'var(--ink-4)' }}>{b}</span>
+              <span style={{ fontSize: 14, color: 'var(--ink-2)' }}>{a}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
+        <TickerRibbon />
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Product shot section ---------- */
+function V1Product() {
+  return (
+    <section className="sect" style={{ paddingTop: 'calc(60px * var(--density))' }}>
+      <div className="sect-inner">
+        <div className="reveal" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 28 }}>
+          <span className="eyebrow">The Cockpit</span>
+          <span className="mono" style={{ fontSize: 10, color: 'var(--ink-4)' }}>OVERVIEW / LIVE</span>
+        </div>
+        <div className="reveal d1" style={{ position: 'relative', border: '1px solid var(--line)', background: 'var(--surface)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', borderBottom: '1px solid var(--line)', background: 'var(--bg-2)' }}>
+            <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#f85149' }} />
+            <span style={{ width: 8, height: 8, borderRadius: '50%', background: '#d29922' }} />
+            <span style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--accent)' }} />
+            <span className="mono" style={{ fontSize: 10, color: 'var(--ink-4)', marginLeft: 14 }}>aurealis.local · overview</span>
+            <span style={{ marginLeft: 'auto' }} className="chip"><span className="dot"/>LIVE</span>
+          </div>
+          <img src="assets/dashboard-overview.png" alt="Aurealis dashboard"
+            style={{ display: 'block', width: '100%', height: 'auto', opacity: 0.95 }} />
+          <div style={{ position: 'absolute', inset: 0, pointerEvents: 'none',
+            background: 'linear-gradient(180deg, transparent 60%, rgba(10,13,18,0.4) 100%)' }} />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Features split ---------- */
+function V1Features() {
+  return (
+    <section id="features" className="sect">
+      <div className="sect-inner">
+        <div className="reveal" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 8, gap: 20, flexWrap: 'wrap' }}>
+          <span className="eyebrow">What you get — MVP</span>
+          <span className="mono" style={{ fontSize: 10, color: 'var(--ink-4)' }}>06 / CURRENT · 03 / PLANNED</span>
+        </div>
+        <h2 className="reveal d1 display" style={{ fontSize: 'clamp(32px, 4vw, 56px)', margin: '0 0 16px', color: 'var(--ink)', maxWidth: '20ch' }}>
+          Everything you need on day one.
+        </h2>
+        <p className="reveal d2" style={{ fontSize: 15, color: 'var(--ink-3)', maxWidth: '60ch', marginBottom: 48, lineHeight: 1.6 }}>
+          Six core tools live at beta. Three more land in the months after — each unlocked automatically as they ship.
+        </p>
+        <div className="reveal d2 feat-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
+          {FEATURES_MVP.map((f, i) => (
+            <article key={i} className="feat-card">
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <span className="feat-icon"><Icon name={f.icon} size={16} /></span>
+                <span className="mono" style={{ fontSize: 10, color: 'var(--ink-4)' }}>0{i + 1}</span>
+              </div>
+              <h3 className="feat-title">{f.title}</h3>
+              <p className="feat-desc">{f.desc}</p>
+              <span className="mono" style={{ fontSize: 10, color: 'var(--accent)', marginTop: 'auto', paddingTop: 10, borderTop: '1px solid var(--line)', letterSpacing: '0.2em' }}>LIVE AT BETA</span>
+            </article>
+          ))}
+        </div>
+
+        <div className="reveal" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', margin: '80px 0 24px', gap: 20, flexWrap: 'wrap' }}>
+          <span className="eyebrow-muted">Planned — post-beta</span>
+          <span className="mono" style={{ fontSize: 10, color: 'var(--ink-5)' }}>ROADMAP / IN DEVELOPMENT</span>
+        </div>
+        <div className="reveal d1 feat-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
+          {FEATURES_PLANNED.map((f, i) => (
+            <article key={i} className="feat-card planned">
+              <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <span className="feat-icon" style={{ background: 'transparent', borderColor: 'var(--line-2)', color: 'var(--ink-4)' }}>
+                  <Icon name={f.icon} size={16} />
+                </span>
+                <span className="mono" style={{ fontSize: 10, color: 'var(--ink-5)' }}>{String(FEATURES_MVP.length + i + 1).padStart(2,'0')}</span>
+              </div>
+              <h3 className="feat-title" style={{ color: 'var(--ink-2)' }}>{f.title}</h3>
+              <p className="feat-desc">{f.desc}</p>
+              <span className="mono" style={{ fontSize: 10, color: 'var(--ink-5)', marginTop: 'auto', paddingTop: 10, borderTop: '1px solid var(--line)', letterSpacing: '0.2em' }}>IN DEVELOPMENT</span>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- How it works ---------- */
+function V1How() {
+  return (
+    <section id="how" className="sect">
+      <div className="sect-inner">
+        <div className="reveal" style={{ marginBottom: 16 }}>
+          <span className="eyebrow">How it works</span>
+        </div>
+        <h2 className="reveal d1 display" style={{ fontSize: 'clamp(32px, 4vw, 56px)', margin: '0 0 64px', color: 'var(--ink)', maxWidth: '20ch' }}>
+          Three steps to institutional insight.
+        </h2>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 0, border: '1px solid var(--line)', background: 'var(--line)' }}>
+          {STEPS.map((s, i) => (
+            <div key={i} className={`reveal d${i+1}`} style={{ background: 'var(--surface)', padding: 'calc(36px * var(--density)) 32px', position: 'relative' }}>
+              <div className="display" style={{
+                position: 'absolute', top: 8, right: 16, fontSize: 120, color: 'var(--accent-dim)',
+                lineHeight: 1, pointerEvents: 'none', fontWeight: 200
+              }}>{s.n}</div>
+              <span className="mono" style={{ fontSize: 10, color: 'var(--accent)', letterSpacing: '0.25em' }}>{s.n} — {s.kicker}</span>
+              <h3 className="display" style={{ fontSize: 24, margin: '20px 0 14px', color: 'var(--ink)', fontWeight: 400, position: 'relative' }}>{s.title}</h3>
+              <p style={{ fontSize: 14, color: 'var(--ink-3)', lineHeight: 1.6, margin: 0, maxWidth: '32ch' }}>{s.body}</p>
+            </div>
+          ))}
+        </div>
+        <div className="reveal d3" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0, marginTop: 40, border: '1px solid var(--line)', background: 'var(--line)' }}>
+          {STATS.map((s, i) => (
+            <div key={i} style={{ background: 'var(--surface)', padding: '24px', textAlign: 'center' }}>
+              <div className="display" style={{ fontSize: 48, color: s.accent ? 'var(--accent)' : 'var(--ink)', lineHeight: 1, fontWeight: 200 }}>{s.value}</div>
+              <div className="mono" style={{ fontSize: 10, color: 'var(--ink-4)', marginTop: 10 }}>{s.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Sample report ---------- */
+function V1Sample() {
+  return (
+    <section id="tech" className="sect">
+      <div className="sect-inner" style={{ display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: 60, alignItems: 'start' }}>
+        <div>
+          <div className="reveal" style={{ marginBottom: 16 }}><span className="eyebrow">Sample Output</span></div>
+          <h2 className="reveal d1 display" style={{ fontSize: 'clamp(30px, 3.4vw, 48px)', margin: '0 0 20px', color: 'var(--ink)', maxWidth: '18ch' }}>
+            Structured research. Not chatbot output.
+          </h2>
+          <p className="reveal d2" style={{ fontSize: 15, color: 'var(--ink-3)', lineHeight: 1.7, marginBottom: 28 }}>
+            Nine sections. Every report. Every ticker. Grounded in live data from Yahoo Finance, SEC Edgar, FRED and Perplexity — layered with Claude Sonnet 4.6 reasoning and typed against a strict JSON schema.
+          </p>
+          <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: 16 }}>
+            {[
+              ['Personalised investment fit', 'calibrated per risk profile & horizon'],
+              ['Full DCF model', 'WACC & terminal growth sensitivity'],
+              ['Catalyst & risk extraction', 'enriched by live web research'],
+              ['Self-hosted runtime', 'portfolio data never leaves your device'],
+            ].map(([a, b], i) => (
+              <li key={i} className={`reveal d${i+1}`} style={{ display: 'grid', gridTemplateColumns: '20px 1fr', gap: 14, paddingBottom: 14, borderBottom: '1px solid var(--line)' }}>
+                <span style={{ color: 'var(--accent)' }}><Icon name="check" size={16} /></span>
+                <div>
+                  <div style={{ fontSize: 14, color: 'var(--ink)', fontWeight: 500 }}>{a}</div>
+                  <div className="mono" style={{ fontSize: 10, color: 'var(--ink-4)', marginTop: 4 }}>{b}</div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div className="reveal d2" style={{ background: 'var(--surface)', border: '1px solid var(--line)', borderTop: '2px solid var(--accent)', fontFamily: 'var(--font-body)' }}>
+          <div style={{ padding: '16px 20px', borderBottom: '1px solid var(--line)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div>
+              <div style={{ fontSize: 18, color: 'var(--ink)', fontWeight: 500 }}>AAPL · <span style={{ color: 'var(--ink-3)', fontWeight: 400 }}>Apple Inc.</span></div>
+              <div className="mono" style={{ fontSize: 10, color: 'var(--ink-4)', marginTop: 4 }}>NASDAQ · GENERATED TODAY · $187.42</div>
+            </div>
+            <div style={{ textAlign: 'right' }}>
+              <div className="mono" style={{ background: 'var(--accent)', color: 'var(--accent-fg)', display: 'inline-block', padding: '5px 10px', fontSize: 10, letterSpacing: '0.2em', fontWeight: 700 }}>STRONG BUY</div>
+              <div className="mono" style={{ fontSize: 10, color: 'var(--ink-4)', marginTop: 6 }}>TARGET $248 · MODERATE RISK</div>
+            </div>
+          </div>
+          <div style={{ padding: '18px 20px', display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 1, background: 'var(--line)' }}>
+            {[
+              ['P/E Fwd', '28.4×', false],
+              ['Rev Growth', '+7.8%', 'pos'],
+              ['EPS Fwd', '$7.33', false],
+              ['FCF Yield', '3.6%', 'pos'],
+            ].map(([l, v, c], i) => (
+              <div key={i} style={{ background: 'var(--bg-2)', padding: '10px', textAlign: 'center' }}>
+                <div className="mono" style={{ fontSize: 9, color: 'var(--ink-4)' }}>{l}</div>
+                <div style={{ fontSize: 16, fontWeight: 600, color: c === 'pos' ? 'var(--pos)' : 'var(--ink)', marginTop: 6 }}>{v}</div>
+              </div>
+            ))}
+          </div>
+          <div style={{ padding: 20, borderBottom: '1px solid var(--line)' }}>
+            <div className="mono" style={{ fontSize: 10, color: 'var(--ink-4)', letterSpacing: '0.2em', marginBottom: 12 }}>PRICE SCENARIOS</div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8 }}>
+              <ScenarioCell label="Bear" value="$158" color="var(--neg)" />
+              <ScenarioCell label="Base ★" value="$248" color="var(--accent)" bold />
+              <ScenarioCell label="Bull" value="$310" color="var(--pos)" />
+            </div>
+          </div>
+          <div style={{ padding: 20, display: 'flex', flexDirection: 'column', gap: 14 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div className="mono" style={{ fontSize: 10, color: 'var(--ink-4)' }}>ANALYST CONSENSUS</div>
+              <div style={{ display: 'flex', gap: 8, fontSize: 11 }}>
+                <span style={{ color: 'var(--pos)' }}>18 Buy</span>
+                <span style={{ color: 'var(--ink-4)' }}>·</span>
+                <span style={{ color: 'var(--ink-3)' }}>7 Hold</span>
+                <span style={{ color: 'var(--ink-4)' }}>·</span>
+                <span style={{ color: 'var(--neg)' }}>3 Sell</span>
+              </div>
+            </div>
+            <div style={{ position: 'relative', height: 6, background: 'var(--bg-2)', borderRadius: 2 }}>
+              <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: '64%', background: 'var(--accent)' }} />
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span className="mono" style={{ fontSize: 9, color: 'var(--ink-4)' }}>MEAN TARGET</span>
+              <span style={{ fontSize: 14, color: 'var(--ink)', fontWeight: 600 }}>$241</span>
+            </div>
+          </div>
+          <div style={{ padding: '10px 20px', background: 'var(--bg-2)', borderTop: '1px solid var(--line)', display: 'flex', justifyContent: 'space-between' }}>
+            <span className="mono" style={{ fontSize: 9, color: 'var(--ink-5)' }}>CLAUDE SONNET 4.6 · MARKETS API · PERPLEXITY</span>
+            <span className="mono" style={{ fontSize: 9, color: 'var(--ink-5)' }}>GENERATED IN 1M 47S</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+function ScenarioCell({ label, value, color, bold }) {
+  return (
+    <div style={{ background: 'var(--bg-2)', border: '1px solid var(--line)', padding: '10px', textAlign: 'center' }}>
+      <div className="mono" style={{ fontSize: 9, color, letterSpacing: '0.15em' }}>{label}</div>
+      <div style={{ fontSize: 16, color: bold ? 'var(--ink)' : 'var(--ink-2)', fontWeight: bold ? 700 : 500, marginTop: 5 }}>{value}</div>
+    </div>
+  );
+}
+
+/* ---------- Pricing ---------- */
+function V1Pricing() {
+  const [annual, setAnnual] = useState1(false);
+  return (
+    <section id="pricing" className="sect">
+      <div className="sect-inner">
+        <div className="reveal" style={{ marginBottom: 16 }}><span className="eyebrow">Pricing</span></div>
+        <div className="reveal d1" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 40, flexWrap: 'wrap', gap: 20 }}>
+          <h2 className="display" style={{ fontSize: 'clamp(32px, 4vw, 56px)', margin: 0, color: 'var(--ink)' }}>
+            Simple, transparent tiers.
+          </h2>
+          <div style={{ display: 'flex', background: 'var(--surface)', border: '1px solid var(--line)', padding: 3 }}>
+            {['Monthly', 'Annual'].map((lbl, i) => {
+              const active = (i === 1) === annual;
+              return (
+                <button key={lbl} onClick={() => setAnnual(i === 1)}
+                  className="mono"
+                  style={{ padding: '8px 18px', background: active ? 'var(--accent)' : 'transparent', color: active ? 'var(--accent-fg)' : 'var(--ink-3)', border: 'none', cursor: 'pointer', fontSize: 10, letterSpacing: '0.2em' }}>
+                  {lbl}{i === 1 ? ' · -17%' : ''}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+        <div className="reveal d2 price-grid">
+          {PRICING.map((p, i) => (
+            <div key={i} className={`price-card ${p.featured ? 'featured' : ''}`}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span className="price-name">{p.name}</span>
+                {p.badge && <span className="mono" style={{ fontSize: 9, padding: '3px 8px', background: p.featured ? 'var(--accent)' : 'var(--accent-soft)', color: p.featured ? 'var(--accent-fg)' : 'var(--accent)', letterSpacing: '0.15em' }}>{p.badge}</span>}
+              </div>
+              <div>
+                <div className="price-value">{annual ? p.price.yr : p.price.mo}</div>
+                <div className="price-unit">{annual ? p.unit.yr : p.unit.mo}</div>
+              </div>
+              <div style={{ fontSize: 12, color: 'var(--ink-3)', lineHeight: 1.55, minHeight: 48 }}>{p.blurb}</div>
+              <ul className="price-list">
+                {p.features.map((f, j) => <li key={j} className={f.on ? '' : 'off'}>{f.t}</li>)}
+              </ul>
+              <a href="#beta" className="btn btn-ghost" style={{ marginTop: 'auto', justifyContent: 'center', borderColor: p.featured ? 'var(--accent)' : 'var(--line-2)', color: p.featured ? 'var(--accent)' : 'var(--ink)' }}>{p.cta}</a>
+            </div>
+          ))}
+        </div>
+        <div className="reveal d3 mono" style={{ fontSize: 10, color: 'var(--ink-4)', marginTop: 20, letterSpacing: '0.1em' }}>
+          Need more? Buy extra reports from €0.99 · Credits never expire · Annual saves 2 months
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Beta ---------- */
+function V1Beta() {
+  return (
+    <section id="beta" className="sect" style={{ position: 'relative', overflow: 'hidden' }}>
+      
+      <div className="sect-inner" style={{ position: 'relative', display: 'grid', gridTemplateColumns: '1.3fr 1fr', gap: 80, alignItems: 'center' }}>
+        <div>
+          <div className="reveal" style={{ marginBottom: 16 }}><span className="chip"><span className="dot"/>Beta live</span></div>
+          <h2 className="reveal d1 display" style={{ fontSize: 'clamp(38px, 4.6vw, 68px)', margin: 0, color: 'var(--ink)', lineHeight: 1.05, maxWidth: '16ch' }}>
+            Research like an institution.<br />
+            <span style={{ color: 'var(--accent)' }}>Invest like a pro.</span>
+          </h2>
+          <ul className="reveal d2" style={{ listStyle: 'none', padding: 0, margin: '36px 0 0', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 14, maxWidth: 520 }}>
+            {[
+              'AI equity reports in under 2 minutes',
+              'Personalised investment fit scoring',
+              '10 research tools, one platform',
+              'Free 24h trial · No lock-in',
+            ].map((t, i) => (
+              <li key={i} style={{ display: 'flex', gap: 10, fontSize: 13, color: 'var(--ink-2)', alignItems: 'flex-start' }}>
+                <span style={{ color: 'var(--accent)', marginTop: 2 }}><Icon name="check" size={14}/></span>
+                {t}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div className="reveal d2" style={{ background: 'var(--surface)', border: '1px solid var(--line)', padding: 32, position: 'relative' }}>
+          <div className="corners"><span/></div>
+          <div className="mono" style={{ fontSize: 10, color: 'var(--accent)', letterSpacing: '0.2em', marginBottom: 20 }}>Request early access</div>
+          <BetaForm />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- V1 Root ---------- */
+function V1({ density }) {
+  useReveal();
+  return (
+    <div className={`variation-root v1 density-${density}`}>
+      <Nav variant="v1" />
+      <V1Hero />
+      <V1Product />
+      <V1Features />
+      <V1How />
+      <V1Sample />
+      <V1Pricing />
+      <V1Beta />
+      <Footer />
+    </div>
+  );
+}
+window.V1 = V1;
+
+</script>
+<script type="text/babel" data-presets="env,react">
+/* V2 — EDITORIAL BRIEF (cream, serif) */
+const { useEffect: useEffect2, useRef: useRef2, useState: useState2 } = React;
+
+/* ---------- Hero bg: hand-drawn candlestick wave ---------- */
+function V2HeroBg() {
+  const svgRef = useRef2(null);
+  useEffect2(() => {
+    const svg = svgRef.current; if (!svg) return;
+    let raf;
+    const start = performance.now();
+    const bars = svg.querySelectorAll('[data-bar]');
+    const tick = (t) => {
+      const dt = (t - start) / 1000;
+      bars.forEach((b, i) => {
+        const phase = dt * 0.4 + i * 0.25;
+        const amp = 10 + 6 * Math.sin(phase * 0.7);
+        b.setAttribute('transform', `translate(0, ${Math.sin(phase) * amp})`);
+      });
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+  const bars = Array.from({ length: 60 }, (_, i) => {
+    const x = 40 + i * 22;
+    const h = 30 + (i % 7) * 10 + Math.sin(i * 0.4) * 40;
+    const up = (i % 3 !== 0);
+    return { x, h, up };
+  });
+  return (
+    <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}>
+      {/* paper grain */}
+      <div style={{ position: 'absolute', inset: 0,
+        backgroundImage: 'radial-gradient(circle at 50% 50%, rgba(20,18,14,0.03) 0%, transparent 50%)',
+        opacity: 0.6 }} />
+      {/* vertical rules */}
+      <div style={{ position: 'absolute', inset: 0,
+        backgroundImage: 'linear-gradient(to right, transparent 0, transparent calc(100% - 1px), rgba(20,18,14,0.04) 100%)',
+        backgroundSize: '120px 100%' }} />
+      <svg ref={svgRef} viewBox="0 0 1600 700" preserveAspectRatio="xMidYMid slice"
+        style={{ position: 'absolute', bottom: 0, left: 0, width: '120%', height: '70%', opacity: 0.38 }}>
+        <defs>
+          <linearGradient id="fade2" x1="0" x2="0" y1="0" y2="1">
+            <stop offset="0%" stopColor="currentColor" stopOpacity="0.9" />
+            <stop offset="100%" stopColor="currentColor" stopOpacity="0.1" />
+          </linearGradient>
+        </defs>
+        {/* horizontal baseline */}
+        <line x1="0" y1="500" x2="1600" y2="500" stroke="var(--ink-4)" strokeWidth="0.5" strokeDasharray="2 4" />
+        {/* target line teal */}
+        <line x1="0" y1="340" x2="1600" y2="340" stroke="var(--accent)" strokeWidth="0.75" strokeDasharray="4 6" opacity="0.7" />
+        <text x="20" y="334" fontSize="10" fill="var(--accent)" fontFamily="IBM Plex Mono" letterSpacing="2">TARGET $248</text>
+        {bars.map((b, i) => (
+          <g key={i} data-bar>
+            <line x1={b.x} y1={500 - b.h} x2={b.x} y2={500 + b.h * 0.35}
+              stroke="var(--ink-2)" strokeWidth="0.8" opacity="0.5" />
+            <rect x={b.x - 6} y={500 - b.h + (b.up ? 0 : b.h * 0.35)}
+              width="12" height={b.h * 0.75}
+              fill={b.up ? 'var(--accent)' : 'transparent'}
+              stroke="var(--ink)"
+              strokeWidth="0.6"
+              opacity={b.up ? 0.85 : 0.5} />
+          </g>
+        ))}
+      </svg>
+      {/* page bleed fade */}
+      <div style={{ position: 'absolute', inset: 0,
+        background: 'linear-gradient(180deg, var(--bg) 0%, transparent 20%, transparent 70%, var(--bg) 100%)' }} />
+    </div>
+  );
+}
+
+/* ---------- Hero ---------- */
+function V2Hero() {
+  return (
+    <section id="top" style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden', paddingTop: 110 }}>
+      <V2HeroBg />
+      <div style={{ position: 'relative', maxWidth: 1240, margin: '0 auto', padding: '0 clamp(24px, 4vw, 80px)' }}>
+        {/* masthead rule */}
+        <div style={{ borderBottom: '1px solid var(--ink)', paddingBottom: 14, marginBottom: 40, display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+          <span className="mono" style={{ fontSize: 10, color: 'var(--ink-3)', letterSpacing: '0.3em' }}>VOLUME 01 · ISSUE 04</span>
+          <span className="mono" style={{ fontSize: 10, color: 'var(--ink-3)', letterSpacing: '0.3em' }}>APRIL MMXXVI · BETA LIVE</span>
+        </div>
+        <div className="reveal" style={{ marginBottom: 20 }}>
+          <span className="mono" style={{ fontSize: 11, color: 'var(--accent)', letterSpacing: '0.3em' }}>— A Brief for the Private Investor</span>
+        </div>
+        <h1 className="reveal d1 display" style={{
+          fontSize: 'clamp(48px, 7.6vw, 116px)', lineHeight: 0.98, margin: 0, color: 'var(--ink)',
+          maxWidth: '14ch',
+        }}>
+          Institutional research,<br />
+          <em style={{ color: 'var(--accent)', fontFamily: 'var(--font-display)' }}>issued privately.</em>
+        </h1>
+        <div style={{ display: 'grid', gridTemplateColumns: '2fr 3fr', gap: 60, marginTop: 56, alignItems: 'start' }}>
+          <div className="reveal d2">
+            <div style={{ borderTop: '1px solid var(--ink)', paddingTop: 14 }}>
+              <span className="mono" style={{ fontSize: 10, color: 'var(--ink-3)' }}>The Premise</span>
+              <p style={{ fontSize: 17, lineHeight: 1.55, color: 'var(--ink-2)', marginTop: 10, fontFamily: 'var(--font-display)', fontWeight: 400 }}>
+                Aurealis is an AI investment desk in your browser — generating on-demand equity reports, tracking your portfolio, and monitoring the macro cycle.
+              </p>
+            </div>
+          </div>
+          <div className="reveal d3" style={{ columns: 2, columnGap: 32, fontSize: 14, color: 'var(--ink-2)', lineHeight: 1.7, columnRule: '1px solid var(--line)' }}>
+            <p style={{ margin: 0 }}>
+              <span style={{ fontFamily: 'var(--font-display)', fontSize: 32, float: 'left', lineHeight: 0.8, marginRight: 6, marginTop: 4, color: 'var(--ink)' }}>W</span>
+              hen a private investor sits down to evaluate a business, the tools at their disposal are a patchwork — a Yahoo chart, a half-read 10-K, a broker's price target.
+            </p>
+            <p style={{ marginTop: 14 }}>
+              Aurealis collapses that patchwork into a single, browser-based desk. Four independent data sources, nine report sections, one verdict — calibrated to your risk profile and horizon.
+            </p>
+          </div>
+        </div>
+        <div className="reveal d4" style={{ display: 'flex', gap: 14, marginTop: 48, flexWrap: 'wrap' }}>
+          <a href="#beta" className="btn btn-primary">Subscribe to the desk <Icon name="arrow" size={14} /></a>
+          <a href="#features" className="btn btn-ghost">Read the brief ↓</a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Product plate ---------- */
+function V2Product() {
+  return (
+    <section className="sect" style={{ paddingTop: 'calc(40px * var(--density))', paddingBottom: 'calc(80px * var(--density))' }}>
+      <div className="sect-inner">
+        <figure className="reveal" style={{ margin: 0 }}>
+          <div style={{ border: '1px solid var(--ink)', padding: 12, background: 'var(--surface)' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 10 }}>
+              <span className="mono" style={{ fontSize: 10, color: 'var(--ink-3)', letterSpacing: '0.2em' }}>PLATE I — THE COCKPIT</span>
+              <span className="mono" style={{ fontSize: 10, color: 'var(--ink-3)' }}>OVERVIEW / LIVE</span>
+            </div>
+            <img src="assets/dashboard-overview.png" alt="Aurealis dashboard" style={{ display: 'block', width: '100%', height: 'auto' }} />
+          </div>
+          <figcaption style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: 'var(--ink-3)', fontStyle: 'italic', marginTop: 14, fontFamily: 'var(--font-display)' }}>
+            <span>Fig. 1 — The overview tab, showing watchlist, recession radar and portfolio in a single frame.</span>
+            <span className="mono" style={{ fontStyle: 'normal', letterSpacing: '0.2em' }}>PG. 01</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Features ---------- */
+function V2Features() {
+  return (
+    <section id="features" className="sect">
+      <div className="sect-inner">
+        <div className="reveal" style={{ display: 'grid', gridTemplateColumns: '1fr 2fr', gap: 40, alignItems: 'baseline', marginBottom: 48, borderBottom: '1px solid var(--line-2)', paddingBottom: 24 }}>
+          <div>
+            <span className="mono" style={{ fontSize: 10, color: 'var(--accent)', letterSpacing: '0.3em' }}>CHAPTER I</span>
+            <h2 className="display" style={{ fontSize: 'clamp(36px, 4.6vw, 64px)', margin: '8px 0 0', color: 'var(--ink)' }}>
+              <em>What you get.</em>
+            </h2>
+          </div>
+          <p style={{ fontSize: 16, color: 'var(--ink-3)', lineHeight: 1.6, margin: 0, fontFamily: 'var(--font-display)', maxWidth: '52ch' }}>
+            Six core tools ship on day one of the beta. Three further modules arrive in the months after — unlocked automatically, at no additional cost to early subscribers.
+          </p>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: 0 }}>
+          {FEATURES_MVP.map((f, i) => (
+            <article key={i} className={`reveal d${(i % 4) + 1}`} style={{
+              display: 'grid', gridTemplateColumns: '80px 1.2fr 2fr 120px', gap: 32, alignItems: 'start',
+              padding: 'calc(26px * var(--density)) 0', borderBottom: '1px solid var(--line-2)',
+            }}>
+              <span className="mono" style={{ fontSize: 11, color: 'var(--accent)', letterSpacing: '0.22em', paddingTop: 8 }}>
+                N° {String(i + 1).padStart(2,'0')}
+              </span>
+              <h3 className="display" style={{ fontSize: 'clamp(22px, 2.2vw, 30px)', margin: 0, color: 'var(--ink)', fontWeight: 400, lineHeight: 1.1 }}>
+                <em>{f.title}.</em>
+              </h3>
+              <p style={{ fontSize: 15, color: 'var(--ink-2)', lineHeight: 1.65, margin: 0, fontFamily: 'var(--font-display)' }}>{f.desc}</p>
+              <span className="mono" style={{ fontSize: 10, color: 'var(--accent)', letterSpacing: '0.2em', paddingTop: 10, textAlign: 'right' }}>LIVE AT BETA</span>
+            </article>
+          ))}
+        </div>
+
+        <div className="reveal" style={{ marginTop: 80, marginBottom: 24, borderTop: '1px solid var(--ink)', paddingTop: 40 }}>
+          <span className="mono" style={{ fontSize: 10, color: 'var(--ink-3)', letterSpacing: '0.3em' }}>APPENDIX — PLANNED</span>
+          <h2 className="display" style={{ fontSize: 'clamp(28px, 3.2vw, 42px)', margin: '8px 0 0', color: 'var(--ink-2)' }}>
+            <em>On the roadmap.</em>
+          </h2>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 0, border: '1px solid var(--line-2)', background: 'var(--line-2)' }}>
+          {FEATURES_PLANNED.map((f, i) => (
+            <article key={i} className="reveal feat-card" style={{ background: 'var(--surface)', opacity: 0.85 }}>
+              <span className="mono" style={{ fontSize: 10, color: 'var(--ink-4)' }}>N° {String(FEATURES_MVP.length + i + 1).padStart(2,'0')}</span>
+              <h3 className="display" style={{ fontSize: 22, margin: '4px 0 10px', fontWeight: 400, color: 'var(--ink-2)' }}><em>{f.title}.</em></h3>
+              <p style={{ fontSize: 14, lineHeight: 1.6, color: 'var(--ink-3)', margin: 0, fontFamily: 'var(--font-display)' }}>{f.desc}</p>
+              <span className="mono" style={{ fontSize: 10, color: 'var(--ink-4)', letterSpacing: '0.22em', marginTop: 'auto', paddingTop: 16, borderTop: '1px dotted var(--line-2)' }}>IN DEVELOPMENT</span>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- How ---------- */
+function V2How() {
+  return (
+    <section id="how" className="sect">
+      <div className="sect-inner">
+        <div className="reveal" style={{ textAlign: 'center', marginBottom: 60 }}>
+          <span className="mono" style={{ fontSize: 10, color: 'var(--accent)', letterSpacing: '0.3em' }}>CHAPTER II — METHOD</span>
+          <h2 className="display" style={{ fontSize: 'clamp(36px, 5vw, 72px)', margin: '14px auto 0', color: 'var(--ink)', maxWidth: '16ch' }}>
+            Three steps, one verdict.
+          </h2>
+        </div>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 0 }}>
+          {STEPS.map((s, i) => (
+            <div key={i} className={`reveal d${i+1}`} style={{ padding: '40px 32px 32px', borderRight: i < 2 ? '1px solid var(--line-2)' : 'none', position: 'relative' }}>
+              <div className="display" style={{ fontSize: 120, lineHeight: 0.9, color: 'var(--ink)', fontWeight: 300, letterSpacing: '-0.05em' }}>{s.n}</div>
+              <span className="mono" style={{ fontSize: 10, color: 'var(--accent)', letterSpacing: '0.3em' }}>— {s.kicker}</span>
+              <h3 className="display" style={{ fontSize: 26, margin: '14px 0 12px', color: 'var(--ink)', fontWeight: 400 }}><em>{s.title}.</em></h3>
+              <p style={{ fontSize: 15, color: 'var(--ink-3)', lineHeight: 1.65, margin: 0, fontFamily: 'var(--font-display)' }}>{s.body}</p>
+            </div>
+          ))}
+        </div>
+        <div className="reveal d3" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', marginTop: 48, borderTop: '1px solid var(--ink)', borderBottom: '1px solid var(--ink)', padding: '28px 0' }}>
+          {STATS.map((s, i) => (
+            <div key={i} style={{ textAlign: 'center', borderRight: i < STATS.length - 1 ? '1px solid var(--line-2)' : 'none' }}>
+              <div className="display" style={{ fontSize: 52, color: s.accent ? 'var(--accent)' : 'var(--ink)', fontWeight: 300 }}>{s.value}</div>
+              <div className="mono" style={{ fontSize: 10, color: 'var(--ink-3)', marginTop: 8 }}>{s.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Sample report card ---------- */
+function V2Sample() {
+  return (
+    <section id="tech" className="sect">
+      <div className="sect-inner" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 64, alignItems: 'center' }}>
+        <div className="reveal">
+          <span className="mono" style={{ fontSize: 10, color: 'var(--accent)', letterSpacing: '0.3em' }}>CHAPTER III — SAMPLE</span>
+          <h2 className="display" style={{ fontSize: 'clamp(32px, 4vw, 56px)', margin: '14px 0 24px', color: 'var(--ink)', maxWidth: '16ch' }}>
+            A page from the desk.
+          </h2>
+          <p style={{ fontSize: 16, color: 'var(--ink-2)', lineHeight: 1.7, fontFamily: 'var(--font-display)', marginBottom: 24 }}>
+            Every report is nine sections long and typed against a strict JSON schema. Grounded in live data from Yahoo Finance, SEC Edgar, FRED and Perplexity, layered with Claude Sonnet 4.6 reasoning.
+          </p>
+          <blockquote style={{ borderLeft: '2px solid var(--accent)', paddingLeft: 20, margin: 0, fontFamily: 'var(--font-display)', fontSize: 19, fontStyle: 'italic', color: 'var(--ink)', lineHeight: 1.5 }}>
+            "Adobe's AI integration across Creative Cloud (Firefly) represents an untapped monetisation vector consensus models underestimate."
+            <footer className="mono" style={{ fontStyle: 'normal', fontSize: 10, color: 'var(--ink-4)', letterSpacing: '0.25em', marginTop: 14 }}>— AUREALIS DESK · SAMPLE THESIS</footer>
+          </blockquote>
+        </div>
+        <div className="reveal d2" style={{ background: 'var(--surface)', border: '1px solid var(--ink)', padding: 32 }}>
+          <div style={{ borderBottom: '1px solid var(--line-2)', paddingBottom: 16, marginBottom: 18 }}>
+            <div className="mono" style={{ fontSize: 10, color: 'var(--ink-3)', letterSpacing: '0.3em' }}>AUREALIS EQUITY BRIEF · SPECIMEN</div>
+            <div className="display" style={{ fontSize: 32, color: 'var(--ink)', fontWeight: 400, marginTop: 10 }}>
+              <em>Apple Inc.</em> <span style={{ color: 'var(--ink-3)', fontSize: 18 }}>AAPL</span>
+            </div>
+            <div style={{ display: 'flex', gap: 20, marginTop: 10, fontSize: 12, color: 'var(--ink-3)' }}>
+              <span>NASDAQ</span>
+              <span>·</span>
+              <span>Generated today</span>
+              <span>·</span>
+              <span style={{ color: 'var(--ink) '}}>$187.42</span>
+            </div>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, marginBottom: 20 }}>
+            <div>
+              <div className="mono" style={{ fontSize: 10, color: 'var(--ink-4)', marginBottom: 8 }}>VERDICT</div>
+              <div style={{ fontFamily: 'var(--font-display)', fontSize: 28, color: 'var(--accent)', fontStyle: 'italic' }}>Strong Buy</div>
+              <div className="mono" style={{ fontSize: 10, color: 'var(--ink-3)', marginTop: 6 }}>TARGET $248 · +32%</div>
+            </div>
+            <div>
+              <div className="mono" style={{ fontSize: 10, color: 'var(--ink-4)', marginBottom: 8 }}>FIT SCORE</div>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
+                <span className="display" style={{ fontSize: 36, color: 'var(--ink)' }}>4</span>
+                <span className="display" style={{ fontSize: 18, color: 'var(--ink-3)' }}>/5</span>
+              </div>
+              <div className="mono" style={{ fontSize: 10, color: 'var(--ink-3)', marginTop: 6 }}>GROWTH · 3–5YR</div>
+            </div>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 1, background: 'var(--line-2)' }}>
+            {[['P/E', '28.4×'],['Growth', '+7.8%'],['FCF Y.', '3.6%'],['EPS', '$7.33']].map(([l, v], i) => (
+              <div key={i} style={{ background: 'var(--surface)', padding: '10px 12px' }}>
+                <div className="mono" style={{ fontSize: 9, color: 'var(--ink-4)' }}>{l}</div>
+                <div style={{ fontSize: 15, color: 'var(--ink)', marginTop: 4, fontWeight: 500 }}>{v}</div>
+              </div>
+            ))}
+          </div>
+          <div className="mono" style={{ fontSize: 9, color: 'var(--ink-4)', marginTop: 16, letterSpacing: '0.25em', textAlign: 'right' }}>
+            CLAUDE SONNET 4.6 · 1M 47S
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Pricing ---------- */
+function V2Pricing() {
+  const [annual, setAnnual] = useState2(false);
+  return (
+    <section id="pricing" className="sect">
+      <div className="sect-inner">
+        <div className="reveal" style={{ textAlign: 'center', marginBottom: 48 }}>
+          <span className="mono" style={{ fontSize: 10, color: 'var(--accent)', letterSpacing: '0.3em' }}>CHAPTER IV — SUBSCRIPTION</span>
+          <h2 className="display" style={{ fontSize: 'clamp(36px, 5vw, 72px)', margin: '14px auto 20px', color: 'var(--ink)' }}>
+            <em>Simple tiers.</em>
+          </h2>
+          <div style={{ display: 'inline-flex', border: '1px solid var(--ink)', padding: 2 }}>
+            {['Monthly', 'Annual'].map((lbl, i) => {
+              const active = (i === 1) === annual;
+              return (
+                <button key={lbl} onClick={() => setAnnual(i === 1)}
+                  style={{ padding: '8px 20px', background: active ? 'var(--ink)' : 'transparent', color: active ? 'var(--bg)' : 'var(--ink-2)', border: 'none', cursor: 'pointer', fontSize: 11, fontFamily: 'var(--font-mono)', letterSpacing: '0.2em', textTransform: 'uppercase' }}>
+                  {lbl}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+        <div className="reveal d1" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 0, border: '1px solid var(--ink)' }}>
+          {PRICING.map((p, i) => (
+            <div key={i} style={{ background: p.featured ? 'var(--bg-2)' : 'var(--surface)', padding: 'calc(32px * var(--density)) 24px', borderRight: i < 3 ? '1px solid var(--line-2)' : 'none', display: 'flex', flexDirection: 'column', gap: 18 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span className="mono" style={{ fontSize: 10, color: 'var(--ink-3)', letterSpacing: '0.2em' }}>— {p.name}</span>
+                {p.badge && <span style={{ fontFamily: 'var(--font-display)', fontStyle: 'italic', fontSize: 12, color: 'var(--accent)' }}>{p.badge}</span>}
+              </div>
+              <div>
+                <div className="display" style={{ fontSize: 48, color: 'var(--ink)', lineHeight: 1 }}>{annual ? p.price.yr : p.price.mo}</div>
+                <div className="mono" style={{ fontSize: 10, color: 'var(--ink-4)', marginTop: 6 }}>{annual ? p.unit.yr : p.unit.mo}</div>
+              </div>
+              <p style={{ fontSize: 12, color: 'var(--ink-3)', margin: 0, fontFamily: 'var(--font-display)', fontStyle: 'italic', minHeight: 36 }}>{p.blurb}</p>
+              <ul className="price-list">{p.features.map((f, j) => <li key={j} className={f.on ? '' : 'off'}>{f.t}</li>)}</ul>
+              <a href="#beta" className="btn btn-ghost" style={{ justifyContent: 'center', marginTop: 'auto' }}>{p.cta}</a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Beta ---------- */
+function V2Beta() {
+  return (
+    <section id="beta" className="sect">
+      <div className="sect-inner" style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr', gap: 80, alignItems: 'center' }}>
+        <div>
+          <span className="mono" style={{ fontSize: 10, color: 'var(--accent)', letterSpacing: '0.3em' }}>— THE CLOSING ARGUMENT</span>
+          <h2 className="display" style={{ fontSize: 'clamp(38px, 5vw, 80px)', margin: '18px 0 0', color: 'var(--bg)', lineHeight: 1 }}>
+            Research like an institution.<br/>
+            <em style={{ color: 'var(--accent)' }}>Invest like a pro.</em>
+          </h2>
+          <p style={{ fontSize: 17, color: 'color-mix(in oklab, var(--bg) 75%, var(--ink))', lineHeight: 1.7, maxWidth: 460, marginTop: 24, fontFamily: 'var(--font-display)' }}>
+            Free 24-hour trial. Full platform unlocked. No credit card. No lock-in. Cancel by closing the tab.
+          </p>
+        </div>
+        <div style={{ background: 'var(--bg)', border: '1px solid var(--accent)', padding: 32 }}>
+          <div className="mono" style={{ fontSize: 10, color: 'var(--accent)', letterSpacing: '0.3em', marginBottom: 20 }}>REQUEST EARLY ACCESS</div>
+          <BetaForm />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- V2 Root ---------- */
+function V2({ density }) {
+  useReveal();
+  return (
+    <div className={`variation-root v2 density-${density}`}>
+      <Nav variant="v2" />
+      <V2Hero />
+      <V2Product />
+      <V2Features />
+      <V2How />
+      <V2Sample />
+      <V2Pricing />
+      <V2Beta />
+      <Footer />
+    </div>
+  );
+}
+window.V2 = V2;
+
+</script>
+<script type="text/babel" data-presets="env,react">
+/* V3 — RESEARCH STATION (light quant) */
+const { useEffect: useEffect3, useRef: useRef3, useState: useState3 } = React;
+
+/* ---------- Hero bg: radar sweep + data ticks ---------- */
+function V3HeroBg() {
+  const svgRef = useRef3(null);
+  useEffect3(() => {
+    const svg = svgRef.current; if (!svg) return;
+    let raf;
+    const start = performance.now();
+    const sweep = svg.querySelector('#sweep');
+    const ticks = svg.querySelectorAll('[data-tick]');
+    const tick = (t) => {
+      const dt = (t - start) / 1000;
+      sweep.setAttribute('transform', `rotate(${(dt * 18) % 360} 600 400)`);
+      ticks.forEach((el, i) => {
+        const phase = dt - i * 0.08;
+        const v = Math.max(0, Math.sin(phase * 2) * 0.5 + 0.1);
+        el.setAttribute('opacity', v.toFixed(2));
+      });
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, []);
+  return (
+    <div style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
+      {/* graph paper */}
+      <div style={{ position: 'absolute', inset: 0,
+        backgroundImage: 'linear-gradient(rgba(10,10,10,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(10,10,10,0.04) 1px, transparent 1px)',
+        backgroundSize: '40px 40px',
+        maskImage: 'radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 90%)',
+        WebkitMaskImage: 'radial-gradient(ellipse 80% 60% at 50% 50%, black 30%, transparent 90%)',
+      }} />
+      <svg ref={svgRef} viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice"
+        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: 0.7 }}>
+        <defs>
+          <radialGradient id="sweepgrad">
+            <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.4" />
+            <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
+          </radialGradient>
+          <radialGradient id="centerglow">
+            <stop offset="0%" stopColor="var(--accent)" stopOpacity="0.1" />
+            <stop offset="100%" stopColor="var(--accent)" stopOpacity="0" />
+          </radialGradient>
+        </defs>
+        <circle cx="600" cy="400" r="400" fill="url(#centerglow)" />
+        {/* concentric rings */}
+        {[100, 200, 300, 400].map(r => (
+          <circle key={r} cx="600" cy="400" r={r} fill="none"
+            stroke="var(--ink-4)" strokeWidth="0.35" strokeDasharray="3 5" opacity="0.35" />
+        ))}
+        {/* crosshair */}
+        <line x1="0" y1="400" x2="1200" y2="400" stroke="var(--ink-4)" strokeWidth="0.4" strokeDasharray="2 6" opacity="0.35" />
+        <line x1="600" y1="0" x2="600" y2="800" stroke="var(--ink-4)" strokeWidth="0.4" strokeDasharray="2 6" opacity="0.35" />
+        {/* ticks */}
+        {Array.from({length: 24}).map((_, i) => {
+          const a = (i / 24) * Math.PI * 2;
+          const r = 120 + (i % 5) * 50;
+          const x = 600 + Math.cos(a) * r;
+          const y = 400 + Math.sin(a) * r;
+          return <circle key={i} data-tick cx={x} cy={y} r="3" fill="var(--accent)" opacity="0.3" />;
+        })}
+        {/* sweep wedge */}
+        <g id="sweep">
+          <path d="M 600 400 L 1000 400 A 400 400 0 0 1 860 680 Z" fill="url(#sweepgrad)" />
+          <line x1="600" y1="400" x2="1000" y2="400" stroke="var(--accent)" strokeWidth="0.8" opacity="0.7" />
+        </g>
+        {/* center */}
+        <circle cx="600" cy="400" r="4" fill="var(--accent)" />
+        <circle cx="600" cy="400" r="12" fill="none" stroke="var(--accent)" strokeWidth="0.5" />
+      </svg>
+      {/* corner annotations */}
+      <div style={{ position: 'absolute', top: 100, left: 24, fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--ink-4)', letterSpacing: '0.2em' }}>
+        R · 01<br/>LAT 40.71 · LON -74.00<br/>DATA: LIVE
+      </div>
+      <div style={{ position: 'absolute', bottom: 60, right: 24, fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--ink-4)', letterSpacing: '0.2em', textAlign: 'right' }}>
+        RECESSION SIGNAL<br/>0.24 · CAUTION<br/>11 / 11 INPUTS
+      </div>
+    </div>
+  );
+}
+
+/* ---------- Hero ---------- */
+function V3Hero() {
+  return (
+    <section id="top" style={{ position: 'relative', minHeight: '100vh', overflow: 'hidden', paddingTop: 110, display: 'flex', alignItems: 'center' }}>
+      <V3HeroBg />
+      <div style={{ position: 'relative', maxWidth: 1240, margin: '0 auto', padding: '0 clamp(24px, 4vw, 80px)', width: '100%' }}>
+        <div className="reveal" style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 32 }}>
+          <span className="chip"><span className="dot"/>BETA LIVE</span>
+          <span className="mono" style={{ fontSize: 10, color: 'var(--ink-4)' }}>— v0.9.3 · built 18.04.26</span>
+        </div>
+        <h1 className="reveal d1 display" style={{ fontSize: 'clamp(44px, 6.8vw, 104px)', lineHeight: 1.0, margin: 0, color: 'var(--ink)', maxWidth: '16ch' }}>
+          A research desk,<br/>
+          engineered for <span style={{ color: 'var(--accent)' }}>signal.</span>
+        </h1>
+        <div style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr', gap: 60, marginTop: 48, alignItems: 'start' }}>
+          <p className="reveal d2" style={{ fontSize: 17, color: 'var(--ink-2)', lineHeight: 1.65, margin: 0, maxWidth: '52ch' }}>
+            Aurealis is a browser-based investment research platform. It generates on-demand equity reports, tracks your portfolio and monitors eleven macroeconomic signals — calibrated to your risk profile, grounded in live data from four independent sources.
+          </p>
+          <div className="reveal d3" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 20, padding: 16, border: '1px solid var(--line-2)', background: 'color-mix(in oklab, var(--surface) 92%, transparent)', backdropFilter: 'blur(8px)' }}>
+            {[
+              ['SECTIONS', '9'], ['SOURCES', '4'],
+              ['TIME / RPT', '<2m'], ['SIGNALS', '11'],
+            ].map(([l, v], i) => (
+              <div key={i} style={{ borderLeft: '1px solid var(--accent)', paddingLeft: 10 }}>
+                <div className="mono" style={{ fontSize: 9, color: 'var(--ink-4)' }}>{l}</div>
+                <div className="display" style={{ fontSize: 26, color: 'var(--ink)', lineHeight: 1, marginTop: 4 }}>{v}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="reveal d4" style={{ display: 'flex', gap: 14, marginTop: 44, flexWrap: 'wrap' }}>
+          <a href="#beta" className="btn btn-primary">Request early access <Icon name="arrow" size={14} /></a>
+          <a href="#features" className="btn btn-ghost">Specs & features ↓</a>
+        </div>
+      </div>
+      <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0 }}>
+        <TickerRibbon />
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Product ---------- */
+function V3Product() {
+  return (
+    <section className="sect" style={{ paddingTop: 'calc(60px * var(--density))' }}>
+      <div className="sect-inner">
+        <div className="reveal" style={{ display: 'grid', gridTemplateColumns: '180px 1fr 180px', alignItems: 'end', gap: 40, marginBottom: 24 }}>
+          <span className="mono" style={{ fontSize: 10, color: 'var(--ink-3)', letterSpacing: '0.22em' }}>FIG. 01 — OVERVIEW</span>
+          <div style={{ borderBottom: '1px solid var(--line-2)' }} />
+          <span className="mono" style={{ fontSize: 10, color: 'var(--ink-3)', letterSpacing: '0.22em', textAlign: 'right' }}>LIVE / WATCHLIST</span>
+        </div>
+        <div className="reveal d1" style={{ position: 'relative', border: '1px solid var(--line-2)' }}>
+          <img src="assets/dashboard-overview.png" alt="Aurealis dashboard" style={{ display: 'block', width: '100%', height: 'auto' }} />
+          <div style={{ position: 'absolute', top: 12, left: 12, fontFamily: 'var(--font-mono)', fontSize: 9, color: 'var(--ink-3)', letterSpacing: '0.2em', padding: '4px 8px', background: 'var(--surface)', border: '1px solid var(--line-2)' }}>
+            ANNOT. A — WATCHLIST TABLE (37 POS)
+          </div>
+          <div style={{ position: 'absolute', top: 12, right: 12, fontFamily: 'var(--font-mono)', fontSize: 9, color: 'var(--ink-3)', letterSpacing: '0.2em', padding: '4px 8px', background: 'var(--surface)', border: '1px solid var(--line-2)' }}>
+            ANNOT. B — RECESSION RADAR
+          </div>
+          <div style={{ position: 'absolute', bottom: 12, right: 12, fontFamily: 'var(--font-mono)', fontSize: 9, color: 'var(--ink-3)', letterSpacing: '0.2em', padding: '4px 8px', background: 'var(--surface)', border: '1px solid var(--line-2)' }}>
+            ANNOT. C — PORTFOLIO
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Features ---------- */
+function V3Features() {
+  return (
+    <section id="features" className="sect">
+      <div className="sect-inner">
+        <div className="reveal" style={{ display: 'grid', gridTemplateColumns: '80px 1fr 80px', gap: 24, alignItems: 'baseline', marginBottom: 48 }}>
+          <span className="mono" style={{ fontSize: 10, color: 'var(--accent)', letterSpacing: '0.3em' }}>§ 01</span>
+          <h2 className="display" style={{ fontSize: 'clamp(32px, 4.2vw, 56px)', margin: 0, color: 'var(--ink)', maxWidth: '22ch' }}>
+            What ships on day one.
+          </h2>
+          <span className="mono" style={{ fontSize: 10, color: 'var(--ink-3)', letterSpacing: '0.22em', textAlign: 'right' }}>06 / CORE</span>
+        </div>
+        <div className="feat-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
+          {FEATURES_MVP.map((f, i) => (
+            <article key={i} className={`feat-card reveal d${(i % 4) + 1}`}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: 12, borderBottom: '1px solid var(--line-2)' }}>
+                <span className="feat-icon"><Icon name={f.icon} size={16} /></span>
+                <span className="mono" style={{ fontSize: 9, color: 'var(--accent)', letterSpacing: '0.25em' }}>MVP</span>
+              </div>
+              <div style={{ display: 'flex', gap: 10, alignItems: 'baseline', marginTop: 6 }}>
+                <span className="mono" style={{ fontSize: 9, color: 'var(--ink-4)' }}>§ {String(i + 1).padStart(2, '0')}</span>
+                <h3 className="feat-title">{f.title}</h3>
+              </div>
+              <p className="feat-desc">{f.desc}</p>
+            </article>
+          ))}
+        </div>
+
+        <div className="reveal" style={{ display: 'grid', gridTemplateColumns: '80px 1fr 80px', gap: 24, alignItems: 'baseline', marginTop: 72, marginBottom: 28 }}>
+          <span className="mono" style={{ fontSize: 10, color: 'var(--ink-3)', letterSpacing: '0.3em' }}>§ 02</span>
+          <h2 className="display" style={{ fontSize: 'clamp(26px, 3.2vw, 42px)', margin: 0, color: 'var(--ink-2)' }}>
+            On the roadmap — post-beta.
+          </h2>
+          <span className="mono" style={{ fontSize: 10, color: 'var(--ink-3)', letterSpacing: '0.22em', textAlign: 'right' }}>03 / NEXT</span>
+        </div>
+        <div className="feat-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }}>
+          {FEATURES_PLANNED.map((f, i) => (
+            <article key={i} className="feat-card planned">
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: 12, borderBottom: '1px solid var(--line-2)' }}>
+                <span className="feat-icon" style={{ background: 'transparent', borderColor: 'var(--line-2)', color: 'var(--ink-4)' }}>
+                  <Icon name={f.icon} size={16} />
+                </span>
+                <span className="mono" style={{ fontSize: 9, color: 'var(--ink-4)', letterSpacing: '0.25em' }}>ROADMAP</span>
+              </div>
+              <div style={{ display: 'flex', gap: 10, alignItems: 'baseline' }}>
+                <span className="mono" style={{ fontSize: 9, color: 'var(--ink-4)' }}>§ {String(FEATURES_MVP.length + i + 1).padStart(2, '0')}</span>
+                <h3 className="feat-title" style={{ color: 'var(--ink-2)' }}>{f.title}</h3>
+              </div>
+              <p className="feat-desc">{f.desc}</p>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- How ---------- */
+function V3How() {
+  return (
+    <section id="how" className="sect">
+      <div className="sect-inner">
+        <div className="reveal" style={{ marginBottom: 52 }}>
+          <span className="mono" style={{ fontSize: 10, color: 'var(--accent)', letterSpacing: '0.3em' }}>§ 03 — PROCEDURE</span>
+          <h2 className="display" style={{ fontSize: 'clamp(32px, 4.2vw, 56px)', margin: '14px 0 0', color: 'var(--ink)' }}>
+            Three steps to a verdict.
+          </h2>
+        </div>
+        <div style={{ position: 'relative' }}>
+          {/* connecting dotted line */}
+          <div style={{ position: 'absolute', top: 40, left: '16.66%', right: '16.66%', height: 1, borderTop: '1px dashed var(--line-2)' }} />
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 40, position: 'relative' }}>
+            {STEPS.map((s, i) => (
+              <div key={i} className={`reveal d${i+1}`} style={{ padding: '0 8px' }}>
+                <div style={{ width: 80, height: 80, borderRadius: '50%', border: '1px solid var(--accent)', background: 'var(--surface)', display: 'grid', placeItems: 'center', marginBottom: 20, position: 'relative' }}>
+                  <span className="display" style={{ fontSize: 28, color: 'var(--accent)', fontWeight: 300 }}>{s.n}</span>
+                </div>
+                <span className="mono" style={{ fontSize: 10, color: 'var(--accent)', letterSpacing: '0.25em' }}>— {s.kicker.toUpperCase()}</span>
+                <h3 className="display" style={{ fontSize: 24, margin: '12px 0 10px', color: 'var(--ink)' }}>{s.title}</h3>
+                <p style={{ fontSize: 14, color: 'var(--ink-3)', lineHeight: 1.7, margin: 0 }}>{s.body}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="reveal d3" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', marginTop: 64, border: '1px solid var(--line-2)', background: 'var(--line-2)', gap: 1 }}>
+          {STATS.map((s, i) => (
+            <div key={i} style={{ background: 'var(--surface)', padding: '28px 20px', textAlign: 'center' }}>
+              <div className="display" style={{ fontSize: 52, color: s.accent ? 'var(--accent)' : 'var(--ink)', lineHeight: 1 }}>{s.value}</div>
+              <div className="mono" style={{ fontSize: 10, color: 'var(--ink-3)', marginTop: 10 }}>{s.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Sample / Tech ---------- */
+function V3Sample() {
+  return (
+    <section id="tech" className="sect">
+      <div className="sect-inner">
+        <div className="reveal" style={{ marginBottom: 48 }}>
+          <span className="mono" style={{ fontSize: 10, color: 'var(--accent)', letterSpacing: '0.3em' }}>§ 04 — ENABLING TECHNOLOGY</span>
+          <h2 className="display" style={{ fontSize: 'clamp(32px, 4.2vw, 56px)', margin: '14px 0 18px', color: 'var(--ink)', maxWidth: '22ch' }}>
+            Powered by Claude. Grounded in data.
+          </h2>
+          <p style={{ fontSize: 16, color: 'var(--ink-2)', lineHeight: 1.65, maxWidth: '68ch', margin: 0 }}>
+            Reports aren't generated from headlines. Aurealis pulls real financial data from four independent sources, layers Claude Sonnet 4.6 reasoning on top, and types every response against a strict JSON schema — producing structured research that's calibrated to your profile.
+          </p>
+        </div>
+
+        {/* Architecture diagram */}
+        <div className="reveal d1" style={{ border: '1px solid var(--line-2)', background: 'var(--surface)', padding: 'calc(32px * var(--density))' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1.3fr auto 1fr', gap: 20, alignItems: 'stretch' }}>
+            {/* Inputs */}
+            <div>
+              <div className="mono" style={{ fontSize: 10, color: 'var(--ink-3)', letterSpacing: '0.2em', marginBottom: 14 }}>INPUTS / 4</div>
+              <div style={{ display: 'grid', gap: 8 }}>
+                {['Yahoo Finance', 'SEC Edgar', 'FRED', 'Perplexity'].map(s => (
+                  <div key={s} style={{ padding: '10px 12px', border: '1px solid var(--line-2)', fontSize: 12, color: 'var(--ink-2)', fontFamily: 'var(--font-mono)', letterSpacing: '0.05em', background: 'var(--bg-2)' }}>
+                    → {s}
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div style={{ width: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent)', fontFamily: 'var(--font-mono)' }}>▸</div>
+            {/* Claude */}
+            <div style={{ border: '1px solid var(--accent)', padding: 20, background: 'color-mix(in oklab, var(--accent) 5%, var(--surface))' }}>
+              <div className="mono" style={{ fontSize: 10, color: 'var(--accent)', letterSpacing: '0.2em', marginBottom: 14 }}>CLAUDE SONNET 4.6 · REASONING LAYER</div>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+                {['Chain-of-thought', 'JSON schema', 'Section templates', 'Validation', 'Persona fit', 'Risk extraction'].map(s => (
+                  <div key={s} style={{ display: 'flex', gap: 6, alignItems: 'center', fontSize: 12, color: 'var(--ink-2)' }}>
+                    <span style={{ width: 4, height: 4, background: 'var(--accent)' }} /> {s}
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div style={{ width: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent)', fontFamily: 'var(--font-mono)' }}>▸</div>
+            {/* Outputs */}
+            <div>
+              <div className="mono" style={{ fontSize: 10, color: 'var(--ink-3)', letterSpacing: '0.2em', marginBottom: 14 }}>OUTPUTS</div>
+              <div style={{ display: 'grid', gap: 8 }}>
+                {[
+                  ['AI Report', '9-section brief'],
+                  ['DCF', 'Valuation + sensitivity'],
+                  ['Portfolio AI', 'Positions & allocation'],
+                  ['Macro Radar', '11-signal risk'],
+                ].map(([t, s]) => (
+                  <div key={t} style={{ padding: '10px 12px', border: '1px solid var(--accent)', background: 'var(--bg-2)' }}>
+                    <div style={{ fontSize: 12, color: 'var(--ink)', fontWeight: 500 }}>{t}</div>
+                    <div className="mono" style={{ fontSize: 9, color: 'var(--ink-3)', marginTop: 3 }}>{s}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Pricing ---------- */
+function V3Pricing() {
+  const [annual, setAnnual] = useState3(false);
+  return (
+    <section id="pricing" className="sect">
+      <div className="sect-inner">
+        <div className="reveal" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 40, gap: 24, flexWrap: 'wrap' }}>
+          <div>
+            <span className="mono" style={{ fontSize: 10, color: 'var(--accent)', letterSpacing: '0.3em' }}>§ 05 — SUBSCRIPTION</span>
+            <h2 className="display" style={{ fontSize: 'clamp(32px, 4.2vw, 56px)', margin: '14px 0 0', color: 'var(--ink)' }}>
+              Simple, transparent tiers.
+            </h2>
+          </div>
+          <div style={{ display: 'flex', border: '1px solid var(--line-2)', padding: 2 }}>
+            {['Monthly', 'Annual'].map((lbl, i) => {
+              const active = (i === 1) === annual;
+              return (
+                <button key={lbl} onClick={() => setAnnual(i === 1)}
+                  className="mono"
+                  style={{ padding: '8px 18px', background: active ? 'var(--ink)' : 'transparent', color: active ? 'var(--bg)' : 'var(--ink-3)', border: 'none', cursor: 'pointer', fontSize: 10, letterSpacing: '0.22em' }}>
+                  {lbl}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+        <div className="reveal d1 price-grid">
+          {PRICING.map((p, i) => (
+            <div key={i} className={`price-card ${p.featured ? 'featured' : ''}`}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <span className="price-name">{p.name}</span>
+                {p.badge && <span className="mono" style={{ fontSize: 9, padding: '3px 8px', background: p.featured ? 'var(--accent)' : 'var(--accent-soft)', color: p.featured ? 'var(--accent-fg)' : 'var(--accent)', letterSpacing: '0.15em' }}>{p.badge}</span>}
+              </div>
+              <div>
+                <div className="price-value">{annual ? p.price.yr : p.price.mo}</div>
+                <div className="price-unit">{annual ? p.unit.yr : p.unit.mo}</div>
+              </div>
+              <div style={{ fontSize: 12, color: 'var(--ink-3)', lineHeight: 1.55, minHeight: 48 }}>{p.blurb}</div>
+              <ul className="price-list">{p.features.map((f, j) => <li key={j} className={f.on ? '' : 'off'}>{f.t}</li>)}</ul>
+              <a href="#beta" className="btn btn-ghost" style={{ marginTop: 'auto', justifyContent: 'center', borderColor: p.featured ? 'var(--accent)' : 'var(--line-2)', color: p.featured ? 'var(--accent)' : 'var(--ink)' }}>{p.cta}</a>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- Beta ---------- */
+function V3Beta() {
+  return (
+    <section id="beta" className="sect">
+      <div className="sect-inner" style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: 60, alignItems: 'center' }}>
+        <div>
+          <span className="mono" style={{ fontSize: 10, color: 'var(--accent)', letterSpacing: '0.3em' }}>§ 06 — ACCESS</span>
+          <h2 className="display" style={{ fontSize: 'clamp(38px, 5vw, 72px)', margin: '18px 0 0', color: 'var(--ink)', lineHeight: 1.05 }}>
+            Research like an institution.<br/>
+            <span style={{ color: 'var(--accent)' }}>Invest like a pro.</span>
+          </h2>
+          <ul style={{ listStyle: 'none', padding: 0, margin: '32px 0 0', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, maxWidth: 520 }}>
+            {['AI equity reports in under 2 min', 'Personalised fit scoring', '10 tools, one platform', 'Free 24h trial · No lock-in'].map((t, i) => (
+              <li key={i} style={{ display: 'flex', gap: 10, fontSize: 13, color: 'var(--ink-2)' }}>
+                <span style={{ color: 'var(--accent)' }}><Icon name="check" size={14}/></span> {t}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div style={{ background: 'var(--surface)', border: '1px solid var(--line-2)', padding: 32 }}>
+          <div className="mono" style={{ fontSize: 10, color: 'var(--accent)', letterSpacing: '0.3em', marginBottom: 20 }}>REQUEST EARLY ACCESS</div>
+          <BetaForm />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ---------- V3 Root ---------- */
+function V3({ density }) {
+  useReveal();
+  return (
+    <div className={`variation-root v3 density-${density}`}>
+      <Nav variant="v3" />
+      <V3Hero />
+      <V3Product />
+      <V3Features />
+      <V3How />
+      <V3Sample />
+      <V3Pricing />
+      <V3Beta />
+      <Footer />
+    </div>
+  );
+}
+window.V3 = V3;
+
+</script>
+
+<script type="text/babel">
+const { useState, useEffect } = React;
+
+function loadState() {
+  try {
+    const stored = localStorage.getItem('aurealis-tweaks');
+    if (stored) return { ...TWEAK_DEFAULTS, ...JSON.parse(stored) };
+  } catch (e) {}
+  return { ...TWEAK_DEFAULTS };
+}
+
+function TweaksPanel({ state, setState, visible }) {
+  if (!visible) return null;
+  const set = (k, v) => setState(s => ({ ...s, [k]: v }));
+  return (
+    <div className="tweaks-panel">
+      <h3>Tweaks</h3>
+      <div className="tweaks-row">
+        <label>Variation</label>
+        <div className="tweaks-seg">
+          {[['v1','Quant'],['v2','Editorial'],['v3','Research']].map(([k,l]) => (
+            <button key={k} className={state.variation === k ? 'active' : ''} onClick={() => set('variation', k)}>{l}</button>
+          ))}
+        </div>
+      </div>
+      <div className="tweaks-row">
+        <label>Density</label>
+        <div className="tweaks-seg">
+          {[['compact','Compact'],['comfortable','Default'],['spacious','Spacious']].map(([k,l]) => (
+            <button key={k} className={state.density === k ? 'active' : ''} onClick={() => set('density', k)}>{l}</button>
+          ))}
+        </div>
+      </div>
+
+    </div>
+  );
+}
+
+function App() {
+  const [state, setState] = useState(loadState);
+  const [tweaksVisible, setTweaksVisible] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem('aurealis-tweaks', JSON.stringify(state));
+    // persist via parent if in edit mode
+    window.parent?.postMessage({ type: '__edit_mode_set_keys', edits: state }, '*');
+  }, [state]);
+
+  useEffect(() => {
+    const onMsg = (e) => {
+      if (e.data?.type === '__activate_edit_mode') setTweaksVisible(true);
+      if (e.data?.type === '__deactivate_edit_mode') setTweaksVisible(false);
+    };
+    window.addEventListener('message', onMsg);
+    window.parent?.postMessage({ type: '__edit_mode_available' }, '*');
+    return () => window.removeEventListener('message', onMsg);
+  }, []);
+
+  // smooth-scroll for hash links
+  useEffect(() => {
+    const onClick = (e) => {
+      const a = e.target.closest('a[href^="#"]');
+      if (!a) return;
+      const id = a.getAttribute('href').slice(1);
+      if (!id) return;
+      const el = document.getElementById(id);
+      if (el) { e.preventDefault(); window.scrollTo({ top: el.offsetTop - 60, behavior: 'smooth' }); }
+    };
+    document.addEventListener('click', onClick);
+    return () => document.removeEventListener('click', onClick);
+  }, []);
+
+  const Variation = state.variation === 'v2' ? window.V2 : state.variation === 'v3' ? window.V3 : window.V1;
+
+  return (
+    <>
+      <Variation density={state.density} key={state.variation} />
+      <TweaksPanel state={state} setState={setState} visible={tweaksVisible} />
+    </>
+  );
+}
+
+function mountWhenReady() {
+  if (window.V1 && window.V2 && window.V3 && window.Nav) {
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  } else {
+    setTimeout(mountWhenReady, 30);
+  }
+}
+mountWhenReady();
+</script>
+</body>
+</html>
