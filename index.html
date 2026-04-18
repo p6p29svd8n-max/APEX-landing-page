@@ -49,7 +49,7 @@
 
         /* ── Scroll / Section layout ── */
         html { overflow-y: scroll; }
-        section.page { height: 100vh; overflow: hidden; position: relative; z-index: 1; opacity: 0; transform: translateY(16px); transition: opacity 0.55s ease, transform 0.55s ease; }
+        section.page { position: relative; z-index: 1; opacity: 0; transform: translateY(16px); transition: opacity 0.55s ease, transform 0.55s ease; padding-top: clamp(80px, 10vh, 120px); padding-bottom: clamp(80px, 10vh, 120px); }
         section.page.in-view { opacity: 1; transform: translateY(0); }
 
         /* ── Section decoration overlay (uniform across all non-hero pages) ── */
@@ -124,7 +124,7 @@
             background: radial-gradient(circle, rgba(59,130,246,0.035) 0%, transparent 70%);
             bottom: -80px; left: -60px;
         }
-        section#hero { z-index: 1; }
+        section#hero { z-index: 1; height: 100vh; overflow: hidden; padding-top: 0; padding-bottom: 0; }
 
         /* ── Chart line draw ── */
         .path-draw {
@@ -434,8 +434,6 @@
         @media (max-width: 639px) {
             .feat-grid { grid-template-columns: repeat(2, 1fr) !important; }
         }
-        /* Allow features section to scroll when grid is taller than viewport */
-        #features { overflow-y: auto !important; }
 
         /* ── Pricing responsive ── */
         @media (max-width: 1023px) {
@@ -815,22 +813,19 @@
 <section id="features" class="page flex flex-col" style="background:#0a0d12; padding-left:clamp(16px,5vw,80px); padding-right:clamp(16px,5vw,80px);">
 
     <!-- Section decoration overlay -->
-    <div class="section-deco" aria-hidden="true">
-        <div class="sc sc-tl"></div><div class="sc sc-tr"></div>
-        <div class="sc sc-bl"></div><div class="sc sc-br"></div>
-    </div>
+    <div class="section-deco" aria-hidden="true"></div>
 
     <!-- Section header -->
     <div class="pt-12 pb-0 shrink-0">
         <div class="reveal flex items-baseline justify-between mb-2" style="gap:20px; flex-wrap:wrap;">
             <span class="font-mono uppercase tracking-[0.24em]" style="font-size:11px; color:#00d4aa;">What you get — MVP</span>
-            <span class="font-mono" style="font-size:10px; color:#6e7680;">06 / CURRENT · 03 / PLANNED</span>
+            <span class="font-mono" style="font-size:10px; color:#6e7680;">06 / CURRENT · 02 / PLANNED</span>
         </div>
         <h2 class="reveal d1 font-display leading-snug" style="font-size:clamp(32px,4vw,56px); color:#f0f0f0; margin:0 0 16px; max-width:20ch;">
             Everything in one place.
         </h2>
         <p class="reveal d2" style="font-size:15px; color:#8a97a6; max-width:60ch; margin-bottom:36px; line-height:1.6;">
-            Six core tools live at beta. Three more land in the months after — each unlocked automatically as they ship.
+            Six core tools live at beta. Two more land in the months after — each unlocked automatically as they ship.
         </p>
     </div>
 
@@ -898,8 +893,8 @@
                         </div>
                         <span class="font-mono" style="font-size:10px; color:#6e7680; letter-spacing:0.12em;">04</span>
                     </div>
-                    <h3 class="feat-title" style="color:#00d4aa;">Recession Radar</h3>
-                    <p class="feat-desc leading-relaxed" style="font-size:13.5px; color:#6e7680;">Track 11 macro signals, merged into one composite score across 5 regimes, to understand recession risks and market sentiment.</p>
+                    <h3 class="feat-title" style="color:#00d4aa;">Recession Radar &amp; Macro</h3>
+                    <p class="feat-desc leading-relaxed" style="font-size:13.5px; color:#6e7680;">Track 11 macro signals across 5 regimes for recession risk, plus live index overview and commodity prices — all in one macro tab.</p>
                     <span class="font-mono" style="font-size:10px; color:#00d4aa; margin-top:auto; padding-top:10px; border-top:1px solid #252b34; letter-spacing:0.2em; display:block;">LIVE AT BETA</span>
                 </div>
             </div>
@@ -920,18 +915,18 @@
                 </div>
             </div>
 
-            <!-- MVP 6: DCF Analyzer -->
-            <div class="feat-card" onclick="openFeature('dcf')">
+            <!-- MVP 6: Sector Insights -->
+            <div class="feat-card" onclick="openFeature('sector')">
 
                 <div class="feat-content">
                     <div style="display:flex; align-items:center; gap:12px;">
                         <div class="feat-icon-box flex items-center justify-center shrink-0" style="width:36px; height:36px; background:rgba(0,212,170,0.1); border:1px solid #00d4aa;">
-                            <i data-lucide="calculator" class="w-4 h-4" style="color:#00d4aa;"></i>
+                            <i data-lucide="layers" class="w-4 h-4" style="color:#00d4aa;"></i>
                         </div>
                         <span class="font-mono" style="font-size:10px; color:#6e7680; letter-spacing:0.12em;">06</span>
                     </div>
-                    <h3 class="feat-title" style="color:#00d4aa;">Plug &amp; Play DCF Analyzer</h3>
-                    <p class="feat-desc leading-relaxed" style="font-size:13.5px; color:#6e7680;">Build comprehensive DCF models with adjustable inputs (i.e. WACC/terminal growth) and leverage AI commentary on key value drivers in under 30 seconds.</p>
+                    <h3 class="feat-title" style="color:#00d4aa;">Sector Insights</h3>
+                    <p class="feat-desc leading-relaxed" style="font-size:13.5px; color:#6e7680;">Evaluate and filter current and historical market performance across prominent sectors, and gain insight into leading companies within each sector.</p>
                     <span class="font-mono" style="font-size:10px; color:#00d4aa; margin-top:auto; padding-top:10px; border-top:1px solid #252b34; letter-spacing:0.2em; display:block;">LIVE AT BETA</span>
                 </div>
             </div>
@@ -947,44 +942,29 @@
         <!-- Planned grid: 3 cards, single row -->
         <div class="feat-grid feat-grid--3col" style="display:grid; gap:1px; width:100%; background:#252b34;">
 
-            <!-- Planned 1: Sector Insights -->
+            <!-- Planned 1: DCF Analyzer -->
             <div class="feat-card feat-card--planned" style="opacity:0.62; cursor:default;">
                 <div class="feat-content">
                     <div style="display:flex; align-items:center; gap:12px;">
                         <div class="feat-icon-box flex items-center justify-center shrink-0" style="width:36px; height:36px; background:transparent; border:1px solid #252b34;">
-                            <i data-lucide="layers" class="w-4 h-4" style="color:#6e7680;"></i>
+                            <i data-lucide="calculator" class="w-4 h-4" style="color:#6e7680;"></i>
                         </div>
                         <span class="font-mono" style="font-size:10px; color:#4a5568; letter-spacing:0.12em;">07</span>
                     </div>
-                    <h3 class="feat-title" style="color:#c9d1d9;">Sector Insights</h3>
-                    <p class="feat-desc leading-relaxed" style="font-size:13.5px; color:#6e7680;">Evaluate and filter current and historical market performance across prominent sectors, and gain insight into leading companies within each sector.</p>
+                    <h3 class="feat-title" style="color:#c9d1d9;">Plug &amp; Play DCF Analyzer</h3>
+                    <p class="feat-desc leading-relaxed" style="font-size:13.5px; color:#6e7680;">Build comprehensive DCF models with adjustable inputs (i.e. WACC/terminal growth) and leverage AI commentary on key value drivers in under 30 seconds.</p>
                     <span class="font-mono" style="font-size:10px; color:#4a5568; margin-top:auto; padding-top:10px; border-top:1px solid #1e2530; letter-spacing:0.2em; display:block;">IN DEVELOPMENT</span>
                 </div>
             </div>
 
-            <!-- Planned 2: Macro, World News & Earnings -->
-            <div class="feat-card feat-card--planned" style="opacity:0.62; cursor:default;">
-                <div class="feat-content">
-                    <div style="display:flex; align-items:center; gap:12px;">
-                        <div class="feat-icon-box flex items-center justify-center shrink-0" style="width:36px; height:36px; background:transparent; border:1px solid #252b34;">
-                            <i data-lucide="globe" class="w-4 h-4" style="color:#6e7680;"></i>
-                        </div>
-                        <span class="font-mono" style="font-size:10px; color:#4a5568; letter-spacing:0.12em;">08</span>
-                    </div>
-                    <h3 class="feat-title" style="color:#c9d1d9;">Macro, World News &amp; Earnings</h3>
-                    <p class="feat-desc leading-relaxed" style="font-size:13.5px; color:#6e7680;">Understand current yield curves, FX, commodities, global news feed, upcoming earnings and an estimated fear &amp; greed index — all in one tab.</p>
-                    <span class="font-mono" style="font-size:10px; color:#4a5568; margin-top:auto; padding-top:10px; border-top:1px solid #1e2530; letter-spacing:0.2em; display:block;">IN DEVELOPMENT</span>
-                </div>
-            </div>
-
-            <!-- Planned 3: Trend Intelligence -->
+            <!-- Planned 2: Trend Intelligence -->
             <div class="feat-card feat-card--planned" style="opacity:0.62; cursor:default;">
                 <div class="feat-content">
                     <div style="display:flex; align-items:center; gap:12px;">
                         <div class="feat-icon-box flex items-center justify-center shrink-0" style="width:36px; height:36px; background:transparent; border:1px solid #252b34;">
                             <i data-lucide="search" class="w-4 h-4" style="color:#6e7680;"></i>
                         </div>
-                        <span class="font-mono" style="font-size:10px; color:#4a5568; letter-spacing:0.12em;">09</span>
+                        <span class="font-mono" style="font-size:10px; color:#4a5568; letter-spacing:0.12em;">08</span>
                     </div>
                     <h3 class="feat-title" style="color:#c9d1d9;">Trend Intelligence</h3>
                     <p class="feat-desc leading-relaxed" style="font-size:13.5px; color:#6e7680;">Vertical and horizontal trend analysis to identify key market movements and investment opportunities, across supply-chains and sectors.</p>
@@ -1004,10 +984,7 @@
 <section id="how" class="page" style="background:#0a0d12; display:grid; grid-template-columns:1fr 1fr; padding-left:clamp(16px,5vw,80px); padding-right:clamp(16px,5vw,80px);">
 
     <!-- Section decoration overlay -->
-    <div class="section-deco" aria-hidden="true">
-        <div class="sc sc-tl"></div><div class="sc sc-tr"></div>
-        <div class="sc sc-bl"></div><div class="sc sc-br"></div>
-    </div>
+    <div class="section-deco" aria-hidden="true"></div>
 
     <!-- Left: vertical timeline -->
     <div class="flex flex-col justify-center gap-8 px-12 py-10" style="border-right:1px solid #1a2030;">
@@ -1245,10 +1222,7 @@
      ENABLING TECHNOLOGY (Page 4)
 ══════════════════════════════════════════════ -->
 <section id="technology" class="page flex items-center" style="background:#0a0d12;">
-    <div class="section-deco" aria-hidden="true">
-        <div class="sc sc-tl"></div><div class="sc sc-tr"></div>
-        <div class="sc sc-bl"></div><div class="sc sc-br"></div>
-    </div>
+    <div class="section-deco" aria-hidden="true"></div>
     <div class="w-full max-w-7xl mx-auto px-8 py-8 tech-inner grid grid-cols-1 gap-10 items-center" style="grid-template-columns: 1fr 2fr;">
 
         <!-- Left: text -->
@@ -1428,11 +1402,8 @@
 <!-- ══════════════════════════════════════════════
      PRICING (Page 4)
 ══════════════════════════════════════════════ -->
-<section id="pricing" class="page flex flex-col items-center justify-center overflow-hidden" style="background:#0a0d12;">
-    <div class="section-deco" aria-hidden="true">
-        <div class="sc sc-tl"></div><div class="sc sc-tr"></div>
-        <div class="sc sc-bl"></div><div class="sc sc-br"></div>
-    </div>
+<section id="pricing" class="page flex flex-col items-center justify-center" style="background:#0a0d12;">
+    <div class="section-deco" aria-hidden="true"></div>
     <div class="w-full max-w-6xl mx-auto px-6">
 
         <div class="reveal text-center mb-6">
@@ -1527,11 +1498,8 @@
 <!-- ══════════════════════════════════════════════
      BETA REGISTRATION (Page 5)
 ══════════════════════════════════════════════ -->
-<section id="beta" class="page flex flex-col items-center justify-center relative overflow-hidden" style="background:#0a0d12; overflow-y:auto;">
-    <div class="section-deco" aria-hidden="true">
-        <div class="sc sc-tl"></div><div class="sc sc-tr"></div>
-        <div class="sc sc-bl"></div><div class="sc sc-br"></div>
-    </div>
+<section id="beta" class="page flex flex-col items-center justify-center relative" style="background:#0a0d12;">
+    <div class="section-deco" aria-hidden="true"></div>
     <!-- Radial teal glow from bottom -->
     <div class="absolute inset-0 pointer-events-none z-0" style="background:radial-gradient(ellipse 60% 40% at 50% 100%, rgba(0,212,170,0.07), transparent);"></div>
 
