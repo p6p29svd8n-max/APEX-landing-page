@@ -363,6 +363,51 @@
         }
         #panel-close:hover { color: #f0f0f0; border-color: #f0f0f0; }
 
+        /* ── Terms of Service modal ── */
+        #tos-modal {
+            position: fixed; inset: 0; z-index: 210;
+            display: flex; align-items: flex-end; justify-content: center;
+            background: rgba(10,13,18,0.75);
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(4px);
+        }
+        #tos-modal.open { opacity: 1; pointer-events: all; }
+        #tos-modal-inner {
+            width: 100%; max-width: 860px; height: 92vh;
+            background: #111418; border-top: 1px solid #252b34;
+            border-left: 1px solid #252b34; border-right: 1px solid #252b34;
+            display: flex; flex-direction: column;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
+        }
+        #tos-modal.open #tos-modal-inner { transform: translateY(0); }
+        #tos-modal-header {
+            height: 52px; display: flex; align-items: center;
+            justify-content: space-between; padding: 0 28px;
+            border-bottom: 1px solid #252b34; flex-shrink: 0;
+        }
+        #tos-close {
+            width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
+            border: 1px solid #252b34; background: transparent; cursor: pointer;
+            color: #6e7680; transition: color 0.15s, border-color 0.15s;
+        }
+        #tos-close:hover { color: #f0f0f0; border-color: #f0f0f0; }
+        #tos-body {
+            flex: 1; overflow-y: auto; padding: 36px 40px 60px;
+            scrollbar-width: thin; scrollbar-color: #252b34 transparent;
+        }
+        #tos-body h2 { font-size: 10px; font-family: 'Inter', monospace; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: #00d4aa; margin: 36px 0 12px; }
+        #tos-body h2:first-child { margin-top: 0; }
+        #tos-body h3 { font-size: 11px; font-family: 'Inter', monospace; font-weight: 600; letter-spacing: 0.1em; color: #8b949e; margin: 20px 0 8px; text-transform: uppercase; }
+        #tos-body p  { font-size: 13px; line-height: 1.75; color: #c9d1d9; margin: 0 0 12px; }
+        #tos-body ul { font-size: 13px; line-height: 1.75; color: #c9d1d9; padding-left: 20px; margin: 0 0 12px; }
+        #tos-body li { margin-bottom: 6px; }
+        #tos-body .tos-warning { background: rgba(248,81,73,0.06); border: 1px solid rgba(248,81,73,0.2); padding: 14px 18px; margin: 0 0 16px; }
+        #tos-body .tos-warning p { color: #c9d1d9; margin: 0; font-size: 12px; }
+        #tos-body .tos-note { background: rgba(0,212,170,0.05); border-left: 2px solid rgba(0,212,170,0.3); padding: 10px 16px; margin: 0 0 16px; }
+        #tos-body .tos-note p { color: #8b949e; margin: 0; font-size: 12px; line-height: 1.6; }
+
         /* ── Screenshot container + hotspot dots ── */
         #panel-screenshot-wrap {
             position: relative; flex: 1; overflow: hidden;
@@ -1250,16 +1295,15 @@
                 Powered by<br><span style="color:#00d4aa;">Claude AI.</span>
             </h2>
             <p class="text-apex-muted leading-relaxed mb-6" style="font-size:15px; max-width:480px;">
-                Reports aren't generated from headlines. Aurealis pulls real financial data from four independent sources and layers Claude AI reasoning on top — producing structured, readable research tailored to your specific investor profile.
+                Reports aren't generated from headlines. Aurealis pulls real financial data from multiple independent sources and layers Claude AI reasoning on top — producing structured, readable research tailored to your specific investor profile.
             </p>
 
             <!-- Bullets -->
             <div class="space-y-3 font-mono" style="font-size:13px; color:#c9d1d9;">
-                <div class="flex items-start gap-3"><div class="w-1 h-1 rounded-full shrink-0 mt-2" style="background:#00d4aa;"></div>Personalised investment fit per report — calibrated to your risk profile and time horizon</div>
-                <div class="flex items-start gap-3"><div class="w-1 h-1 rounded-full shrink-0 mt-2" style="background:#00d4aa;"></div>Full DCF model with WACC &amp; terminal growth sensitivity — valuation in under a minute</div>
-                <div class="flex items-start gap-3"><div class="w-1 h-1 rounded-full shrink-0 mt-2" style="background:#00d4aa;"></div>Structured research — not chatbot output. 9 sections, every report, every ticker.</div>
+                <div class="flex items-start gap-3"><div class="w-1 h-1 rounded-full shrink-0 mt-2" style="background:#00d4aa;"></div>Personalized investment fit per report — calibrated to your risk profile and time horizon</div>
+                <div class="flex items-start gap-3"><div class="w-1 h-1 rounded-full shrink-0 mt-2" style="background:#00d4aa;"></div>Full DCF model with WACC &amp; terminal growth sensitivity — valuation in under two minutes</div>
+                <div class="flex items-start gap-3"><div class="w-1 h-1 rounded-full shrink-0 mt-2" style="background:#00d4aa;"></div>Structured research — not chatbot output. 10+ sections, every report, every ticker.</div>
                 <div class="flex items-start gap-3"><div class="w-1 h-1 rounded-full shrink-0 mt-2" style="background:#00d4aa;"></div>Catalyst identification, risk extraction, and analyst consensus — enriched by live web research</div>
-                <div class="flex items-start gap-3"><div class="w-1 h-1 rounded-full shrink-0 mt-2" style="background:#00d4aa;"></div>Self-hosted on your machine — your portfolio data never leaves your device</div>
             </div>
 
         </div>
@@ -1280,19 +1324,19 @@
                         <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
                             <div style="display:flex; align-items:center; gap:10px; padding:11px 14px; background:#111418; border:1px solid #1e2530;">
                                 <i data-lucide="trending-up" style="width:13px; height:13px; color:#00d4aa; flex-shrink:0;"></i>
-                                <span style="font-size:13px; color:#f0f0f0; font-weight:500;">Markets API</span>
+                                <span style="font-size:13px; color:#f0f0f0; font-weight:500;">Live & historical market data</span>
                             </div>
                             <div style="display:flex; align-items:center; gap:10px; padding:11px 14px; background:#111418; border:1px solid #1e2530;">
                                 <i data-lucide="activity" style="width:13px; height:13px; color:#00d4aa; flex-shrink:0;"></i>
-                                <span style="font-size:13px; color:#f0f0f0; font-weight:500;">SEC Edgar</span>
+                                <span style="font-size:13px; color:#f0f0f0; font-weight:500;">SEC & corporate financial data</span>
                             </div>
                             <div style="display:flex; align-items:center; gap:10px; padding:11px 14px; background:#111418; border:1px solid #1e2530;">
                                 <i data-lucide="search" style="width:13px; height:13px; color:#00d4aa; flex-shrink:0;"></i>
-                                <span style="font-size:13px; color:#f0f0f0; font-weight:500;">Perplexity</span>
+                                <span style="font-size:13px; color:#f0f0f0; font-weight:500;">Perplexity web search</span>
                             </div>
                             <div style="display:flex; align-items:center; gap:10px; padding:11px 14px; background:#111418; border:1px solid #1e2530;">
                                 <i data-lucide="landmark" style="width:13px; height:13px; color:#00d4aa; flex-shrink:0;"></i>
-                                <span style="font-size:13px; color:#f0f0f0; font-weight:500;">FRED</span>
+                                <span style="font-size:13px; color:#f0f0f0; font-weight:500;">Live & historical news data</span>
                             </div>
                         </div>
                     </div>
@@ -1326,7 +1370,7 @@
                             </div>
                             <div style="display:flex; align-items:center; gap:9px;">
                                 <div style="width:5px; height:5px; background:rgba(0,212,170,0.7); flex-shrink:0;"></div>
-                                <span style="font-size:12px; color:#e2e8f0; font-family:monospace;">Recession Signals</span>
+                                <span style="font-size:12px; color:#e2e8f0; font-family:monospace;">Business Model & Financial Analysis</span>
                             </div>
                             <div style="display:flex; align-items:center; gap:9px;">
                                 <div style="width:5px; height:5px; background:rgba(0,212,170,0.7); flex-shrink:0;"></div>
@@ -1347,7 +1391,7 @@
                         <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
                             <div style="padding:12px 14px; background:#111418; border:1px solid #1e2530; border-left:2px solid #00d4aa;">
                                 <div style="font-size:11px; color:#00d4aa; font-family:monospace; text-transform:uppercase; letter-spacing:0.12em; margin-bottom:4px;">AI Report</div>
-                                <div style="font-size:11px; color:#c9d1d9;">9-section equity research</div>
+                                <div style="font-size:11px; color:#c9d1d9;">10+ section equity research</div>
                             </div>
                             <div style="padding:12px 14px; background:#111418; border:1px solid #1e2530; border-left:2px solid #00d4aa;">
                                 <div style="font-size:11px; color:#00d4aa; font-family:monospace; text-transform:uppercase; letter-spacing:0.12em; margin-bottom:4px;">DCF Analysis</div>
@@ -1394,7 +1438,7 @@
                         </div>
                         <div>
                             <div style="font-size:12px; font-family:monospace; color:#f0f0f0; font-weight:600; margin-bottom:4px;">Section Templates</div>
-                            <div style="font-size:11px; color:#a0b0be; line-height:1.6;">Each of the 9 report sections has its own purpose-built prompt with domain-specific guidance baked in.</div>
+                            <div style="font-size:11px; color:#a0b0be; line-height:1.6;">Each of the 10+ report sections has its own purpose-built prompt with domain-specific guidance baked in.</div>
                         </div>
                         <div>
                             <div style="font-size:12px; font-family:monospace; color:#f0f0f0; font-weight:600; margin-bottom:4px;">Output Validation</div>
@@ -1442,17 +1486,18 @@
             <!-- Free Trial -->
             <div class="plan-card flex flex-col p-6" style="background:#0a0d12;">
                 <div class="text-[10px] font-mono text-apex-muted uppercase tracking-[0.2em] mb-4">Free Trial</div>
-                <div class="mb-4 whitespace-nowrap">
+                <div class="mb-1 whitespace-nowrap">
                     <span class="font-display text-apex-text" style="font-size:52px; line-height:1;">€0</span>
                     <span class="text-apex-muted text-[13px] ml-1 font-mono">/ 24h</span>
                 </div>
-                <div class="text-[12px] text-apex-muted mb-5">Full platform access for 24 hours.</div>
+                <div class="flex justify-center my-4"><div style="width:85%;height:1px;background:linear-gradient(to right,transparent,#00d4aa,transparent);"></div></div>
                 <ul class="space-y-2.5 text-[12px] text-apex-sub flex-1 mb-8">
                     <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>3 AI research reports</li>
                     <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>All dashboard tabs</li>
                     <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Live prices &amp; charts</li>
-                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Portfolio tracker</li>
+                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Portfolio tracker & AI analysis</li>
                     <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Recession Radar</li>
+                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Company Finder</li>
                 </ul>
                 <a href="#beta" class="btn-outline text-center text-[12px] uppercase tracking-wider">Start Free Trial</a>
             </div>
@@ -1467,13 +1512,14 @@
                     <span class="text-apex-muted text-[13px] ml-1 font-mono price-mo">/ mo</span>
                     <span class="text-apex-muted text-[13px] ml-1 font-mono price-yr hidden">/ yr</span>
                 </div>
-                <div class="text-[11px] font-mono text-apex-muted mb-4">No setup required</div>
+                <div class="flex justify-center my-4"><div style="width:85%;height:1px;background:linear-gradient(to right,transparent,#00d4aa,transparent);"></div></div>
                 <ul class="space-y-2.5 text-[12px] text-apex-sub flex-1 mb-8">
                     <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span><span><strong class="text-apex-text">10 reports</strong> / month</span></li>
                     <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>All dashboard tabs</li>
                     <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Live prices &amp; charts</li>
-                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Portfolio tracker</li>
+                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Portfolio tracker & AI analysis</li>
                     <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Recession Radar</li>
+                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Company Finder</li>
                 </ul>
                 <a href="#beta" class="btn-primary text-center text-[12px] uppercase tracking-wider">Join Beta →</a>
             </div>
@@ -1487,13 +1533,14 @@
                     <span class="text-apex-muted text-[13px] ml-1 font-mono price-mo">/ mo</span>
                     <span class="text-apex-muted text-[13px] ml-1 font-mono price-yr hidden">/ yr</span>
                 </div>
-                <div class="text-[11px] font-mono text-apex-muted mb-4">&nbsp;</div>
+                <div class="flex justify-center my-4"><div style="width:85%;height:1px;background:linear-gradient(to right,transparent,#00d4aa,transparent);"></div></div>
                 <ul class="space-y-2.5 text-[12px] text-apex-sub flex-1 mb-8">
                     <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span><span><strong class="text-apex-text">30 reports</strong> / month</span></li>
                     <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>All dashboard tabs</li>
                     <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Live prices &amp; charts</li>
-                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Portfolio tracker</li>
+                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Portfolio tracker & AI analysis</li>
                     <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Recession Radar</li>
+                    <li class="flex items-start gap-2.5"><span style="color:#00d4aa;">✓</span>Company Finder</li>
                     <li class="flex items-start gap-2.5"><span style="color:#d29922;">✦</span>Early access to new features</li>
                 </ul>
                 <a href="#beta" class="btn-outline text-center text-[12px] uppercase tracking-wider">Join Beta →</a>
@@ -1531,7 +1578,7 @@
                 <span style="color:#00d4aa;">Invest like a pro.</span>
             </h2>
             <div style="display:flex; flex-direction:column; gap:12px; margin-top:8px;">
-                <div style="display:flex; align-items:center; gap:12px;">
+                <div style="display:flex; align-items:center; gap:12px;"> 
                     <div style="width:4px; height:4px; background:#00d4aa; border-radius:50%; flex-shrink:0;"></div>
                     <span style="font-size:14px; color:#6e7680;">AI equity reports in under 2 minutes</span>
                 </div>
@@ -1566,7 +1613,7 @@
                            class="form-input" autocomplete="email">
                 </div>
                 <button type="submit" id="submit-btn" class="btn-primary w-full text-center uppercase tracking-[0.14em]" style="font-size:0.9rem;">
-                    Join Waitlist
+                    Join beta
                 </button>
             </form>
 
@@ -1622,7 +1669,7 @@
                 <div>
                     <div class="font-mono text-[9px] uppercase tracking-[0.2em] mb-3" style="color:#6e7680;">Legal</div>
                     <div class="flex flex-col gap-2 font-mono text-[11px] uppercase tracking-wider" style="color:#4a5568;">
-                        <a href="#" class="hover:text-apex-accent transition-colors duration-150" title="To be published">Terms of Service</a>
+                        <a href="javascript:void(0)" onclick="openTos()" class="hover:text-apex-accent transition-colors duration-150">Terms of Service</a>
                         <a href="#" class="hover:text-apex-accent transition-colors duration-150" title="To be published">Privacy Policy</a>
                         <a href="#" class="hover:text-apex-accent transition-colors duration-150" title="To be published">Imprint</a>
                     </div>
@@ -1677,6 +1724,257 @@
             <div id="panel-hotspots"></div>
         </div>
 
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     TERMS OF SERVICE MODAL
+══════════════════════════════════════════════ -->
+<div id="tos-modal" onclick="if(event.target===this)closeTos()">
+    <div id="tos-modal-inner">
+        <div id="tos-modal-header">
+            <span style="font-family:'Inter',monospace; font-size:11px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:#00d4aa;">Terms of Service</span>
+            <button id="tos-close" onclick="closeTos()" title="Close">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
+                    <line x1="1" y1="1" x2="13" y2="13"/><line x1="13" y1="1" x2="1" y2="13"/>
+                </svg>
+            </button>
+        </div>
+        <div id="tos-body">
+
+            <p style="font-size:11px; color:#6e7680; font-family:'Inter',monospace; letter-spacing:0.08em;">Last updated: April 2026</p>
+
+            <h2>§1 — Definitions</h2>
+            <p>In these Terms of Service ("Terms"), the following definitions apply:</p>
+            <ul>
+                <li>"Aurealis Intelligence," "we," "us," or "our" refers to Jonas Möhring, operating as a sole proprietor (Einzelunternehmer) under the business name "Aurealis Intelligence", at Am Steinbecker Feld 29, 21244 Buchholz, Germany.</li>
+                <li>"Service" refers to the Aurealis Intelligence web application, including all features, AI-powered analyses, reports, dashboards, portfolio tools, and related services accessible via aurealisintelligence.com.</li>
+                <li>"User," "you," or "your" refers to any individual or entity that accesses or uses the Service.</li>
+                <li>"Account" refers to a user's registered account, managed via our authentication provider (Clerk).</li>
+                <li>"Subscription" refers to a paid plan (Base, Starter, or Pro) that grants access to the Service.</li>
+                <li>"BYOK" (Bring Your Own Keys) refers to the option for users to supply their own third-party API keys to power certain features of the Service.</li>
+                <li>"AI Content" refers to any text, analysis, report, recommendation, or output generated by artificial intelligence models within the Service.</li>
+                <li>"Report" refers to an AI-generated deep analysis of a financial instrument, which consumes a report credit or API call under the user's plan.</li>
+            </ul>
+
+            <h2>§2 — Acceptance of Terms</h2>
+            <p>By creating an Account, subscribing to a plan, or otherwise using the Service, you acknowledge that you have read, understood, and agree to be bound by these Terms and our Privacy Policy. If you do not agree to these Terms, you must not use the Service.</p>
+            <p>You represent that you are at least 18 years of age and have the legal capacity to enter into a binding agreement. If you are using the Service on behalf of a company or other entity, you represent that you have the authority to bind that entity to these Terms.</p>
+
+            <h2>§3 — Service Description</h2>
+            <p>Aurealis Intelligence is a web-based financial research and analysis platform. The Service provides:</p>
+            <ul>
+                <li>Real-time and delayed market data, stock quotes, and financial indicators sourced from third-party data providers.</li>
+                <li>AI-powered research reports, portfolio analysis, DCF (discounted cash flow) evaluations, ticker-level deep analysis, and news sentiment digests.</li>
+                <li>Portfolio tracking, watchlist management, and newsletter ingestion tools.</li>
+                <li>A dashboard interface consolidating multiple financial data sources into a unified workspace.</li>
+            </ul>
+            <p>The Service is provided "as-is." We make no guarantees regarding the completeness, accuracy, timeliness, or reliability of the data or analyses presented. Market data may be delayed and is subject to the terms of our upstream data providers.</p>
+
+            <h2>§4 — Financial Disclaimer</h2>
+            <div class="tos-warning">
+                <p>This section is critical. Please read it carefully.</p>
+            </div>
+            <p>Aurealis Intelligence is not a registered investment advisor, broker-dealer, financial planner, or fiduciary under the laws of any jurisdiction, including but not limited to the German Federal Financial Supervisory Authority (BaFin) or the European Securities and Markets Authority (ESMA) under MiFID II.</p>
+            <p>All content provided through the Service — including AI-generated reports, analyses, portfolio recommendations, DCF models, sentiment scores, and any other output — is strictly for informational and educational purposes only. None of this content constitutes:</p>
+            <ul>
+                <li>A personal recommendation or solicitation to buy, sell, or hold any financial instrument.</li>
+                <li>A guarantee of future performance or a prediction of market outcomes.</li>
+                <li>Professional financial, investment, legal, or tax advice.</li>
+            </ul>
+            <p>Investment decisions carry risk, including the potential loss of principal. Past performance is not indicative of future results. AI-generated content may contain errors, hallucinations, or outdated information. You are solely responsible for your own investment decisions and should consult with a qualified, licensed financial advisor before acting on any information obtained through the Service.</p>
+            <p>We disclaim all liability for any financial losses, damages, or consequences arising from your use of or reliance on the Service or any content provided therein.</p>
+
+            <h2>§5 — Account Registration</h2>
+            <p>To use the Service, you must create an Account through our authentication provider, Clerk. You agree to:</p>
+            <ul>
+                <li>Provide accurate and complete registration information.</li>
+                <li>Maintain the security and confidentiality of your login credentials.</li>
+                <li>Immediately notify us of any unauthorized use of your Account.</li>
+                <li>Accept responsibility for all activity that occurs under your Account.</li>
+            </ul>
+            <p>We reserve the right to suspend or terminate Accounts that violate these Terms or that we reasonably believe are being used fraudulently, including but not limited to the creation of multiple accounts to abuse free trial offers.</p>
+
+            <h2>§6 — Subscription Plans &amp; Billing</h2>
+            <h3>6.1 Plans</h3>
+            <p>Aurealis Intelligence offers the following subscription tiers, each with different feature sets and usage allowances:</p>
+            <ul>
+                <li>Starter — €12.99/month or €129.99/year. Includes a monthly allowance of AI report generations using Aurealis Intelligence-managed API keys. No API key setup required.</li>
+                <li>Pro — €29.99/month or €299.99/year. Includes a higher monthly allowance of AI report generations. Optional BYOK to remove report limits entirely.</li>
+            </ul>
+            <p>Current plan details, pricing, and feature comparisons are available on our pricing page. We reserve the right to modify pricing or plan features with 30 days' notice to existing subscribers.</p>
+            <h3>6.2 Billing</h3>
+            <p>All payments are processed through Stripe. By subscribing, you authorize Stripe to charge your designated payment method on a recurring basis (monthly or annually) until you cancel. All fees are quoted in Euros (€) and are inclusive of applicable VAT where required.</p>
+            <h3>6.3 Cancellation &amp; Refunds</h3>
+            <p>You may cancel your subscription at any time from your account settings. Upon cancellation:</p>
+            <ul>
+                <li>Your access continues until the end of the current billing period.</li>
+                <li>No prorated refunds are issued for partial billing periods.</li>
+                <li>Any unused report credits or allowances expire at the end of the billing period.</li>
+            </ul>
+            <p>Purchased add-on report credits (if applicable) do not expire and remain in your account until used, even if your subscription lapses. However, credits can only be used with an active subscription.</p>
+            <h3>6.4 Price Changes</h3>
+            <p>We may adjust subscription pricing. Existing subscribers will be notified at least 30 days in advance via email. Continued use of the Service after the new pricing takes effect constitutes acceptance. If you do not agree with the new pricing, you may cancel before the next billing cycle.</p>
+
+            <h2>§7 — Free Trial</h2>
+            <p>Aurealis Intelligence may offer a limited free trial (currently 24 hours) to new users. The free trial provides full platform access with a limited number of AI report generations. No credit card is required.</p>
+            <p>Free trial access is limited to one trial per person. We employ email verification and additional measures to prevent abuse. Attempts to create multiple accounts to obtain additional trials may result in the suspension of all associated accounts.</p>
+            <p>At the end of the trial period, your access to premium features will be restricted until you subscribe to a paid plan. Any data entered during the trial (watchlists, portfolios) will be retained for a reasonable period to allow you to subscribe without data loss.</p>
+
+            <h2>§8 — Bring Your Own Keys (BYOK)</h2>
+            <h3>8.1 Overview</h3>
+            <p>Certain subscription plans allow or require you to provide your own API keys from third-party providers (such as Anthropic, Perplexity, and Finnhub) to power AI and data features within the Service.</p>
+            <h3>8.2 Your Responsibility</h3>
+            <p>When using BYOK, you acknowledge and agree that:</p>
+            <ul>
+                <li>You are solely responsible for obtaining, managing, and paying for your own API keys in accordance with each third-party provider's terms of service.</li>
+                <li>API usage costs incurred through your keys are your responsibility. Aurealis Intelligence does not control, monitor, or reimburse third-party API charges.</li>
+                <li>You must ensure that your use of third-party APIs through Aurealis Intelligence complies with each provider's terms and acceptable use policies.</li>
+                <li>We are not responsible for any charges, overages, rate limits, or account actions imposed by third-party providers on your accounts.</li>
+            </ul>
+            <h3>8.3 Key Security</h3>
+            <p>API keys you submit are encrypted at rest using AES-256 encryption and stored in our database. They are decrypted only at the moment of use to make API calls on your behalf and are never logged, shared with third parties, or accessible to other users. Despite these precautions, you acknowledge that no system is completely immune to security breaches and use the BYOK feature at your own risk.</p>
+            <p>You may add, update, or delete your API keys at any time through the Settings page in your Account. We recommend rotating your keys periodically as a security best practice.</p>
+
+            <h2>§9 — Acceptable Use</h2>
+            <p>You agree to use the Service only for its intended purpose — personal financial research and analysis. You must not:</p>
+            <ul>
+                <li>Redistribute, resell, sublicense, or commercially exploit any data, reports, or content obtained from the Service without prior written consent.</li>
+                <li>Use automated scripts, bots, or scrapers to access the Service or extract data beyond normal usage patterns.</li>
+                <li>Attempt to circumvent usage limits, subscription restrictions, rate limiting, or abuse prevention measures.</li>
+                <li>Reverse-engineer, decompile, or disassemble any part of the Service.</li>
+                <li>Use the Service to engage in market manipulation, insider trading, or any illegal financial activity.</li>
+                <li>Interfere with the Service's infrastructure, security, or availability for other users.</li>
+                <li>Upload malicious content, including viruses, malware, or harmful code.</li>
+                <li>Share your Account credentials with others or allow multiple individuals to use a single Account.</li>
+            </ul>
+            <p>We reserve the right to suspend or terminate accounts that violate these policies, with or without notice, depending on the severity of the violation.</p>
+
+            <h2>§10 — Intellectual Property</h2>
+            <p>The Service, including its design, source code, algorithms, user interface, branding, documentation, and all proprietary content, is owned by Aurealis Intelligence and protected by copyright, trademark, and other intellectual property laws.</p>
+            <p>Your subscription grants you a limited, non-exclusive, non-transferable, revocable license to access and use the Service for personal, non-commercial financial research purposes during your active subscription period.</p>
+            <p>AI-generated reports and analyses produced for you through the Service are provided for your personal use. You may retain and reference them for your own financial decision-making. You may not republish, redistribute, or present AI-generated content as professional financial advice to third parties.</p>
+
+            <h2>§11 — Data &amp; Privacy (GDPR)</h2>
+            <div class="tos-note">
+                <p>Full details are in our Privacy Policy. This section summarises your key data rights under the EU General Data Protection Regulation (GDPR).</p>
+            </div>
+            <h3>11.1 Data We Collect</h3>
+            <p>We collect and process the following categories of personal data:</p>
+            <ul>
+                <li>Account data: Email address, name, authentication tokens (managed by Clerk).</li>
+                <li>Subscription data: Plan type, billing status, payment method metadata (managed by Stripe; we do not store full payment details).</li>
+                <li>Usage data: Watchlists, portfolio holdings, saved analyses, report history, and preferences you store in the platform.</li>
+                <li>API keys (BYOK): Encrypted at rest, decrypted only during API calls, never shared.</li>
+                <li>Technical data: IP address, browser type, and session data for security and analytics purposes.</li>
+            </ul>
+            <h3>11.2 Your Rights Under GDPR</h3>
+            <p>As a data subject under the GDPR, you have the right to:</p>
+            <ul>
+                <li>Access: Request a copy of all personal data we hold about you.</li>
+                <li>Rectification: Request correction of inaccurate personal data.</li>
+                <li>Erasure ("Right to Be Forgotten"): Request deletion of your personal data. Upon request, we will delete your data across all systems, including Clerk (authentication), our database (Postgres), and any cached data (Redis). This process is completed within 30 days.</li>
+                <li>Data Portability: Request an export of your data (watchlists, portfolios, analyses, reports) in a machine-readable format (JSON).</li>
+                <li>Restriction: Request that we restrict the processing of your data under certain circumstances.</li>
+                <li>Objection: Object to the processing of your data for specific purposes.</li>
+                <li>Withdraw Consent: Where processing is based on consent, you may withdraw it at any time.</li>
+            </ul>
+            <p>To exercise any of these rights, contact us at <span style="color:#00d4aa;">support@aurealisintelligence.com</span>. We will respond within 30 days as required by the GDPR.</p>
+            <h3>11.3 Data Retention</h3>
+            <p>We retain your data for as long as your Account is active. If you delete your Account or request erasure, we will remove your personal data from all active systems within 30 days. Anonymised usage analytics may be retained for service improvement purposes.</p>
+            <h3>11.4 Data Processors</h3>
+            <p>We use the following third-party data processors, each with GDPR-compliant Data Processing Agreements (DPAs):</p>
+            <ul>
+                <li>Clerk — Authentication and user management.</li>
+                <li>Stripe — Payment processing and subscription management.</li>
+                <li>Neon — Database hosting (PostgreSQL).</li>
+                <li>Cloudflare — CDN and hosting.</li>
+                <li>Anthropic — AI model provider (for Aurealis Intelligence-managed key tiers; no personal user data is sent to AI models beyond the financial queries themselves).</li>
+            </ul>
+
+            <h2>§12 — Third-Party Services</h2>
+            <p>The Service integrates with and relies upon third-party data providers, AI model providers, and infrastructure services. These include, but are not limited to: Anthropic (AI models), Perplexity (AI search), Finnhub (market data), Yahoo Finance (market data), Clerk (authentication), and Stripe (payments).</p>
+            <p>We do not control these third-party services and are not responsible for their availability, accuracy, or terms. Changes to third-party APIs, pricing, or availability may affect the features and functionality of the Service. We will make reasonable efforts to communicate material changes but cannot guarantee uninterrupted access to any third-party-dependent feature.</p>
+            <p>Your use of third-party services through Aurealis Intelligence (particularly when using BYOK) is also subject to the respective terms of service and privacy policies of each provider.</p>
+
+            <h2>§13 — AI-Generated Content</h2>
+            <p>The Service uses large language models (LLMs) and other AI technologies to generate reports, analyses, and recommendations. You acknowledge and agree that:</p>
+            <ul>
+                <li>AI-generated content may contain inaccuracies, errors, or "hallucinations" — plausible-sounding but factually incorrect statements. You should independently verify any information before relying on it.</li>
+                <li>AI models have knowledge cutoff dates and may not reflect the most current market conditions, regulatory changes, or company developments.</li>
+                <li>AI outputs do not reflect the views, opinions, or recommendations of Aurealis Intelligence or its operators.</li>
+                <li>The quality and accuracy of AI-generated content may vary and is not guaranteed.</li>
+                <li>AI-generated content should never be the sole basis for any financial or investment decision.</li>
+            </ul>
+            <p>We make no representations or warranties about the accuracy, completeness, or suitability of any AI-generated content for any particular purpose.</p>
+
+            <h2>§14 — Availability &amp; Uptime</h2>
+            <p>We strive to keep the Service available at all times but do not guarantee uninterrupted or error-free operation. The Service may be temporarily unavailable due to:</p>
+            <ul>
+                <li>Scheduled or unscheduled maintenance.</li>
+                <li>Third-party service outages (data providers, AI APIs, authentication, hosting).</li>
+                <li>Infrastructure failures, network disruptions, or force majeure events.</li>
+            </ul>
+            <p>We do not offer a Service Level Agreement (SLA) at this time. We will make commercially reasonable efforts to notify users in advance of planned maintenance that may affect service availability.</p>
+            <p>We are not liable for any losses, damages, or missed opportunities arising from service downtime or unavailability.</p>
+
+            <h2>§15 — Limitation of Liability</h2>
+            <p>To the fullest extent permitted by applicable law:</p>
+            <ul>
+                <li>Aurealis Intelligence, its operators, employees, and affiliates shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising from your use of the Service.</li>
+                <li>This includes, without limitation, damages for loss of profits, loss of data, financial losses resulting from investment decisions, business interruption, or any other intangible losses — even if we have been advised of the possibility of such damages.</li>
+                <li>Our total aggregate liability for any and all claims arising from or related to the Service shall not exceed the total amount you have paid to us in subscription fees during the twelve (12) months preceding the event giving rise to the claim.</li>
+            </ul>
+            <p>Some jurisdictions do not allow the exclusion or limitation of certain damages. In such jurisdictions, our liability shall be limited to the maximum extent permitted by law.</p>
+            <p>You expressly acknowledge that financial markets carry inherent risks, that past performance is not indicative of future results, and that Aurealis Intelligence is a tool — not an advisor. You bear full responsibility for your investment decisions.</p>
+
+            <h2>§16 — Indemnification</h2>
+            <p>You agree to indemnify, defend, and hold harmless Aurealis Intelligence, its operators, and affiliates from and against any and all claims, liabilities, damages, losses, and expenses (including reasonable legal fees) arising from:</p>
+            <ul>
+                <li>Your use of the Service or reliance on its content.</li>
+                <li>Your violation of these Terms.</li>
+                <li>Your violation of any third-party rights, including intellectual property or API provider terms.</li>
+                <li>Any financial decisions you make based on information obtained from the Service.</li>
+                <li>Your use of the BYOK feature, including any charges, breaches, or disputes with third-party API providers.</li>
+            </ul>
+
+            <h2>§17 — Termination</h2>
+            <h3>17.1 By You</h3>
+            <p>You may cancel your subscription and delete your Account at any time. Cancellation takes effect at the end of the current billing period. Account deletion triggers the erasure of your personal data in accordance with §11.</p>
+            <h3>17.2 By Us</h3>
+            <p>We reserve the right to suspend or terminate your Account, with or without notice, if:</p>
+            <ul>
+                <li>You breach these Terms or our Acceptable Use policies.</li>
+                <li>We reasonably believe your Account is being used for fraudulent or illegal purposes.</li>
+                <li>Your Account is involved in abuse of the free trial, usage limits, or rate limiting systems.</li>
+                <li>We are required to do so by law or regulatory order.</li>
+            </ul>
+            <p>In the event of termination for cause, no refund will be provided for the remaining subscription period.</p>
+            <h3>17.3 Effect of Termination</h3>
+            <p>Upon termination, your right to access the Service ceases immediately (or at the end of the billing period, in the case of voluntary cancellation). Provisions that by their nature should survive termination — including §4 (Financial Disclaimer), §10 (Intellectual Property), §15 (Limitation of Liability), §16 (Indemnification), and §19 (Governing Law) — shall continue in full force and effect.</p>
+
+            <h2>§18 — Changes to Terms</h2>
+            <p>We may update these Terms from time to time. When we make material changes, we will:</p>
+            <ul>
+                <li>Update the "Last updated" date at the top of this page.</li>
+                <li>Notify you via email or through a prominent notice in the Service at least 14 days before the changes take effect.</li>
+            </ul>
+            <p>Continued use of the Service after the updated Terms take effect constitutes acceptance. If you disagree with the changes, you may cancel your subscription before the new Terms take effect.</p>
+
+            <h2>§19 — Governing Law &amp; Dispute Resolution</h2>
+            <p>These Terms are governed by and construed in accordance with the laws of the Federal Republic of Germany, without regard to its conflict of law provisions.</p>
+            <p>Any disputes arising out of or in connection with these Terms shall be subject to the exclusive jurisdiction of the courts of Buchholz, Niedersachsen, Germany — except where mandatory consumer protection laws of your jurisdiction provide otherwise.</p>
+            <p>For consumers residing in the European Union: you may also refer disputes to the European Commission's Online Dispute Resolution platform at https://ec.europa.eu/consumers/odr. We are not obligated to, but may choose to, participate in dispute resolution proceedings before a consumer arbitration board.</p>
+
+            <h2>§20 — Contact</h2>
+            <p>If you have questions about these Terms, your Account, or your data rights, please contact us:</p>
+            <ul>
+                <li>Email: <span style="color:#00d4aa;">support@aurealisintelligence.com</span></li>
+                <li>Postal address: Am Steinbecker Feld 29, 21244 Buchholz, Germany</li>
+                <li>For GDPR-related requests (data access, deletion, portability), please send your request to <span style="color:#00d4aa;">management@aurealisintelligence.com</span>. We will respond within 30 days.</li>
+            </ul>
+
+        </div>
     </div>
 </div>
 
@@ -1918,13 +2216,22 @@
         document.body.style.overflow = '';
     }
 
+    function openTos() {
+        document.getElementById('tos-modal').classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeTos() {
+        document.getElementById('tos-modal').classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
     function handlePanelBackdropClick(e) {
         // Close if clicking the dark backdrop (not the inner panel)
         if (e.target === document.getElementById('feature-panel')) closeFeature();
     }
 
     // Close on Escape key
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeFeature(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeFeature(); closeTos(); } });
 
     // ── Pricing toggle ─────────────────────────
     function setPricing(mode) {
