@@ -171,7 +171,7 @@
         .feat-card {
             position: relative; overflow: hidden; background: #111418;
             border: 1px solid #1e2530;
-            display: flex; flex-direction: column; cursor: pointer;
+            display: flex; flex-direction: column;
             min-height: 200px;
             padding: clamp(16px, 2.2vmin, 28px) clamp(14px, 2vmin, 26px) !important;
             transition: border-color 0.25s, box-shadow 0.25s;
@@ -197,29 +197,12 @@
             text-align: center;
         }
         .feat-content { position: relative; z-index: 2; flex: 1; display: flex; flex-direction: column; gap: 14px; }
-        .feat-explore {
-            font-size: 11px; color: #00d4aa; letter-spacing: 0.15em;
-            margin-top: 10px; opacity: 0; transform: translateY(4px);
-            transition: opacity 0.2s, transform 0.2s; font-family: Inter, sans-serif;
-        }
         .feat-card:hover {
             border-color: rgba(0,212,170,0.3) !important;
             box-shadow: 0 0 20px rgba(0,212,170,0.06), inset 0 0 20px rgba(0,212,170,0.02);
         }
         .feat-card:hover::before { opacity: 1; }
         .feat-card:hover .feat-desc { color: #f0f0f0 !important; }
-        .feat-card:hover .feat-explore { opacity: 1; transform: translateY(0); }
-        .feat-bg {
-            position: absolute; inset: 0; overflow: hidden;
-            z-index: 0;
-            opacity: 0; transition: opacity 0.35s; pointer-events: none;
-        }
-        .feat-bg img {
-            width: 100%; height: 100%;
-            object-fit: cover; object-position: top center;
-            display: block;
-        }
-        .feat-card:hover .feat-bg { opacity: 0.35; }
 
         /* ── Form ── */
         .form-input {
@@ -329,40 +312,6 @@
         }
         .step-connector-path.drawn { stroke-dashoffset: 0; }
 
-        /* ── Feature panel slide-over ── */
-        #feature-panel {
-            position: fixed; inset: 0; z-index: 200;
-            display: flex; align-items: flex-end; justify-content: center;
-            background: rgba(10,13,18,0.7);
-            opacity: 0; pointer-events: none;
-            transition: opacity 0.3s ease;
-            backdrop-filter: blur(4px);
-        }
-        #feature-panel.open {
-            opacity: 1; pointer-events: all;
-        }
-        #feature-panel-inner {
-            width: 100%; height: 92vh;
-            background: #111418; border-top: 1px solid #252b34;
-            display: flex; flex-direction: column;
-            transform: translateY(100%);
-            transition: transform 0.4s cubic-bezier(0.16,1,0.3,1);
-        }
-        #feature-panel.open #feature-panel-inner {
-            transform: translateY(0);
-        }
-        #feature-panel-header {
-            height: 52px; display: flex; align-items: center;
-            justify-content: space-between; padding: 0 28px;
-            border-bottom: 1px solid #252b34; flex-shrink: 0;
-        }
-        #panel-close {
-            width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;
-            border: 1px solid #252b34; background: transparent; cursor: pointer;
-            color: #6e7680; transition: color 0.15s, border-color 0.15s;
-        }
-        #panel-close:hover { color: #f0f0f0; border-color: #f0f0f0; }
-
         /* ── Terms of Service modal ── */
         #tos-modal {
             position: fixed; inset: 0; z-index: 210;
@@ -407,67 +356,6 @@
         #tos-body .tos-warning p { color: #c9d1d9; margin: 0; font-size: 12px; }
         #tos-body .tos-note { background: rgba(0,212,170,0.05); border-left: 2px solid rgba(0,212,170,0.3); padding: 10px 16px; margin: 0 0 16px; }
         #tos-body .tos-note p { color: #8b949e; margin: 0; font-size: 12px; line-height: 1.6; }
-
-        /* ── Screenshot container + hotspot dots ── */
-        #panel-screenshot-wrap {
-            position: relative; flex: 1; overflow: hidden;
-            display: flex; align-items: center; justify-content: center;
-            background: #0a0d12;
-        }
-        #panel-screenshot-wrap img {
-            max-width: 100%; max-height: 100%;
-            object-fit: contain; display: block;
-            border: 1px solid #252b34;
-        }
-        #panel-screenshot-placeholder {
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            gap: 12px; color: #252b34; user-select: none;
-            width: 85%; height: 80%;
-            border: 1px dashed #252b34;
-        }
-        #panel-screenshot-placeholder span {
-            font-family: 'JetBrains Mono', monospace;
-            font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: #252b34;
-        }
-
-        /* ── Hotspot dot ── */
-        .hotspot {
-            position: absolute;
-            width: 14px; height: 14px;
-            cursor: pointer; z-index: 10;
-        }
-        .hotspot-dot {
-            width: 14px; height: 14px; border-radius: 50%;
-            background: #00d4aa;
-            box-shadow: 0 0 0 0 rgba(0,212,170,0.6);
-            animation: hotspotPulse 2.4s ease-in-out infinite;
-            position: relative; z-index: 2;
-        }
-        @keyframes hotspotPulse {
-            0%,100% { box-shadow: 0 0 0 0 rgba(0,212,170,0.55); }
-            50%      { box-shadow: 0 0 0 8px rgba(0,212,170,0); }
-        }
-        .hotspot-tooltip {
-            position: absolute; bottom: calc(100% + 10px); left: 50%; transform: translateX(-50%);
-            background: #111418; border: 1px solid #00d4aa;
-            padding: 10px 14px; min-width: 180px; max-width: 240px;
-            pointer-events: none; opacity: 0;
-            transition: opacity 0.18s ease;
-            z-index: 20;
-        }
-        .hotspot:hover .hotspot-tooltip { opacity: 1; }
-        .hotspot-tooltip h4 {
-            font-family: 'Inter', sans-serif; font-size: 12px; font-weight: 600;
-            color: #00d4aa; margin: 0 0 4px 0;
-        }
-        .hotspot-tooltip p {
-            font-family: 'Inter', sans-serif; font-size: 11px; line-height: 1.5;
-            color: #c9d1d9; margin: 0;
-        }
-        /* Flip tooltip if near top edge */
-        .hotspot.flip-down .hotspot-tooltip {
-            bottom: auto; top: calc(100% + 10px);
-        }
 
         /* ── Features responsive grid ── */
         @media (max-width: 1400px) {
@@ -881,7 +769,7 @@
         <div class="feat-grid feat-grid--3col" style="display:grid; gap:1px; width:100%; background:#252b34;">
 
             <!-- MVP 1: Shortlist Management -->
-            <div class="feat-card" onclick="openFeature('shortlist')">
+            <div class="feat-card">
 
                 <div class="feat-content">
                     <div style="display:flex; align-items:center; gap:12px;">
@@ -897,7 +785,7 @@
             </div>
 
             <!-- MVP 2: AI Equity Research Reports -->
-            <div class="feat-card" onclick="openFeature('reports')">
+            <div class="feat-card">
 
                 <div class="feat-content">
                     <div style="display:flex; align-items:center; gap:12px;">
@@ -913,7 +801,7 @@
             </div>
 
             <!-- MVP 3: Stock Viewer -->
-            <div class="feat-card" onclick="openFeature('stock')">
+            <div class="feat-card">
 
                 <div class="feat-content">
                     <div style="display:flex; align-items:center; gap:12px;">
@@ -929,7 +817,7 @@
             </div>
 
             <!-- MVP 4: Recession Radar -->
-            <div class="feat-card" onclick="openFeature('recession')">
+            <div class="feat-card">
 
                 <div class="feat-content">
                     <div style="display:flex; align-items:center; gap:12px;">
@@ -945,7 +833,7 @@
             </div>
 
             <!-- MVP 5: Portfolio Tracking & AI Analysis -->
-            <div class="feat-card" onclick="openFeature('portfolio')">
+            <div class="feat-card">
 
                 <div class="feat-content">
                     <div style="display:flex; align-items:center; gap:12px;">
@@ -961,7 +849,7 @@
             </div>
 
             <!-- MVP 6: Sector Insights -->
-            <div class="feat-card" onclick="openFeature('sector')">
+            <div class="feat-card">
 
                 <div class="feat-content">
                     <div style="display:flex; align-items:center; gap:12px;">
@@ -1686,48 +1574,6 @@
 
 
 <!-- ══════════════════════════════════════════════
-     FEATURE DETAIL PANEL
-══════════════════════════════════════════════ -->
-<div id="feature-panel" onclick="handlePanelBackdropClick(event)">
-    <div id="feature-panel-inner">
-
-        <!-- Header bar -->
-        <div id="feature-panel-header">
-            <div style="display:flex; align-items:center; gap:10px;">
-                <span id="panel-icon" style="color:#00d4aa; display:flex; align-items:center;"></span>
-                <span id="panel-title" style="font-family:'Inter',sans-serif; font-size:14px; font-weight:600; color:#00d4aa; letter-spacing:0.04em;"></span>
-            </div>
-            <button id="panel-close" onclick="closeFeature()" title="Close">
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round">
-                    <line x1="1" y1="1" x2="13" y2="13"/><line x1="13" y1="1" x2="1" y2="13"/>
-                </svg>
-            </button>
-        </div>
-
-        <!-- Screenshot area -->
-        <div id="panel-screenshot-wrap">
-
-            <!-- Placeholder shown until screenshot image is provided -->
-            <div id="panel-screenshot-placeholder">
-                <svg width="48" height="48" viewBox="0 0 48 48" fill="none" stroke="#252b34" stroke-width="1.5">
-                    <rect x="4" y="10" width="40" height="28" rx="1"/>
-                    <line x1="4" y1="17" x2="44" y2="17"/>
-                    <circle cx="8.5" cy="13.5" r="1.5"/><circle cx="13" cy="13.5" r="1.5"/><circle cx="17.5" cy="13.5" r="1.5"/>
-                </svg>
-                <span id="panel-placeholder-label">Screenshot coming soon</span>
-            </div>
-
-            <!-- Real screenshot — shown when src is set -->
-            <img id="panel-screenshot-img" src="" alt="" style="display:none;">
-
-            <!-- Hotspot dots injected here by JS -->
-            <div id="panel-hotspots"></div>
-        </div>
-
-    </div>
-</div>
-
-<!-- ══════════════════════════════════════════════
      TERMS OF SERVICE MODAL
 ══════════════════════════════════════════════ -->
 <div id="tos-modal" onclick="if(event.target===this)closeTos()">
@@ -2072,150 +1918,6 @@
 
     // Live ticker removed (mockup hidden)
 
-    // ── Feature panel ─────────────────────────
-    // Each feature: title, lucide icon name, screenshot path (set when ready), and hotspot dots.
-    // Dots: x/y are percentage positions on the screenshot. flipDown: true if near the top edge.
-    const featureData = {
-        shortlist: {
-            title: 'Shortlist Management',
-            icon: 'bookmark',
-            screenshot: 'shortlist_management.png',
-            dots: [
-                { x: 89, y: 08.5, flipDown: false, label: 'Quick-add ticker', body: 'Simply add or remove tickers via search.' },
-                { x: 60, y: 55, flipDown: false, label: 'Live price column', body: 'Description coming soon.' },
-                { x: 80, y: 25, flipDown: true,  label: 'Sort & filter',    body: 'Description coming soon.' },
-            ]
-        },
-        reports: {
-            title: 'AI Equity Research Reports',
-            icon: 'file-text',
-            screenshot: 'AI_equityreports.png',
-            dots: [
-                { x: 20, y: 40, flipDown: false, label: 'Investment fit',   body: 'Description coming soon.' },
-                { x: 50, y: 60, flipDown: false, label: 'DCF model',        body: 'Description coming soon.' },
-                { x: 75, y: 30, flipDown: true,  label: 'Risk factors',     body: 'Description coming soon.' },
-            ]
-        },
-        stock: {
-            title: 'Stock Viewer',
-            icon: 'bar-chart-2',
-            screenshot: 'stock_viewer.png',
-            dots: [
-                { x: 30, y: 45, flipDown: false, label: 'Price chart',      body: 'Description coming soon.' },
-                { x: 55, y: 65, flipDown: false, label: 'Insider buys',     body: 'Description coming soon.' },
-                { x: 78, y: 28, flipDown: true,  label: 'Analyst targets',  body: 'Description coming soon.' },
-            ]
-        },
-        sectors: {
-            title: 'Key Sector Overview & Insights',
-            icon: 'layers',
-            screenshot: 'sector_overview.png',
-            dots: [
-                { x: 22, y: 38, flipDown: false, label: 'Sector heatmap',   body: 'Description coming soon.' },
-                { x: 58, y: 55, flipDown: false, label: 'ETF sparkline',    body: 'Description coming soon.' },
-                { x: 82, y: 30, flipDown: true,  label: 'Top movers',       body: 'Description coming soon.' },
-            ]
-        },
-        macro: {
-            title: 'Macro Data, World News & Earnings',
-            icon: 'globe',
-            screenshot: 'news_world_earnings.png',
-            dots: [
-                { x: 28, y: 42, flipDown: false, label: 'Yield curve',      body: 'Description coming soon.' },
-                { x: 52, y: 62, flipDown: false, label: 'World news feed',  body: 'Description coming soon.' },
-                { x: 76, y: 32, flipDown: true,  label: 'Earnings calendar',body: 'Description coming soon.' },
-            ]
-        },
-        recession: {
-            title: 'Recession Radar & Fear & Greed',
-            icon: 'activity',
-            screenshot: 'recession_radar.png',
-            dots: [
-                { x: 26, y: 44, flipDown: false, label: 'Composite score',  body: 'Description coming soon.' },
-                { x: 54, y: 58, flipDown: false, label: 'Signal breakdown', body: 'Description coming soon.' },
-                { x: 79, y: 27, flipDown: true,  label: 'Regime allocation',body: 'Description coming soon.' },
-            ]
-        },
-        portfolio: {
-            title: 'Portfolio Tracking & AI Analysis',
-            icon: 'briefcase',
-            screenshot: 'portfolio_analyzer.png',
-            dots: [
-                { x: 24, y: 40, flipDown: false, label: 'P&L history',      body: 'Description coming soon.' },
-                { x: 56, y: 60, flipDown: false, label: 'Sector allocation', body: 'Description coming soon.' },
-                { x: 80, y: 30, flipDown: true,  label: 'AI commentary',    body: 'Description coming soon.' },
-            ]
-        },
-        dcf: {
-            title: 'Plug & Play DCF Analyzer',
-            icon: 'calculator',
-            screenshot: 'DCF_analyzer.png',
-            dots: [
-                { x: 30, y: 48, flipDown: false, label: 'Assumptions panel',body: 'Description coming soon.' },
-                { x: 58, y: 65, flipDown: false, label: 'Sensitivity table',body: 'Description coming soon.' },
-                { x: 77, y: 28, flipDown: true,  label: 'AI commentary',    body: 'Description coming soon.' },
-            ]
-        },
-        trends: {
-            title: 'Trend-Based Company Finder',
-            icon: 'search',
-            screenshot: 'company_finder.png',
-            dots: [
-                { x: 22, y: 42, flipDown: false, label: 'Theme input',      body: 'Description coming soon.' },
-                { x: 55, y: 60, flipDown: false, label: 'Result cards',     body: 'Description coming soon.' },
-                { x: 80, y: 28, flipDown: true,  label: 'Filter panel',     body: 'Description coming soon.' },
-            ]
-        },
-        intelligence: {
-            title: 'Trend Intelligence',
-            icon: 'zap',
-            screenshot: '',
-            dots: [
-                { x: 35, y: 45, flipDown: false, label: 'Signal detection', body: 'Description coming soon.' },
-                { x: 65, y: 60, flipDown: false, label: 'Theme clusters',   body: 'Description coming soon.' },
-            ]
-        },
-    };
-
-    function openFeature(id) {
-        const data = featureData[id];
-        if (!data) return;
-
-        // Populate header
-        document.getElementById('panel-title').textContent = data.title;
-
-        // Swap icon via lucide
-        const iconEl = document.getElementById('panel-icon');
-        iconEl.innerHTML = `<i data-lucide="${data.icon}" style="width:16px;height:16px;"></i>`;
-        lucide.createIcons({ nodes: [iconEl] });
-
-        // Screenshot vs placeholder
-        const img = document.getElementById('panel-screenshot-img');
-        const placeholder = document.getElementById('panel-screenshot-placeholder');
-        const label = document.getElementById('panel-placeholder-label');
-        if (data.screenshot) {
-            img.src = data.screenshot;
-            img.style.display = 'block';
-            placeholder.style.display = 'none';
-        } else {
-            img.style.display = 'none';
-            placeholder.style.display = 'flex';
-            label.textContent = data.title + ' — screenshot coming soon';
-        }
-
-        // Hotspots removed — screenshot only
-        document.getElementById('panel-hotspots').replaceChildren();
-
-        // Open panel
-        document.getElementById('feature-panel').classList.add('open');
-        document.body.style.overflow = 'hidden';
-    }
-
-    function closeFeature() {
-        document.getElementById('feature-panel').classList.remove('open');
-        document.body.style.overflow = '';
-    }
-
     function openTos() {
         document.getElementById('tos-modal').classList.add('open');
         document.body.style.overflow = 'hidden';
@@ -2225,13 +1927,8 @@
         document.body.style.overflow = '';
     }
 
-    function handlePanelBackdropClick(e) {
-        // Close if clicking the dark backdrop (not the inner panel)
-        if (e.target === document.getElementById('feature-panel')) closeFeature();
-    }
-
     // Close on Escape key
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeFeature(); closeTos(); } });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeTos(); } });
 
     // ── Pricing toggle ─────────────────────────
     function setPricing(mode) {
